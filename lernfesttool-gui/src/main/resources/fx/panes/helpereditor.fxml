@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Name">
+         <VBox.margin>
+            <Insets bottom="10.0" left="40.0" right="40.0" top="40.0" />
+         </VBox.margin>
+      </Label>
+      <TextField fx:id="textName" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="520.0">
+         <VBox.margin>
+            <Insets bottom="60.0" left="40.0" right="40.0" />
+         </VBox.margin>
+      </TextField>
+      <ListView fx:id="listStudents" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="520.0">
+         <VBox.margin>
+            <Insets bottom="20.0" left="40.0" right="40.0" />
+         </VBox.margin>
+      </ListView>
+      <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="520.0" spacing="40.0">
+         <children>
+            <TextField fx:id="textSearch" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="240.0" promptText="Suche" />
+            <ComboBox fx:id="boxClasses" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="240.0" promptText="Klasse" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="20.0" left="40.0" right="40.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="520.0" spacing="40.0">
+         <children>
+            <Button fx:id="btnChooseStudent" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="146.0" text="Schüler auswählen">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnOpenStudent" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="148.0" text="Schüler öffnen" />
+            <Button fx:id="btnUnselect" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="146.0" text="Auswahl löschen" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="20.0" left="40.0" right="40.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="520.0">
+         <children>
+            <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Angehöriger Schüler: " />
+            <Label fx:id="labelStudent" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" style="-fx-font-size: 15;" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>

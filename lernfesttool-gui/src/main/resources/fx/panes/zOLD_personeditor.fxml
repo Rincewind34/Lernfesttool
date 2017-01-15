@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ListView fx:id="listPersons" prefHeight="200.0" prefWidth="1000.0" />
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" spacing="20.0">
+         <children>
+            <ComboBox fx:id="boxPersonType" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" promptText="{SELECT FIRST}" />
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+               <children>
+                  <ComboBox fx:id="boxClasses" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" promptText="Klasse" />
+                  <ComboBox fx:id="boxPersons" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" promptText="{student/helper}" />
+               </children>
+            </HBox>
+            <TextField fx:id="textSearch" minHeight="-Infinity" prefHeight="30.0" promptText="Suche" />
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+               <children>
+                  <Button fx:id="btnAdd" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Hinzufügen" />
+                  <Button fx:id="btnRemove" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Entfernen" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>

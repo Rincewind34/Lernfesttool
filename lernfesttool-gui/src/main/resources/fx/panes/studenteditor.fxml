@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="0.0" prefWidth="1200.0">
+         <children>
+      		<HBox prefHeight="0.0" prefWidth="1000.0" spacing="20.0">
+      			<VBox.margin>
+      				<Insets bottom="20.0" left="40.0" right="40.0" top="40.0" />
+      			</VBox.margin>
+      			<children>
+      				<TextField fx:id="textFirstname" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" promptText="Vorname" />
+      				<TextField fx:id="textLastname" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" promptText="Nachname" />
+      			</children>
+      		</HBox>
+      		<Separator prefWidth="200.0">
+      			<VBox.margin>
+      				<Insets left="20.0" right="20.0" />
+      			</VBox.margin>
+      		</Separator>
+      		<HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      			<children>
+      				<VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
+      					<children>
+      						<Label style="-fx-font-size: 15;" text="Zugangsberechtigung" />
+      						<ComboBox fx:id="boxAccess" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" promptText="Zugangsberechtigung" />
+      					</children>
+      				</VBox>
+      				<VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
+      					<children>
+      						<Label style="-fx-font-size: 15;" text="Status" />
+      						<ComboBox fx:id="boxState" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" promptText="Status" />
+      					</children>
+      				</VBox>
+      			</children>
+      			<VBox.margin>
+      				<Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+      			</VBox.margin>
+      		</HBox>
+      		<HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      			<children>
+      				<TextField fx:id="textPassword" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" promptText="Passwort">
+      					<HBox.margin>
+      						<Insets />
+      					</HBox.margin>
+      				</TextField>
+      				<Button fx:id="btnResetPassword" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Zurücksetzten" />
+      			</children>
+      			<VBox.margin>
+      				<Insets bottom="20.0" left="40.0" right="40.0" />
+      			</VBox.margin>
+      		</HBox>
+      		<Separator prefWidth="200.0">
+      			<VBox.margin>
+      				<Insets left="20.0" right="20.0" />
+      			</VBox.margin>
+      		</Separator>
+      		<HBox prefHeight="100.0" prefWidth="200.0">
+      			<children>
+      				<Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Klasse: " />
+      				<Label fx:id="labelClass" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" style="-fx-font-size: 15;">
+      					<HBox.margin>
+      						<Insets />
+      					</HBox.margin>
+      				</Label>
+      				<Button fx:id="btnClassOpen" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Klasse öffnen">
+      					<HBox.margin>
+      						<Insets />
+      					</HBox.margin>
+      				</Button>
+      			</children>
+      			<VBox.margin>
+      				<Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+      			</VBox.margin>
+      		</HBox>
+      		<HBox prefHeight="100.0" prefWidth="200.0">
+      			<VBox.margin>
+      				<Insets bottom="20.0" left="40.0" right="40.0" />
+      			</VBox.margin>
+      			<children>
+      				<Button fx:id="btnClassRemove" disable="true" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Auswahl entfernen">
+      					<HBox.margin>
+      						<Insets right="120.0" />
+      					</HBox.margin>
+      				</Button>
+      				<Button fx:id="btnClassSelect" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Klasse auswählen">
+      					<HBox.margin>
+      						<Insets />
+      					</HBox.margin>
+      				</Button>
+      			</children>
+      		</HBox>
+      		<Separator prefWidth="200.0">
+      			<VBox.margin>
+      				<Insets left="20.0" right="20.0" />
+      			</VBox.margin>
+      		</Separator>
+      		<HBox prefHeight="30.0" prefWidth="0.0" spacing="20.0">
+      			<children>
+      				<Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Ganzes Projekt: " />
+                  <Label fx:id="labelFullProject" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" style="-fx-font-size: 15;" />
+      				<CheckBox fx:id="checkFullProject" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Leitung" HBox.hgrow="ALWAYS" />
+      				<Button fx:id="btnProjectFullOpen" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Projekt öffnen" />
+      			</children>
+      			<VBox.margin>
+      				<Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+      			</VBox.margin>
+      		</HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnProjectFullRemove" disable="true" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Auswahl entfernen">
+                     <HBox.margin>
+                        <Insets right="120.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnProjectFullSelect" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Projekt auswählen">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" />
+               </VBox.margin>
+            </HBox>
+      		<HBox prefHeight="0.0" prefWidth="1000.0" spacing="20.0">
+      			<children>
+                  <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Frühes Projekt: " />
+                  <Label fx:id="labelEarlyProject" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" style="-fx-font-size: 15;" />
+      				<CheckBox fx:id="checkEarlyProject" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Leitung" HBox.hgrow="ALWAYS" />
+      				<Button fx:id="btnProjectEarlyOpen" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Projekt öffnen" />
+      			</children>
+      			<VBox.margin>
+      				<Insets bottom="20.0" left="40.0" right="40.0" />
+      			</VBox.margin>
+      		</HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnProjectEarlyRemove" disable="true" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Auswahl entfernen">
+                     <HBox.margin>
+                        <Insets right="120.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnProjectEarlySelect" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Projekt auswählen">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" />
+               </VBox.margin>
+            </HBox>
+      		<HBox prefHeight="0.0" prefWidth="1000.0" spacing="20.0">
+      			<children>
+                  <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Spätes Projekt: " />
+                  <Label fx:id="labelLateProject" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" style="-fx-font-size: 15;" />
+      				<CheckBox fx:id="checkLateProject" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Leitung" HBox.hgrow="ALWAYS" />
+      				<Button fx:id="btnProjectLateOpen" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Projekt öffnen" />
+      			</children>
+      			<VBox.margin>
+      				<Insets bottom="20.0" left="40.0" right="40.0" />
+      			</VBox.margin>
+      		</HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnProjectLateRemove" disable="true" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Auswahl entfernen">
+                     <HBox.margin>
+                        <Insets right="120.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnProjectLateSelect" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Projekt auswählen">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+	</children>
+</VBox>

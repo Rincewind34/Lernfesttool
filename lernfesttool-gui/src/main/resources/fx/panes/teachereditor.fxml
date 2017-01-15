@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Name">
+         <VBox.margin>
+            <Insets bottom="10.0" left="40.0" right="40.0" top="40.0" />
+         </VBox.margin>
+      </Label>
+      <TextField fx:id="textName" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="520.0" promptText="Name des Lehrers">
+         <VBox.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" />
+         </VBox.margin>
+      </TextField>
+      <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Kürzel">
+         <VBox.margin>
+            <Insets bottom="10.0" left="40.0" right="40.0" />
+         </VBox.margin>
+      </Label>
+      <TextField fx:id="textToken" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="520.0" promptText="Kürzel des Lehrers">
+         <VBox.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" />
+         </VBox.margin>
+      </TextField>
+      <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Projektbeaufsichtigung">
+         <VBox.margin>
+            <Insets bottom="10.0" left="40.0" right="40.0" />
+         </VBox.margin>
+      </Label>
+      <GridPane gridLinesVisible="true" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="520.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <VBox.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" />
+         </VBox.margin>
+         <children>
+            <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Frühes Projekt" />
+            <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Spätest Projekt" GridPane.rowIndex="1" />
+            <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Ganzes Projekt" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
+            <Button fx:id="btnEarly" disable="true" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Projekt öffnen" GridPane.columnIndex="2">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="btnLate" disable="true" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Projekt öffnen" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button fx:id="btnFull" disable="true" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Projekt öffnen" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="labelEarly" minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Keines" GridPane.columnIndex="1" />
+            <Label fx:id="labelLate" minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Keines" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="labelFull" minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Keines" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+   </children>
+</VBox>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.input.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<VBox fx:id="paneVBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="10000.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="Datenbearbeitung">
+            <items>
+                  <Menu mnemonicParsing="false" text="Erstellen...">
+                    <items>
+                      <MenuItem fx:id="menuCreateProject" mnemonicParsing="false" text="Projekt" />
+                        <MenuItem fx:id="menuCreateStudent" mnemonicParsing="false" text="Schüler" />
+                        <MenuItem fx:id="menuCreateTeacher" mnemonicParsing="false" text="Lehrer" />
+                        <MenuItem fx:id="menuCreateHelper" mnemonicParsing="false" text="Helfer" />
+                        <MenuItem fx:id="menuCreateClass" mnemonicParsing="false" text="Klasse" />
+                        <MenuItem fx:id="menuCreateRoom" mnemonicParsing="false" text="Raum" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Öffnen...">
+                     <items>
+                        <MenuItem fx:id="menuOpenProject" mnemonicParsing="false" text="Projekt" />
+                        <MenuItem fx:id="menuOpenStudent" mnemonicParsing="false" text="Schüler" />
+                        <MenuItem fx:id="menuOpenTeacher" mnemonicParsing="false" text="Lehrer" />
+                        <MenuItem fx:id="menuOpenHelper" mnemonicParsing="false" text="Helfer" />
+                        <MenuItem fx:id="menuOpenClass" mnemonicParsing="false" text="Klasse" />
+                        <MenuItem fx:id="menuOpenRoom" mnemonicParsing="false" text="Raum" />
+                     </items>
+                  </Menu>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem fx:id="menuPrint" mnemonicParsing="false" text="Drucken">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem fx:id="menuSave" mnemonicParsing="false" text="Speichern">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Statistiken">
+              <items>
+                <MenuItem fx:id="menuStatsProject" mnemonicParsing="false" text="Projekt Statistik" />
+                  <MenuItem fx:id="menuStatsRoom" mnemonicParsing="false" text="Raum Statistik" />
+                  <MenuItem fx:id="menuStatsClass" mnemonicParsing="false" text="Klassen Statistik" />
+                  <MenuItem fx:id="menuStatsGuide" mnemonicParsing="false" text="Betreuer Statsitik" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Zuordnungen">
+               <items>
+                  <MenuItem fx:id="menuMatchProjects" mnemonicParsing="false" text="Projekt =&gt; Raum" />
+                  <MenuItem fx:id="menuMatchGuides" mnemonicParsing="false" text="Betreuer =&gt; Projekt" />
+                  <MenuItem fx:id="menuMatchStudents" mnemonicParsing="false" text="Schüler =&gt; Projekt" />
+               </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Abmelden">
+            <items>
+              <MenuItem fx:id="menuLogout" mnemonicParsing="false" text="Abmelden" />
+                  <MenuItem fx:id="menuTerminate" mnemonicParsing="false" text="Beenden" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TabPane fx:id="paneTabs" prefHeight="10000.0" prefWidth="10000.0" tabClosingPolicy="ALL_TABS" />
+   </children>
+</VBox>

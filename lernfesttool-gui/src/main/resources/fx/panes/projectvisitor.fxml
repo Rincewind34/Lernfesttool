@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="1000.0">
+         <children>
+            <TextField fx:id="textName" disable="true" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0">
+               <VBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+               </VBox.margin>
+            </TextField>
+            <TextArea fx:id="textDescription" disable="true" prefHeight="1000.0" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+               </VBox.margin>
+            </TextArea>
+            <ComboBox fx:id="boxCategory" disable="true" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0">
+               <VBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+               </VBox.margin>
+            </ComboBox>
+            <ComboBox fx:id="boxProjectType" disable="true" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0">
+               <VBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+               </VBox.margin>
+            </ComboBox>
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="1000.0">
+         <children>
+            <HBox prefHeight="0.0" prefWidth="1000.0" spacing="40.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
+                     <children>
+                        <Label text="Mindest KlassenStufe" />
+                        <ComboBox fx:id="boxMinClass" disable="true" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
+                     <children>
+                        <Label text="Maximale Klassenstufe" />
+                        <ComboBox fx:id="boxMaxClass" disable="true" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="0.0" prefWidth="1000.0" spacing="40.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
+                     <children>
+                        <Label text="Minimale Teilnehmerzahl" />
+                        <TextField fx:id="textMinUser" disable="true" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
+                     <children>
+                        <Label text="Maximale Teilnehmerzahl" />
+                        <TextField fx:id="textMaxUser" disable="true" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="200.0" spacing="20.0">
+               <VBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" />
+               </VBox.margin>
+               <children>
+                  <Label minWidth="50.0" text="Kosten" />
+                  <TextField fx:id="textCosts" disable="true" minHeight="-Infinity" prefHeight="30.0" prefWidth="1500.0" />
+                  <ComboBox fx:id="boxCurrency" disable="true" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="0.0" prefWidth="1000.0" spacing="40.0">
+               <children>
+                  <VBox prefHeight="0.0" prefWidth="1000.0" spacing="15.0">
+                     <children>
+                        <CheckBox fx:id="checkEBoard" disable="true" mnemonicParsing="false" text="Elektrische Tafel" />
+                        <CheckBox fx:id="checkMusics" disable="true" mnemonicParsing="false" text="Musikalische Ausstatung" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="0.0" prefWidth="1000.0" spacing="15.0">
+                     <children>
+                        <CheckBox fx:id="checkSports" disable="true" mnemonicParsing="false" text="Sportliche Ausstatung" />
+                        <CheckBox fx:id="checkHardware" disable="true" mnemonicParsing="false" text="Hardwareequipment" />
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" />
+               </VBox.margin>
+            </HBox>
+            <Separator prefWidth="1000.0">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+            </Separator>
+            <ListView fx:id="listLeaders" prefHeight="1000.0" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+               </VBox.margin>
+            </ListView>
+            <ListView fx:id="listGuides" prefHeight="1000.0" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" />
+               </VBox.margin>
+            </ListView>
+            <Button fx:id="btnClose" minHeight="-Infinity" mnemonicParsing="false" onAction="#onPressClose" prefHeight="30.0" prefWidth="1000.0" text="Schließen">
+               <VBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</HBox>

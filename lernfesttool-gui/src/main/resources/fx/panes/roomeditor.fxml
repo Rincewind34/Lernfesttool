@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="textName" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="520.0" promptText="Raumname">
+         <VBox.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+         </VBox.margin>
+      </TextField>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="0.0" prefWidth="520.0" spacing="20.0">
+         <children>
+            <CheckBox fx:id="checkEBoard" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Besitzt elektrische Tafel">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </CheckBox>
+            <CheckBox fx:id="checkHardware" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Beitzt Hardwareequipment">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </CheckBox>
+            <CheckBox fx:id="checkSports" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Besitzt sportliche Ausstatung">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </CheckBox>
+            <CheckBox fx:id="checkMusics" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Besitzt musikalische Ausstatung">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </CheckBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" />
+         </VBox.margin>
+      </VBox>
+      <HBox alignment="CENTER" maxWidth="-Infinity" prefHeight="0.0" prefWidth="520.0" spacing="80.0">
+         <VBox.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" />
+         </VBox.margin>
+         <children>
+            <TextField fx:id="textSize" disable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="100.0" promptText="Raumgröße" />
+            <Slider fx:id="sliderSize" blockIncrement="1.0" majorTickUnit="10.0" minHeight="-Infinity" minorTickCount="1" prefHeight="30.0" prefWidth="340.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
