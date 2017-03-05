@@ -6,7 +6,6 @@ import java.util.List;
 import de.rincewind.api.Helper;
 import de.rincewind.api.SchoolClass;
 import de.rincewind.api.Student;
-import de.rincewind.api.abstracts.Dataset;
 import de.rincewind.gui.controller.abstracts.ControllerEditor;
 import de.rincewind.gui.util.Cell;
 import de.rincewind.gui.util.TabHandler;
@@ -66,15 +65,13 @@ public class ControllerHelperEditor extends ControllerEditor {
 		
 		this.boxClasses.getItems().add(new Cell<>("Alle", null));
 		
-		for (Dataset dataset : SchoolClass.getManager().initAllDatasets().sync()) {
-			dataset.fetchAll();
+		for (SchoolClass dataset : SchoolClass.getManager().getAllDatasets().sync()) {
 			this.boxClasses.getItems().add(dataset.asCell());
 		}
 		
 		List<Cell<Student>> studentElements = new ArrayList<>();
 		
-		for (Dataset dataset : Student.getManager().initAllDatasets().sync()) {
-			dataset.fetchValues(Student.FIRSTNAME, Student.LASTNAME, Student.SCHOOL_CLASS);
+		for (Student dataset : Student.getManager().getAllDatasets().sync()) {
 			studentElements.add(dataset.asCell());
 		}
 		

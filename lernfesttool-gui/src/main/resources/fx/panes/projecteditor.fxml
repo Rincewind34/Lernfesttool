@@ -6,236 +6,240 @@
 <?import javafx.scene.layout.*?>
 
 <HBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <VBox prefHeight="200.0" prefWidth="1000.0">
-         <children>
-            <TextField fx:id="textName" minHeight="-Infinity" prefHeight="30.0" promptText="Projektname">
-               <VBox.margin>
-                  <Insets bottom="20.0" left="40.0" right="40.0" top="40.0" />
-               </VBox.margin>
-            </TextField>
-            <Separator prefWidth="200.0">
-               <VBox.margin>
-                  <Insets left="20.0" right="20.0" />
-               </VBox.margin>
-            </Separator>
-            <TextArea fx:id="textDescription" prefHeight="1000.0" prefWidth="1000.0" promptText="Beschreibung">
-               <VBox.margin>
-                  <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
-               </VBox.margin>
-            </TextArea>
-            <TextArea fx:id="textNotes" prefHeight="1000.0" prefWidth="1000.0" promptText="Notitzen">
-               <VBox.margin>
-                  <Insets bottom="20.0" left="40.0" right="40.0" />
-               </VBox.margin>
-            </TextArea>
-            <Separator prefWidth="200.0">
-               <VBox.margin>
-                  <Insets left="20.0" right="20.0" />
-               </VBox.margin>
-            </Separator>
-            <ListView fx:id="listStudents" prefHeight="1300.0" prefWidth="1000.0">
-               <VBox.margin>
-                  <Insets bottom="40.0" left="40.0" right="40.0" top="20.0" />
-               </VBox.margin>
-            </ListView>
-         </children>
-      </VBox>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0">
-         <children>
-            <HBox prefHeight="0.0" prefWidth="200.0" spacing="40.0">
-               <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
-                     <children>
-                        <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Projekt-Typ">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Label>
-                        <ComboBox fx:id="boxType" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
-                     <children>
-                        <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Kategorie" />
-                        <ComboBox fx:id="boxCategory" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
-                     </children>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="20.0" left="40.0" right="40.0" top="40.0" />
-               </VBox.margin>
-            </HBox>
-            <Separator prefWidth="200.0">
-               <VBox.margin>
-                  <Insets left="20.0" right="20.0" />
-               </VBox.margin>
-            </Separator>
-            <HBox prefHeight="0.0" prefWidth="200.0" spacing="40.0">
-               <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
-                     <children>
-                        <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Mindest Klassenstufe">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Label>
-                        <ComboBox fx:id="boxMinLevel" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
-                     <children>
-                        <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Maximale Klassenstufe" />
-                        <ComboBox fx:id="boxMaxLevel" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
-                     </children>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="0.0" prefWidth="200.0" spacing="40.0">
-               <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
-                     <children>
-                        <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Minimale Teilnehmerzahl">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Label>
-                        <TextField fx:id="textMinStudents" minHeight="-Infinity" prefHeight="30.0" />
-                     </children>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
-                     <children>
-                        <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Maximale Teilnehmerzahl" />
-                        <TextField fx:id="textMaxStudents" minHeight="-Infinity" prefHeight="30.0" />
-                     </children>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="20.0" left="40.0" right="40.0" />
-               </VBox.margin>
-            </HBox>
-            <Separator prefWidth="1000.0">
-               <VBox.margin>
-                  <Insets left="20.0" right="20.0" />
-               </VBox.margin>
-            </Separator>
-            <HBox prefHeight="0.0" prefWidth="200.0" spacing="20.0">
-               <children>
-                  <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Voraussichtliche Kosten" />
-                  <TextField fx:id="textCosts" minHeight="-Infinity" prefHeight="30.0" prefWidth="1500.0" />
-                  <ComboBox fx:id="boxCurrency" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="100.0" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
-               </VBox.margin>
-            </HBox>
-            <Separator prefWidth="1000.0">
-               <VBox.margin>
-                  <Insets left="20.0" right="20.0" />
-               </VBox.margin>
-            </Separator>
-            <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Raumanforderungen">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="40.0" right="40.0" top="20.0" />
-               </VBox.margin>
-            </Label>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
-               <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="1000.0" spacing="20.0">
-                     <children>
-                        <CheckBox fx:id="checkEBoard" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Elektrische Tafel" />
-                        <CheckBox fx:id="checkMusics" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Musikalische Ausstatung" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="1000.0" spacing="20.0">
-                     <children>
-                        <CheckBox fx:id="checkSports" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Sportliche Ausstatung" />
-                        <CheckBox fx:id="checkHardware" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Hardwareequipment" />
-                     </children>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="20.0" left="40.0" right="40.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <VBox.margin>
-                  <Insets bottom="20.0" left="40.0" right="40.0" />
-               </VBox.margin>
-               <children>
-                  <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Finaler Raum: " />
-                  <Label fx:id="labelRoom" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" style="-fx-font-size: 15;" />
-                  <Button fx:id="btnRoomOpen" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Raum öffnen">
-                     <HBox.margin>
-                        <Insets right="40.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="btnRoomSelect" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Raum auswählen" />
-               </children>
-            </HBox>
-            <Separator prefWidth="200.0">
-               <VBox.margin>
-                  <Insets left="20.0" right="20.0" />
-               </VBox.margin>
-            </Separator>
-            <HBox prefHeight="1000.0" prefWidth="200.0" spacing="40.0">
-               <children>
-                  <VBox alignment="CENTER" prefHeight="0.0" prefWidth="1000.0">
-                     <children>
-                        <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Projektleitung (Schüler)">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Label>
-                        <ListView fx:id="listLeaders" prefHeight="1000.0" prefWidth="1000.0">
-                           <VBox.margin>
-                              <Insets bottom="20.0" />
-                           </VBox.margin></ListView>
-                        <Button fx:id="btnLeaderAdd" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Leiter hinzufügen">
-                           <VBox.margin>
-                              <Insets bottom="20.0" />
-                           </VBox.margin></Button>
-                        <Button fx:id="btnLeaderRemove" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Auswahl entfernen">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin></Button>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="0.0" prefWidth="1000.0">
-                     <children>
-                        <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Beaufsichtigung (Lehrer/Eltern)">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Label>
-                        <ListView fx:id="listGuides" prefHeight="1000.0" prefWidth="1000.0">
-                           <VBox.margin>
-                              <Insets bottom="20.0" />
-                           </VBox.margin></ListView>
-                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0">
-                           <children>
-                              <Button fx:id="btnTeacherAdd" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Lehrer hinzufügen" />
-                              <Button fx:id="btnHelperAdd" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Eltern hinzufügen" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="20.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <Button fx:id="btnGuideRemove" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Auswahl entfernen" />
-                     </children>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="40.0" left="40.0" right="40.0" top="20.0" />
-               </VBox.margin>
-            </HBox>
-         </children>
-      </VBox>
-   </children>
+	<children>
+		<VBox prefHeight="200.0" prefWidth="1000.0">
+			<children>
+				<TextField fx:id="textName" minHeight="-Infinity" prefHeight="30.0" promptText="Projektname">
+					<VBox.margin>
+						<Insets bottom="20.0" left="40.0" right="40.0" top="40.0" />
+					</VBox.margin>
+				</TextField>
+				<Separator prefWidth="200.0">
+					<VBox.margin>
+						<Insets left="20.0" right="20.0" />
+					</VBox.margin>
+				</Separator>
+				<TextArea fx:id="textDescription" prefHeight="1000.0" prefWidth="1000.0" promptText="Beschreibung">
+					<VBox.margin>
+						<Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+					</VBox.margin>
+				</TextArea>
+				<TextArea fx:id="textNotes" prefHeight="1000.0" prefWidth="1000.0" promptText="Notitzen">
+					<VBox.margin>
+						<Insets bottom="20.0" left="40.0" right="40.0" />
+					</VBox.margin>
+				</TextArea>
+				<Separator prefWidth="200.0">
+					<VBox.margin>
+						<Insets left="20.0" right="20.0" />
+					</VBox.margin>
+				</Separator>
+				<ListView fx:id="listStudents" prefHeight="1300.0" prefWidth="1000.0">
+					<VBox.margin>
+						<Insets bottom="40.0" left="40.0" right="40.0" top="20.0" />
+					</VBox.margin>
+				</ListView>
+			</children>
+		</VBox>
+		<VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0">
+			<children>
+				<HBox prefHeight="0.0" prefWidth="200.0" spacing="40.0">
+					<children>
+						<VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
+							<children>
+								<Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Projekt-Typ">
+									<VBox.margin>
+										<Insets />
+									</VBox.margin>
+								</Label>
+								<ComboBox fx:id="boxType" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
+							</children>
+						</VBox>
+						<VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
+							<children>
+								<Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Kategorie" />
+								<ComboBox fx:id="boxCategory" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
+							</children>
+						</VBox>
+					</children>
+					<VBox.margin>
+						<Insets bottom="20.0" left="40.0" right="40.0" top="40.0" />
+					</VBox.margin>
+				</HBox>
+				<Separator prefWidth="200.0">
+					<VBox.margin>
+						<Insets left="20.0" right="20.0" />
+					</VBox.margin>
+				</Separator>
+				<HBox prefHeight="0.0" prefWidth="200.0" spacing="40.0">
+					<children>
+						<VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
+							<children>
+								<Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Mindest Klassenstufe">
+									<VBox.margin>
+										<Insets />
+									</VBox.margin>
+								</Label>
+								<ComboBox fx:id="boxMinLevel" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
+							</children>
+						</VBox>
+						<VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
+							<children>
+								<Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Maximale Klassenstufe" />
+								<ComboBox fx:id="boxMaxLevel" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
+							</children>
+						</VBox>
+					</children>
+					<VBox.margin>
+						<Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+					</VBox.margin>
+				</HBox>
+				<HBox prefHeight="0.0" prefWidth="200.0" spacing="40.0">
+					<children>
+						<VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
+							<children>
+								<Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Minimale Teilnehmerzahl">
+									<VBox.margin>
+										<Insets />
+									</VBox.margin>
+								</Label>
+								<TextField fx:id="textMinStudents" minHeight="-Infinity" prefHeight="30.0" />
+							</children>
+							<HBox.margin>
+								<Insets />
+							</HBox.margin>
+						</VBox>
+						<VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
+							<children>
+								<Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Maximale Teilnehmerzahl" />
+								<TextField fx:id="textMaxStudents" minHeight="-Infinity" prefHeight="30.0" />
+							</children>
+						</VBox>
+					</children>
+					<VBox.margin>
+						<Insets bottom="20.0" left="40.0" right="40.0" />
+					</VBox.margin>
+				</HBox>
+				<Separator prefWidth="1000.0">
+					<VBox.margin>
+						<Insets left="20.0" right="20.0" />
+					</VBox.margin>
+				</Separator>
+				<HBox prefHeight="0.0" prefWidth="200.0" spacing="20.0">
+					<children>
+						<Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Voraussichtliche Kosten" />
+						<TextField fx:id="textCosts" minHeight="-Infinity" prefHeight="30.0" prefWidth="1500.0" />
+						<ComboBox fx:id="boxCurrency" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="100.0" />
+					</children>
+					<VBox.margin>
+						<Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+					</VBox.margin>
+				</HBox>
+				<Separator prefWidth="1000.0">
+					<VBox.margin>
+						<Insets left="20.0" right="20.0" />
+					</VBox.margin>
+				</Separator>
+				<Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Raumanforderungen">
+					<VBox.margin>
+						<Insets bottom="10.0" left="40.0" right="40.0" top="20.0" />
+					</VBox.margin>
+				</Label>
+				<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+					<children>
+						<VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="1000.0" spacing="20.0">
+							<children>
+								<CheckBox fx:id="checkEBoard" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Elektrische Tafel" />
+								<CheckBox fx:id="checkMusics" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Musikalische Ausstatung" />
+							</children>
+						</VBox>
+						<VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="1000.0" spacing="20.0">
+							<children>
+								<CheckBox fx:id="checkSports" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Sportliche Ausstatung" />
+								<CheckBox fx:id="checkHardware" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Hardwareequipment" />
+							</children>
+						</VBox>
+					</children>
+					<VBox.margin>
+						<Insets bottom="20.0" left="40.0" right="40.0" />
+					</VBox.margin>
+				</HBox>
+				<HBox prefHeight="100.0" prefWidth="200.0">
+					<VBox.margin>
+						<Insets bottom="20.0" left="40.0" right="40.0" />
+					</VBox.margin>
+					<children>
+						<Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Finaler Raum: " />
+						<Label fx:id="labelRoom" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" style="-fx-font-size: 15;" />
+						<Button fx:id="btnRoomOpen" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Raum öffnen">
+							<HBox.margin>
+								<Insets right="40.0" />
+							</HBox.margin>
+						</Button>
+						<Button fx:id="btnRoomSelect" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Raum auswählen" />
+					</children>
+				</HBox>
+				<Separator prefWidth="200.0">
+					<VBox.margin>
+						<Insets left="20.0" right="20.0" />
+					</VBox.margin>
+				</Separator>
+				<HBox prefHeight="1000.0" prefWidth="200.0" spacing="40.0">
+					<children>
+						<VBox alignment="CENTER" prefHeight="0.0" prefWidth="1000.0">
+							<children>
+								<Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Projektleitung (Schüler)">
+									<VBox.margin>
+										<Insets bottom="10.0" />
+									</VBox.margin>
+								</Label>
+								<ListView fx:id="listLeaders" prefHeight="1000.0" prefWidth="1000.0">
+									<VBox.margin>
+										<Insets bottom="20.0" />
+									</VBox.margin>
+								</ListView>
+								<Button fx:id="btnLeaderAdd" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Leiter hinzufügen">
+									<VBox.margin>
+										<Insets bottom="20.0" />
+									</VBox.margin>
+								</Button>
+								<Button fx:id="btnLeaderRemove" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Auswahl entfernen">
+									<VBox.margin>
+										<Insets />
+									</VBox.margin>
+								</Button>
+							</children>
+						</VBox>
+						<VBox alignment="CENTER" prefHeight="0.0" prefWidth="1000.0">
+							<children>
+								<Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Beaufsichtigung (Lehrer/Eltern)">
+									<VBox.margin>
+										<Insets bottom="10.0" />
+									</VBox.margin>
+								</Label>
+								<ListView fx:id="listGuides" prefHeight="1000.0" prefWidth="1000.0">
+									<VBox.margin>
+										<Insets bottom="20.0" />
+									</VBox.margin>
+								</ListView>
+								<HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+									<children>
+										<Button fx:id="btnTeacherAdd" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Lehrer hinzufügen" />
+										<Button fx:id="btnHelperAdd" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Eltern hinzufügen" />
+									</children>
+									<VBox.margin>
+										<Insets bottom="20.0" />
+									</VBox.margin>
+								</HBox>
+								<Button fx:id="btnGuideRemove" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Auswahl entfernen" />
+							</children>
+						</VBox>
+					</children>
+					<VBox.margin>
+						<Insets bottom="40.0" left="40.0" right="40.0" top="20.0" />
+					</VBox.margin>
+				</HBox>
+			</children>
+		</VBox>
+	</children>
 </HBox>

@@ -1,5 +1,6 @@
 package de.rincewind.gui.controller.editors;
 
+import de.rincewind.api.Project;
 import de.rincewind.api.Teacher;
 import de.rincewind.api.util.ProjectSet;
 import de.rincewind.api.util.ProjectType;
@@ -60,15 +61,15 @@ public class ControllerTeacherEditor extends ControllerEditor {
 		// === Building === //
 		// === Inserting === //
 		
-		for (ProjectType type : this.projectSet.asMap().keySet()) {
-			if (type == ProjectType.EARLY) {
-				this.labelEarly.setText(this.projectSet.getProject(type).toString());
+		for (Project project : this.projectSet.projects()) {
+			if (project.getValue(Project.TYPE) == ProjectType.EARLY) {
+				this.labelEarly.setText(project.toString());
 				this.btnEarly.setDisable(false);
-			} else if (type == ProjectType.LATE) {
-				this.labelLate.setText(this.projectSet.getProject(type).toString());
+			} else if (project.getValue(Project.TYPE) == ProjectType.LATE) {
+				this.labelLate.setText(project.toString());
 				this.btnLate.setDisable(false);
-			} else if (type == ProjectType.FULL) {
-				this.labelFull.setText(this.projectSet.getProject(type).toString());
+			} else if (project.getValue(Project.TYPE) == ProjectType.FULL) {
+				this.labelFull.setText(project.toString());
 				this.btnFull.setDisable(false);
 			} 
 		}
@@ -105,8 +106,6 @@ public class ControllerTeacherEditor extends ControllerEditor {
 		}, (exception) -> {
 			// TODO
 		});
-		
-		System.out.println("SAVE");
 	}
 	
 	@Override

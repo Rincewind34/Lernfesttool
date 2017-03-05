@@ -1,13 +1,14 @@
 package de.rincewind.gui.windows;
 
+import de.rincewind.api.Student;
+import de.rincewind.gui.panes.PaneStudent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import de.rincewind.gui.panes.PaneStudent;
 
 public class WindowStudent extends Window<BorderPane> {
 
-	public WindowStudent() {
-		super(new PaneStudent(), "Lernfest - Projekt Management");
+	public WindowStudent(Student student) {
+		super(new PaneStudent(student), "Lernfest");
 	}
 
 	@Override

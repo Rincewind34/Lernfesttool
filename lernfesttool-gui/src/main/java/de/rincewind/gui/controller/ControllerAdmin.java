@@ -9,7 +9,7 @@ import de.rincewind.api.SchoolClass;
 import de.rincewind.api.Student;
 import de.rincewind.api.Teacher;
 import de.rincewind.api.abstracts.Dataset;
-import de.rincewind.api.manager.DatasetManager;
+import de.rincewind.api.abstracts.DatasetManager;
 import de.rincewind.gui.controller.abstracts.Controller;
 import de.rincewind.gui.dialogs.DialogConfirmClose;
 import de.rincewind.gui.main.GUIHandler;
@@ -73,6 +73,9 @@ public class ControllerAdmin implements Controller, TabHandler {
 	private MenuItem menuSave;
 	
 	@FXML
+	private MenuItem menuDelete;
+	
+	@FXML
 	private MenuItem menuLogout;
 	
 	@FXML
@@ -122,7 +125,7 @@ public class ControllerAdmin implements Controller, TabHandler {
 						error.setHeaderText("Der Datensatz konnte aus unbekannten Gründen nicht gespeichert werden!");
 						error.show();
 						
-						closeEvent.consume(); // TODO create FeatureTast with check if the database save was successful
+						closeEvent.consume(); // TODO create FeatureTask with check if the database save was successful
 					}
 				}
 			}
@@ -136,6 +139,7 @@ public class ControllerAdmin implements Controller, TabHandler {
 	public void init() {
 		this.menuPrint.setDisable(true);
 		this.menuSave.setDisable(true);
+		this.menuDelete.setDisable(true);
 		
 		this.menuCreateProject.setOnAction((event) -> {
 			this.createDataset(Project.getManager());
@@ -203,6 +207,11 @@ public class ControllerAdmin implements Controller, TabHandler {
 			this.getCurrentTab().print();
 		});
 		
+		this.menuDelete.setOnAction((event) -> {
+			this.getCurrentTab().delete();
+			this.paneTabs.getTabs().remove(this.paneTabs.getSelectionModel().getSelectedIndex());
+		});
+		
 		this.menuLogout.setOnAction((event) -> {
 			GUIHandler.session().logout();
 		});
@@ -215,11 +224,13 @@ public class ControllerAdmin implements Controller, TabHandler {
 			if (newValue == null) {
 				this.menuPrint.setDisable(true);
 				this.menuSave.setDisable(true);
+				this.menuDelete.setDisable(true);
 			} else {
 				AdminTab adminTab = (AdminTab) newValue.getUserData();
 				
 				this.menuPrint.setDisable(!adminTab.isPrintable());
 				this.menuSave.setDisable(!adminTab.isSaveable());
+				this.menuDelete.setDisable(!adminTab.isDeleteable());
 			}
 		});
 	}

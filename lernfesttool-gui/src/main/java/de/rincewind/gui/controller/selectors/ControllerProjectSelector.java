@@ -1,11 +1,9 @@
 package de.rincewind.gui.controller.selectors;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.rincewind.api.Project;
-import de.rincewind.api.abstracts.Dataset;
 import de.rincewind.api.util.ProjectType;
 import de.rincewind.gui.controller.abstracts.ControllerSelector;
 import de.rincewind.gui.util.Cell;
@@ -46,14 +44,14 @@ public class ControllerProjectSelector extends ControllerSelector<Project> {
 			this.boxProjectType.getItems().add(new Cell<>(type.getName(), type));
 		}
 		
-		List<Cell<Project>> elements = new ArrayList<>();
-		
-		for (Dataset dataset : Project.getManager().initAllDatasets().sync()) {
-			dataset.fetchAll().sync();
-			elements.add(dataset.asCell());
-		}
-		
-		Collections.sort(elements);
+		this.boxProjectType.getSelectionModel().select(0);
+	}
+	
+	@Override
+	public void setupList(List<Project> datasets) {
+		List<Cell<Project>> elements = datasets.stream().map((project) -> {
+			return project.asCell(Project.class);
+		}).sorted().collect(Collectors.toList());
 		
 		this.filler = new ListFiller<>(this.listProjects, elements);
 		this.filler.addChecker(new SearchCheck<>(this.textSearch));

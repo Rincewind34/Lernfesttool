@@ -5,12 +5,15 @@ import java.util.List;
 
 import de.rincewind.api.SchoolClass;
 import de.rincewind.api.abstracts.DatasetFieldAccessor;
+import de.rincewind.api.abstracts.DatasetManager;
+import de.rincewind.gui.controller.selectors.ControllerClassSelector;
 import de.rincewind.gui.panes.abstarcts.FXMLPane;
-import de.rincewind.gui.panes.abstarcts.PaneSelector;
 import de.rincewind.gui.panes.editors.PaneClassEditor;
-import de.rincewind.gui.panes.selectors.PaneClassSelector;
+import de.rincewind.gui.panes.selectors.PaneSelector;
 import de.rincewind.gui.util.TabHandler;
+import de.rincewind.sql.SQLRequest;
 import de.rincewind.sql.tables.entities.TableSchoolClasses;
+import javafx.scene.layout.VBox;
 
 public class SchoolClassManager extends DatasetManager {
 	
@@ -44,8 +47,8 @@ public class SchoolClassManager extends DatasetManager {
 	}
 	
 	@Override
-	public PaneSelector<?> createSelectorPane() {
-		return FXMLPane.setup(new PaneClassSelector());
+	public PaneSelector<VBox, SchoolClass> createSelectorPane() {
+		return FXMLPane.setup(new PaneSelector<>("classselector.fxml", Arrays.asList(), new ControllerClassSelector(), this, SchoolClass.class));
 	}
 	
 	@Override
@@ -56,6 +59,12 @@ public class SchoolClassManager extends DatasetManager {
 	@Override
 	public List<DatasetFieldAccessor<?>> fieldAccessors() {
 		return Arrays.asList(SchoolClass.CLASS_DATA, SchoolClass.CLASS_LEVEL, SchoolClass.ROOM, SchoolClass.TEACHER);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public SQLRequest<List<SchoolClass>> getAllDatasets() {
+		return this.getAllDatasets(SchoolClass.class);
 	}
 	
 }

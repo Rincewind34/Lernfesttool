@@ -1,12 +1,16 @@
 package de.rincewind.api;
 
+import java.awt.Graphics;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.rincewind.api.abstracts.Dataset;
 import de.rincewind.api.abstracts.DatasetField;
 import de.rincewind.api.abstracts.DatasetFieldAccessor;
-import de.rincewind.api.manager.DatasetManager;
+import de.rincewind.api.abstracts.DatasetManager;
 import de.rincewind.api.manager.ProjectManager;
 import de.rincewind.api.manager.StudentManager;
 import de.rincewind.api.util.GuideType;
@@ -15,9 +19,8 @@ import de.rincewind.api.util.ProjectType;
 import de.rincewind.api.util.SaveResult;
 import de.rincewind.sql.SQLRequest;
 import de.rincewind.sql.tables.entities.TableProjects;
-import de.rincewind.sql.tables.relations.TableProjectAttandence;
+import de.rincewind.sql.tables.relations.TableProjectAttandences;
 import de.rincewind.sql.tables.relations.TableProjectHelping;
-import de.rincewind.sql.tables.relations.TableProjectLeading;
 
 public class Project extends Dataset {
 	
@@ -67,8 +70,12 @@ public class Project extends Dataset {
 	}
 	
 	@Override
-	public void print() {
-		// TODO Auto-generated method stub
+	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+		if (pageIndex != 0) {
+			return Printable.NO_SUCH_PAGE;
+		}
+		
+		return Printable.PAGE_EXISTS;
 	}
 	
 	@Override
@@ -168,7 +175,7 @@ public class Project extends Dataset {
 	
 	public SQLRequest<List<Student>> fetchAttendences() {
 		return () -> {
-			List<Integer> studentIds = TableProjectAttandence.instance().getStudents(this.getId()).sync();
+			List<Integer> studentIds = TableProjectAttandences.instance().getStudents(this.getId(), false).sync();
 			List<Student> students = new ArrayList<>();
 			
 			for (int studentId : studentIds) {
@@ -183,7 +190,7 @@ public class Project extends Dataset {
 	
 	public SQLRequest<List<Student>> fetchLeaders() {
 		return () -> {
-			List<Integer> studentIds = TableProjectLeading.instance().getStudents(this.getId()).sync();
+			List<Integer> studentIds = TableProjectAttandences.instance().getStudents(this.getId(), true).sync();
 			List<Student> students = new ArrayList<>();
 			
 			for (int studentId : studentIds) {

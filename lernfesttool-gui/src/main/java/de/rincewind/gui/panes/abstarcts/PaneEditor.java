@@ -1,5 +1,7 @@
 package de.rincewind.gui.panes.abstarcts;
 
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.util.List;
 
 import javafx.scene.layout.Pane;
@@ -16,12 +18,32 @@ public abstract class PaneEditor<T extends Pane> extends FXMLPane<T> implements 
 	
 	@Override
 	public void print() {
-		this.getEditingObject().print();
+		PrinterJob job = PrinterJob.getPrinterJob();
+		job.setJobName("Lernfest");
+		job.setPrintable(this.getEditingObject());
+		
+		try {
+			job.print();
+		} catch (PrinterException exception) {
+			exception.printStackTrace();
+		}
 	}
 	
 	@Override
 	public boolean save() {
 		((ControllerEditor) this.getController()).saveStages();
+		((ControllerEditor) this.getController()).getSaveHandler().reset();
+		return true;
+	}
+	
+	@Override
+	public boolean delete() {
+		this.getEditingObject().delete().async((nullObject) -> {
+			
+		}, (exception) -> {
+			
+		});
+		
 		return true;
 	}
 
@@ -37,6 +59,11 @@ public abstract class PaneEditor<T extends Pane> extends FXMLPane<T> implements 
 	
 	@Override
 	public boolean isPrintable() {
+		return true;
+	}
+	
+	@Override
+	public boolean isDeleteable() {
 		return true;
 	}
 	

@@ -109,13 +109,15 @@ public class ControllerClassEditor extends ControllerEditor {
 
 		this.fillerStudents = new ListFiller<Cell<Student>>(this.listStudents, students);
 		this.fillerStudents.addChecker(new SearchCheck<>(this.textSearchStudents));
-		this.fillerStudents.refresh();
-
-		// TODO add to #getSaveHandler()
-
+		
 		// === Building === //
 		// === Inserting === //
-
+		
+		this.fillerStudents.refresh();
+		
+		this.updateRoomDisplay();
+		this.updateTeacherDisplay();
+		
 		// === Inserting === //
 		// === Listening === //
 

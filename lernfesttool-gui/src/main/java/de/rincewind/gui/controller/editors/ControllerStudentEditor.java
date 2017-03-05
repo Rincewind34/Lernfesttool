@@ -186,7 +186,7 @@ public class ControllerStudentEditor extends ControllerEditor {
 			Optional<Dataset> result = Project.getManager().dialogSelector(ProjectType.EARLY).showAndWait();
 			
 			if (result.isPresent()) {
-				this.projectSet.setProject(ProjectType.EARLY, (Project) result.get());
+				this.projectSet.setProject((Project) result.get());
 				this.projectSet.setLeading(ProjectType.EARLY, false);
 				this.updateProjectDisplay(ProjectType.EARLY);
 				this.getSaveHandler().valueChanged();
@@ -197,7 +197,7 @@ public class ControllerStudentEditor extends ControllerEditor {
 			Optional<Dataset> result = Project.getManager().dialogSelector(ProjectType.LATE).showAndWait();
 			
 			if (result.isPresent()) {
-				this.projectSet.setProject(ProjectType.LATE, (Project) result.get());
+				this.projectSet.setProject((Project) result.get());
 				this.projectSet.setLeading(ProjectType.LATE, false);
 				this.updateProjectDisplay(ProjectType.LATE);
 				this.getSaveHandler().valueChanged();
@@ -208,7 +208,7 @@ public class ControllerStudentEditor extends ControllerEditor {
 			Optional<Dataset> result = Project.getManager().dialogSelector(ProjectType.FULL).showAndWait();
 			
 			if (result.isPresent()) {
-				this.projectSet.setProject(ProjectType.FULL, (Project) result.get());
+				this.projectSet.setProject((Project) result.get());
 				this.projectSet.setLeading(ProjectType.FULL, false);
 				this.updateProjectDisplay(ProjectType.FULL);
 				this.getSaveHandler().valueChanged();
@@ -370,7 +370,7 @@ public class ControllerStudentEditor extends ControllerEditor {
 				this.checkEarlyProject.setSelected(false);
 				this.labelEarlyProject.setText("KEINES");
 			}
-		} else if (type == ProjectType.FULL) {
+		} else if (type == ProjectType.LATE) {
 			this.btnProjectLateOpen.setDisable(!this.projectSet.isSet(ProjectType.LATE));
 			this.btnProjectLateRemove.setDisable(!this.projectSet.isSet(ProjectType.LATE));
 			this.checkLateProject.setDisable(!this.projectSet.isSet(ProjectType.LATE));

@@ -8,11 +8,15 @@ public interface AdminTab {
 	
 	public abstract boolean save();
 	
+	public abstract boolean delete();
+	
 	public abstract boolean hasValueChanged();
 	
 	public abstract boolean isSaveable();
 	
 	public abstract boolean isPrintable();
+	
+	public abstract boolean isDeleteable();
 	
 	public abstract String getName();
 	

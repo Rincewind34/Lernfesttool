@@ -1,18 +1,18 @@
 package de.rincewind.api.abstracts;
 
+import java.awt.print.Printable;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import de.rincewind.api.manager.DatasetManager;
 import de.rincewind.api.util.SaveResult;
 import de.rincewind.gui.util.Cell;
 import de.rincewind.sql.SQLRequest;
 import de.rincewind.sql.abstracts.EntityTable.FieldMap;
 
-public abstract class Dataset {
+public abstract class Dataset implements Printable {
 	
 	public static final Comparator<Dataset> COMPERATOR_ID = (dataset1, dataset2) -> {
 		return Integer.compare(dataset1.datasetId, dataset2.datasetId);
@@ -62,8 +62,6 @@ public abstract class Dataset {
 		}
 	}
 	
-	public abstract void print();
-	
 	public abstract DatasetManager getMatchingManager();
 	
 	public abstract SQLRequest<SaveResult> save();
@@ -84,6 +82,13 @@ public abstract class Dataset {
 		
 		DatasetField<T> field = (DatasetField<T>) this.fields.get(accessor);
 		field.setValue(value);
+	}
+	
+	public void insertValues(FieldMap map) {
+		for (Entry<String, Object> entry : map) {
+			DatasetField<?> field = this.fields.get(this.getMatchingManager().getFieldAccessor(entry.getKey()));
+			this.setSQLValue(field, entry.getValue());
+		}
 	}
 	
 	public boolean containsField(DatasetFieldAccessor<?> accessor) {
@@ -141,12 +146,7 @@ public abstract class Dataset {
 		
 		return () -> {
 			FieldMap map = this.getMatchingManager().getTable().getValues(this.datasetId, fieldNames).sync();
-			
-			for (Entry<String, Object> entry : map) {
-				DatasetField<?> field = this.fields.get(entry.getKey());
-				this.setSQLValue(field, entry.getValue());
-			}
-			
+			this.insertValues(map);
 			return null;
 		};
 	}
@@ -155,14 +155,13 @@ public abstract class Dataset {
 		return () -> {
 			List<String> fieldNames = DatasetFieldAccessor.fieldNames(this.fields.keySet());
 			FieldMap map = this.getMatchingManager().getTable().getValues(this.datasetId, fieldNames.toArray(new String[fieldNames.size()])).sync();
-			
-			for (Entry<String, Object> entry : map) {
-				DatasetField<?> field = this.fields.get(this.getMatchingManager().getFieldAccessor(entry.getKey()));
-				this.setSQLValue(field, entry.getValue());
-			}
-			
+			this.insertValues(map);
 			return null;
 		};
+	}
+	
+	public SQLRequest<Void> delete() {
+		return this.getMatchingManager().getTable().delete(this.datasetId);
 	}
 	
 	@SuppressWarnings("unchecked")

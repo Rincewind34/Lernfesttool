@@ -7,7 +7,7 @@ import de.rincewind.gui.panes.PaneStudentChoice;
 public class WindowStudentChoice extends Window<GridPane> {
 
 	public WindowStudentChoice() {
-		super(new PaneStudentChoice(), "Lernfest - Wählen");
+		super(new PaneStudentChoice(), "Lernfest");
 	}
 
 	@Override

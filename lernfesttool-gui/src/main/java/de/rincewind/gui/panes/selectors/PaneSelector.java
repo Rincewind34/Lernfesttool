@@ -1,21 +1,48 @@
-package de.rincewind.gui.panes.abstarcts;
+package de.rincewind.gui.panes.selectors;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.rincewind.api.abstracts.Dataset;
+import de.rincewind.api.abstracts.DatasetManager;
 import de.rincewind.gui.controller.abstracts.ControllerSelector;
+import de.rincewind.gui.panes.abstarcts.FXMLPane;
 import de.rincewind.gui.util.Cell;
 import de.rincewind.gui.util.ChangeListener;
+import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 
-public abstract class PaneSelector<T extends Pane> extends FXMLPane<T> {
+public class PaneSelector<T extends Pane, U extends Dataset> extends FXMLPane<T> {
 	
-	private ControllerSelector<?> controller;
+	private DatasetManager manager;
 	
-	public PaneSelector(String layout, List<String> styleSheets, ControllerSelector<?> controller) {
+	private Class<U> datasetCls;
+	
+	private ControllerSelector<U> controller;
+	
+	public PaneSelector(String layout, List<String> styleSheets, ControllerSelector<U> controller, DatasetManager manager, Class<U> datasetCls) {
 		super(layout, styleSheets, controller);
 		
 		this.controller = controller;
+		this.manager = manager;
+		this.datasetCls = datasetCls;
+	}
+	
+	@Override
+	public void init() {
+		super.init();
+		
+		this.manager.getAllDatasets().async((datasets) -> {
+			List<U> casted = datasets.stream().map((dataset) -> {
+				return this.datasetCls.cast(dataset);
+			}).collect(Collectors.toList());
+			
+			Platform.runLater(() -> {
+				this.controller.setupList(casted);
+			});
+		}, (exception) -> {
+			// TODO
+		});
 	}
 
 	public void addSelectListener(ChangeListener<Cell<? extends Dataset>> listener) {

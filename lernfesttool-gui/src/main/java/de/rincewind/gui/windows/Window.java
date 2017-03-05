@@ -25,13 +25,14 @@ public abstract class Window<T extends Pane> {
 	
 	public final void init(Stage stage) {
 		this.pane.init();
-		this.onInit(stage, this.pane.getPane());
 		
 		stage.setScene(new Scene(this.pane.getPane()));
 		stage.setFullScreen(true);
 		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		stage.setFullScreenExitHint(null);
 		stage.setTitle(this.title);
+		
+		this.onInit(stage, this.pane.getPane());
 		
 		stage.show();
 		

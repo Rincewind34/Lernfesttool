@@ -5,29 +5,37 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="rootBox" alignment="TOP_CENTER" prefHeight="271.0" prefWidth="420.0" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ListView fx:id="listProjects" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1000.0" prefWidth="1000.0">
-         <VBox.margin>
-            <Insets left="10.0" right="10.0" top="10.0" />
-         </VBox.margin>
-      </ListView>
-      <HBox fx:id="paneHBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="40.0">
-         <children>
-            <TextField fx:id="textSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" promptText="Suche">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </TextField>
-            <ComboBox fx:id="boxProjectType" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" promptText="Projekt Typ">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </ComboBox>
-         </children>
-         <VBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" />
-         </VBox.margin>
-      </HBox>
-   </children>
+<VBox fx:id="rootBox" alignment="TOP_CENTER" prefHeight="271.0"
+	prefWidth="420.0" spacing="20.0" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<ListView fx:id="listProjects" maxHeight="1.7976931348623157E308"
+			maxWidth="1.7976931348623157E308" prefHeight="1000.0" prefWidth="1000.0">
+			<VBox.margin>
+				<Insets left="10.0" right="10.0" top="10.0" />
+			</VBox.margin>
+		</ListView>
+		<HBox fx:id="paneHBox" alignment="CENTER" maxHeight="1.7976931348623157E308"
+			maxWidth="1.7976931348623157E308" spacing="40.0">
+			<children>
+				<TextField fx:id="textSearch" maxHeight="1.7976931348623157E308"
+					maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="30.0"
+					prefWidth="1000.0" promptText="Suche">
+					<HBox.margin>
+						<Insets />
+					</HBox.margin>
+				</TextField>
+				<ComboBox fx:id="boxProjectType" maxHeight="1.7976931348623157E308"
+					maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="30.0"
+					prefWidth="1000.0" promptText="Projekt Typ">
+					<HBox.margin>
+						<Insets />
+					</HBox.margin>
+				</ComboBox>
+			</children>
+			<VBox.margin>
+				<Insets bottom="10.0" left="10.0" right="10.0" />
+			</VBox.margin>
+		</HBox>
+	</children>
 </VBox>

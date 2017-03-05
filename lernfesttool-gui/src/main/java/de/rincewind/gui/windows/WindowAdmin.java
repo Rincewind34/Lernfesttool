@@ -12,7 +12,7 @@ public class WindowAdmin extends Window<VBox> {
 
 	@Override
 	public void onInit(Stage stage, VBox pane) {
-		
+		stage.setFullScreen(false);
 	}
 
 	@Override

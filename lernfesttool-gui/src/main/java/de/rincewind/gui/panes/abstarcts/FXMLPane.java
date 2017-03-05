@@ -13,7 +13,6 @@ public class FXMLPane<T extends Pane> {
 	public static <U extends FXMLPane<?>> U setup(U pane) {
 		pane.create();
 		pane.init();
-		
 		return pane;
 	}
 	
@@ -46,7 +45,7 @@ public class FXMLPane<T extends Pane> {
 		}
 	}
 	
-	public final void init() {
+	public void init() {
 		this.controller.init();
 	}
 	

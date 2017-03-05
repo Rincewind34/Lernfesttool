@@ -13,9 +13,9 @@ public class Database {
 		return Database.instance;
 	}
 	
-	public static void initialize(ExecutorService threadpool) {
+	public static void initialize(ExecutorService threadpool, String host, int port, String database, String username, String password) {
 		Database.threadpool = threadpool;
-		Database.instance = SQLDatabase.createNewInstance(threadpool, new MySQLConnection("192.168.1.30", 3306, "lernfest_beta", "torben", "torben"));
+		Database.instance = SQLDatabase.createNewInstance(threadpool, new MySQLConnection(host, port, database, username, password));
 	}
 	
 	protected static ExecutorService threadpool() {

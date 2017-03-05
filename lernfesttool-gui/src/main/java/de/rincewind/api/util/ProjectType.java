@@ -36,6 +36,16 @@ public enum ProjectType {
 		return this.adjective;
 	}
 	
+	public ProjectType invert() {
+		if (this == ProjectType.EARLY) {
+			return ProjectType.LATE;
+		} else if (this == ProjectType.LATE) {
+			return ProjectType.EARLY;
+		} else {
+			return ProjectType.FULL;
+		}
+	}
+	
 	
 	public static ProjectType get(byte id) {
 		for (ProjectType type : ProjectType.values()) {

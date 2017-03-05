@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane fx:id="gridStats" alignment="CENTER" gridLinesVisible="true">
+        <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <HBox.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+         </HBox.margin>
+         <children>
+            <Label minHeight="-Infinity" prefHeight="30.0" text="Nicht gewählt" GridPane.columnIndex="1" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="Ohne Projekt" GridPane.columnIndex="5" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="3. Wahl" GridPane.columnIndex="4" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="2. Wahl" GridPane.columnIndex="3" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="1. Wahl" GridPane.columnIndex="2" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="5. Klassen" GridPane.rowIndex="1" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="7. Klassen" GridPane.rowIndex="3" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="6. Klassen" GridPane.rowIndex="2" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="8. Klassen" GridPane.rowIndex="4" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="9. Klassen" GridPane.rowIndex="5" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="Q1 Jahrgang" GridPane.rowIndex="7" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="E Jahrgang" GridPane.rowIndex="6" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="5" GridPane.rowIndex="7" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="Gesammt" GridPane.rowIndex="9" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="5" GridPane.rowIndex="9" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+         </children>
+      </GridPane>
+      <Separator orientation="VERTICAL" prefHeight="200.0">
+         <HBox.margin>
+            <Insets bottom="20.0" top="20.0" />
+         </HBox.margin>
+      </Separator>
+      <VBox alignment="CENTER" maxWidth="750.0" spacing="20.0" HBox.hgrow="ALWAYS">
+         <children>
+            <HBox maxWidth="1.7976931348623157E308" spacing="40.0">
+               <children>
+                  <ComboBox fx:id="boxClassLevels" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="30.0" HBox.hgrow="ALWAYS" />
+                  <ComboBox fx:id="boxCategories" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="30.0" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <ListView fx:id="listStudents" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+            <TextField fx:id="textSearch" minHeight="-Infinity" prefHeight="30.0" promptText="Suche" />
+         </children>
+         <HBox.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+         </HBox.margin>
+      </VBox>
+   </children>
+</HBox>

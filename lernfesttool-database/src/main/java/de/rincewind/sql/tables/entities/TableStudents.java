@@ -2,7 +2,9 @@ package de.rincewind.sql.tables.entities;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.rincewind.sql.Database;
 import de.rincewind.sql.DatabaseConnection;
@@ -54,19 +56,76 @@ public class TableStudents extends EntityTable {
 			return null;
 		};
 	}
-
-	public SQLRequest<List<Integer>> getByClass(int schoolClassId) {
+	
+	public SQLRequest<Map<Integer, FieldMap>> getByClass(int schoolClassId, String... columns) {
 		return () -> {
 			DatabaseConnection connection = this.getDatabase().getConnection();
 
-			PreparedStatement stmt = connection.prepare(this.format("SELECT %key FROM %table WHERE classId = ?"));
+			PreparedStatement stmt = connection.prepare("SELECT studentId, " + this.buildSelection(columns) + " FROM students WHERE classId = ?");
 			DatabaseUtils.setInt(stmt, 1, schoolClassId);
+			SQLResult result = connection.query(stmt);
+
+			Map<Integer, FieldMap> values = new HashMap<>();
+
+			while (result.next()) {
+				values.put(result.current("studentId"), this.fillFieldMap(result, columns));
+			}
+			
+			result.close();
+			return values;
+		};
+	}
+
+	public SQLRequest<List<Integer>> getWithoutProject() {
+		return () -> {
+			DatabaseConnection connection = this.getDatabase().getConnection();
+
+			PreparedStatement stmt = connection.prepare("SELECT students.studentId FROM students LEFT JOIN projectattandences attandences ON "
+					+ "(students.studentId = attandences.studentId) WHERE attandences.projectId IS NULL");
 			SQLResult result = connection.query(stmt);
 
 			List<Integer> values = new ArrayList<>();
 
 			while (result.next()) {
-				values.add(result.current(this.getPrimaryKey()));
+				values.add(result.current("studentId"));
+			}
+
+			result.close();
+			return values;
+		};
+	}
+
+	public SQLRequest<List<Integer>> getWithoutChoose() {
+		return () -> {
+			DatabaseConnection connection = this.getDatabase().getConnection();
+
+			PreparedStatement stmt = connection.prepare("SELECT students.studentId FROM students LEFT JOIN projectchoosing choosing ON "
+					+ "(students.studentId = choosing.studentId) WHERE choosing.projectId IS NULL");
+			SQLResult result = connection.query(stmt);
+
+			List<Integer> values = new ArrayList<>();
+
+			while (result.next()) {
+				values.add(result.current("studentId"));
+			}
+
+			result.close();
+			return values;
+		};
+	}
+
+	public SQLRequest<List<Integer>> getWithProject(int chooseIndex, byte projectType) {
+		return () -> {
+			DatabaseConnection connection = this.getDatabase().getConnection();
+
+			PreparedStatement stmt = connection.prepare(
+					"SELECT students.studentId FROM students, projectchoosing choosing, projectattandence attandence WHERE (students.studentId = choosing.studentId AND choosing.studentId = attandence.studentId) ");
+			SQLResult result = connection.query(stmt);
+
+			List<Integer> values = new ArrayList<>();
+
+			while (result.next()) {
+				values.add(result.current("studentId"));
 			}
 
 			result.close();

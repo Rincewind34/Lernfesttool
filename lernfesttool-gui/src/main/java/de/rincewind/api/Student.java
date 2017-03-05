@@ -1,9 +1,13 @@
 package de.rincewind.api;
 
+import java.awt.Graphics;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterException;
+
 import de.rincewind.api.abstracts.Dataset;
 import de.rincewind.api.abstracts.DatasetField;
 import de.rincewind.api.abstracts.DatasetFieldAccessor;
-import de.rincewind.api.manager.DatasetManager;
+import de.rincewind.api.abstracts.DatasetManager;
 import de.rincewind.api.manager.StudentManager;
 import de.rincewind.api.util.AccessLevel;
 import de.rincewind.api.util.ProjectSet;
@@ -11,6 +15,7 @@ import de.rincewind.api.util.SaveResult;
 import de.rincewind.api.util.StudentState;
 import de.rincewind.sql.SQLRequest;
 import de.rincewind.sql.tables.entities.TableStudents;
+import de.rincewind.sql.tables.relations.TableProjectChoosing;
 
 public class Student extends Dataset {
 	
@@ -31,8 +36,9 @@ public class Student extends Dataset {
 	}
 	
 	@Override
-	public void print() {
+	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
 		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	@Override
@@ -75,7 +81,17 @@ public class Student extends Dataset {
 	@Override
 	public String toString() {
 		if (this.isValuePreset(Student.LASTNAME) && this.isValuePreset(Student.FIRSTNAME)) {
-			return this.getValue(Student.LASTNAME) + ", " + this.getValue(Student.FIRSTNAME);
+			String result = "";
+			
+			if (this.isSchoolClassSelected() && this.isValuePreset(Student.SCHOOL_CLASS)) {
+				SchoolClass schoolClass = this.getValue(Student.SCHOOL_CLASS);
+				
+				if (schoolClass.isValuePreset(SchoolClass.CLASS_LEVEL) && schoolClass.isValuePreset(SchoolClass.CLASS_DATA)) {
+					result = "(" + schoolClass.toString() + ") ";
+				}
+			}
+			
+			return result + this.getValue(Student.LASTNAME) + ", " + this.getValue(Student.FIRSTNAME);
 		} else {
 			return "schüler-" + this.getId();
 		}
@@ -87,6 +103,20 @@ public class Student extends Dataset {
 	
 	public SQLRequest<Void> fetchSchoolClass() {
 		return Dataset.fetchDataset(Student.SCHOOL_CLASS, this);
+	}
+	
+	public SQLRequest<Void> choose(ProjectSet[] sets) {
+		return () -> {
+			TableProjectChoosing.instance().clearStudent(this.getId()).sync();
+			
+			for (int i = 0; i < 3; i++) {
+				for (Project project : sets[i].projects()) {
+					TableProjectChoosing.instance().add(project.getId(), this.getId(), i).sync();
+				}
+			}
+			
+			return null;
+		};
 	}
 	
 	public SQLRequest<ProjectSet> getLeadingProjects() {

@@ -5,12 +5,15 @@ import java.util.List;
 
 import de.rincewind.api.Helper;
 import de.rincewind.api.abstracts.DatasetFieldAccessor;
+import de.rincewind.api.abstracts.DatasetManager;
+import de.rincewind.gui.controller.selectors.ControllerHelperSelector;
 import de.rincewind.gui.panes.abstarcts.FXMLPane;
-import de.rincewind.gui.panes.abstarcts.PaneSelector;
 import de.rincewind.gui.panes.editors.PaneHelperEditor;
-import de.rincewind.gui.panes.selectors.PaneHelperSelector;
+import de.rincewind.gui.panes.selectors.PaneSelector;
 import de.rincewind.gui.util.TabHandler;
+import de.rincewind.sql.SQLRequest;
 import de.rincewind.sql.tables.entities.TableHelpers;
+import javafx.scene.layout.VBox;
 
 public class HelperManager extends DatasetManager {
 	
@@ -44,8 +47,8 @@ public class HelperManager extends DatasetManager {
 	}
 	
 	@Override
-	public PaneSelector<?> createSelectorPane() {
-		return FXMLPane.setup(new PaneHelperSelector());
+	public PaneSelector<VBox, Helper> createSelectorPane() {
+		return FXMLPane.setup(new PaneSelector<>("helperselector.fxml", Arrays.asList(), new ControllerHelperSelector(), this, Helper.class));
 	}
 	
 	@Override
@@ -56,6 +59,12 @@ public class HelperManager extends DatasetManager {
 	@Override
 	public List<DatasetFieldAccessor<?>> fieldAccessors() {
 		return Arrays.asList(Helper.NAME, Helper.STUDENT);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public SQLRequest<List<Helper>> getAllDatasets() {
+		return this.getAllDatasets(Helper.class);
 	}
 	
 }

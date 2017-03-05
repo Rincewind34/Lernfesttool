@@ -1,30 +1,35 @@
 package de.rincewind.gui.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import de.rincewind.api.Project;
+import de.rincewind.api.SchoolClass;
+import de.rincewind.api.Student;
+import de.rincewind.api.util.ProjectSet;
 import de.rincewind.api.util.ProjectType;
+import de.rincewind.api.util.StudentState;
 import de.rincewind.gui.controller.abstracts.Controller;
+import de.rincewind.gui.dialogs.DialogProjectCreator;
+import de.rincewind.gui.main.GUIHandler;
 import de.rincewind.gui.util.Cell;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import de.rincewind.gui.util.filler.CheckBoxCheck;
+import de.rincewind.gui.util.filler.ListFiller;
+import de.rincewind.gui.util.filler.SearchCheck;
+import de.rincewind.gui.util.listeners.DoubleClickListener;
+import de.rincewind.gui.windows.Window;
+import de.rincewind.gui.windows.WindowStudentProjectVisitor;
+import de.rincewind.gui.windows.WindowStudent;
+import de.rincewind.gui.windows.WindowStudentProjectEditor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseButton;
 
 public class ControllerStudent implements Controller {
-
-	@FXML
-	private ListView<Cell<Integer>> listProjects;
 
 	@FXML
 	private CheckBox checkFullProjects;
@@ -42,191 +47,143 @@ public class ControllerStudent implements Controller {
 	private TextField textSearch;
 
 	@FXML
-	private Button btnManage;
+	private Button buttonManage;
 
 	@FXML
-	private Button btnLogout;
+	private Button buttonLogout;
 
 	@FXML
-	private ComboBox<Cell<Integer>> boxProjects;
+	private ComboBox<Cell<Project>> boxProjects;
 
-	private Map<Integer, Object[]> projectsFull;
-	private Map<Integer, Object[]> projectsEarly;
-	private Map<Integer, Object[]> projectsLate;
+	@FXML
+	private ListView<Cell<Project>> listProjects;
 
-	private int classLevel;
+	private ListFiller<Cell<Project>> filler;
+
+	private Student student;
+
+	public ControllerStudent(Student student) {
+		this.student = student;
+	}
 
 	@Override
 	public void init() {
-		// int classId = Tables.students().getData(((StudentSession)
-		// Main.getSession()).getStudentId(), StudentDatas.CLASS).sync();
-		// this.classLevel = Tables.classes().getData(classId,
-		// ClassDatas.CLASS_LEVEL).sync();
+		this.student.fetchAll().sync();
 
-		// this.refreshProjects();
-		this.refillListView();
-
-		this.checkFullProjects.selectedProperty().addListener(new ChangeHandler(this.checkFullProjects));
-		this.checkEarlyProjects.selectedProperty().addListener(new ChangeHandler(this.checkEarlyProjects));
-		this.checkLateProjects.selectedProperty().addListener(new ChangeHandler(this.checkLateProjects));
-		this.checkJoinableProjects.selectedProperty().addListener(new ChangeHandler(this.checkJoinableProjects));
-
-		this.textSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-			this.refillListView();
-		});
-
-		Map<Integer, Object[]> projects = new HashMap<>();
-
-		// for (int pID : Tables.projectleading().getProjects(((StudentSession)
-		// Main.getSession()).getStudentId()).sync()) {
-		// projects.put(pID, Tables.projects().getData(pID, ProjectDatas.NAME,
-		// ProjectDatas.TYPE).sync());
-		// }
-
-		if ((projects.isEmpty() || !projects.values().iterator().next()[1].equals(ProjectType.FULL)) && projects.size() < 2) {
-			this.boxProjects.getItems().add(new Cell<>("<Neues erstellen>", -1));
+		if (this.student.isSchoolClassSelected()) {
+			this.student.fetchSchoolClass().sync();
 		}
 
-		for (Entry<Integer, Object[]> entry : projects.entrySet()) {
-			this.boxProjects.getItems().add(new Cell<>(entry.getValue()[0].toString(), entry.getKey()));
+		List<Project> projects = Project.getManager().getAllDatasets().sync();
+		ProjectSet leadings = this.student.getLeadingProjects().sync();
+
+		// === Building === //
+
+		this.filler = new ListFiller<Cell<Project>>(this.listProjects, projects.stream().map((project) -> {
+			return project.asCell(Project.class);
+		}).sorted().collect(Collectors.toList()));
+
+		this.filler.addChecker(new SearchCheck<>(this.textSearch));
+		this.filler.addChecker(new CheckBoxCheck<>(this.checkFullProjects, (value, cell) -> {
+			return value ? true : cell.getSavedObject().getValue(Project.TYPE) != ProjectType.FULL;
+		}));
+		this.filler.addChecker(new CheckBoxCheck<>(this.checkEarlyProjects, (value, cell) -> {
+			return value ? true : cell.getSavedObject().getValue(Project.TYPE) != ProjectType.EARLY;
+		}));
+		this.filler.addChecker(new CheckBoxCheck<>(this.checkLateProjects, (value, cell) -> {
+			return value ? true : cell.getSavedObject().getValue(Project.TYPE) != ProjectType.LATE;
+		}));
+		this.filler.addChecker(new CheckBoxCheck<>(this.checkJoinableProjects, (value, cell) -> {
+			if (value || !this.student.isSchoolClassSelected()) {
+				return true;
+			}
+
+			int classLevel = this.student.getValue(Student.SCHOOL_CLASS).getValue(SchoolClass.CLASS_LEVEL);
+			return cell.getSavedObject().getValue(Project.MIN_CLASS) <= classLevel && classLevel <= cell.getSavedObject().getValue(Project.MAX_CLASS);
+		}));
+
+		// === Building === //
+		// === Inserting === //
+
+		this.filler.refresh();
+
+		if ((leadings.leadingAmount() == 0 || !leadings.isLeading(ProjectType.FULL)) && this.student.getValue(Student.STATE) == StudentState.ENTER_PROJECTS) {
+			this.boxProjects.getItems().add(new Cell<>("<Neues erstellen>", null));
+		}
+
+		for (Project project : leadings.leadingProjects()) {
+			this.boxProjects.getItems().add(project.asCell());
 		}
 
 		this.boxProjects.getSelectionModel().select(0);
 		this.boxProjects.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			if (oldValue != null && oldValue.equals(newValue)) {
-				return;
-			}
-
 			this.calculateButton();
 		});
 
-		this.listProjects.setOnMouseClicked((event) -> {
-			if (event.getButton() == MouseButton.PRIMARY) {
-				if (event.getClickCount() == 2) {
-					// GUIHandler.session().changeWindow(new
-					// WindowProjectVisitor(this.listProjects.getSelectionModel().getSelectedItem().getSavedObject(),
-					// () -> {
-					// Main.changeWindow(new WindowStudent());
-					// }));
-				}
-			}
+		this.calculateButton();
+
+		// === Inserting === //
+		// === Listening === //
+
+		this.listProjects.setOnMouseClicked(new DoubleClickListener(() -> {
+			WindowStudentProjectVisitor window = new WindowStudentProjectVisitor(this.listProjects.getSelectionModel().getSelectedItem().getSavedObject());
+			window.setOnClose(() -> {
+				GUIHandler.session().changeWindow(new WindowStudent(this.student));
+			});
+
+			GUIHandler.session().changeWindow(window);
+		}));
+
+		this.buttonLogout.setOnAction((event) -> {
+			GUIHandler.session().logout();
 		});
 
-		this.calculateButton();
-	}
+		this.buttonManage.setOnAction((event) -> {
+			Project project = this.boxProjects.getSelectionModel().getSelectedItem().getSavedObject();
+			
+			if (project == null && this.student.getValue(Student.STATE) == StudentState.ENTER_PROJECTS) {
+				ProjectType type = null;
 
-	// @FXML
-	// public void onManage() {
-	// int id =
-	// this.boxProjects.getSelectionModel().getSelectedItem().getSavedObject();
-	//
-	// if (id == -1) {
-	// if (this.boxProjects.getItems().size() == 1) {
-	// Main.changeWindow(new WindowProjectEditor(id, null, () -> {
-	// Main.changeWindow(new WindowStudent());
-	// }));
-	// } else {
-	// Main.changeWindow(new WindowProjectEditor(id,
-	// Tables.projects().getData(this.boxProjects.getItems().get(1).getSavedObject(),
-	// ProjectDatas.TYPE).sync() == ProjectType.EARLY
-	// ? ProjectType.LATE : ProjectType.EARLY,
-	// () -> {
-	// Main.changeWindow(new WindowStudent());
-	// }));
-	// }
-	// } else {
-	// Main.changeWindow(new WindowProjectEditor(id,
-	// Tables.projects().getData(id, ProjectDatas.TYPE).sync(), () -> {
-	// Main.changeWindow(new WindowStudent());
-	// }));
-	// }
-	// }
-	//
-	// @FXML
-	// public void onLogout() {
-	// Main.logout();
-	// }
-	//
-	// private void refreshProjects() {
-	// this.projectsFull = Tables.projects()
-	// .getData(new Equalizer<>(ProjectDatas.TYPE, ProjectType.FULL),
-	// ProjectDatas.NAME, ProjectDatas.MIN_CLASS,
-	// ProjectDatas.MAX_CLASS).sync();
-	// this.projectsEarly = Tables.projects()
-	// .getData(new Equalizer<>(ProjectDatas.TYPE, ProjectType.EARLY),
-	// ProjectDatas.NAME, ProjectDatas.MIN_CLASS,
-	// ProjectDatas.MAX_CLASS).sync();
-	// this.projectsLate = Tables.projects()
-	// .getData(new Equalizer<>(ProjectDatas.TYPE, ProjectType.LATE),
-	// ProjectDatas.NAME, ProjectDatas.MIN_CLASS,
-	// ProjectDatas.MAX_CLASS).sync();
-	// }
+				if (leadings.leadingAmount() == 1) {
+					type = leadings.getFirstLeadingOne().getValue(Project.TYPE).invert();
+				}
 
-	private void refillListView() {
-		this.listProjects.getItems().clear();
+				DialogProjectCreator creator = new DialogProjectCreator(type);
+				Optional<Project> result = creator.showAndWait();
 
-		List<Cell<Integer>> entryList = new ArrayList<>();
-
-		if (this.checkFullProjects.isSelected()) {
-			entryList.addAll(this.elementsFromMap(this.projectsFull, this.classLevel));
-		}
-
-		if (this.checkEarlyProjects.isSelected()) {
-			entryList.addAll(this.elementsFromMap(this.projectsEarly, this.classLevel));
-		}
-
-		if (this.checkLateProjects.isSelected()) {
-			entryList.addAll(this.elementsFromMap(this.projectsLate, this.classLevel));
-		}
-
-		Collections.sort(entryList);
-		this.listProjects.getItems().addAll(entryList);
-	}
-
-	private List<Cell<Integer>> elementsFromMap(Map<Integer, Object[]> map, int classLevel) {
-		List<Cell<Integer>> result = new ArrayList<>();
-
-		for (int id : map.keySet()) {
-			String name = (String) map.get(id)[0];
-			int minCl = (int) map.get(id)[1];
-			int maxCl = (int) map.get(id)[2];
-
-			if (this.checkJoinableProjects.isSelected()) {
-				if (maxCl < classLevel || classLevel < minCl) {
-					continue;
+				if (result.isPresent()) {
+					project = result.get();
 				}
 			}
-
-			if (name.toLowerCase().contains(this.textSearch.getText().toLowerCase())) {
-				result.add(new Cell<>(Project.format(id, name), id));
+			
+			if (project == null) {
+				return;
 			}
-		}
+			
+			Window<?> window;
+			
+			if (this.student.getValue(Student.STATE) == StudentState.ENTER_PROJECTS) {
+				window = new WindowStudentProjectEditor(project, this.student);
+			} else {
+				window = new WindowStudentProjectVisitor(project);
+			}
+			
+			GUIHandler.session().changeWindow(window);
+		});
 
-		return result;
+		// === Listening === //
 	}
 
 	private void calculateButton() {
-		if (this.boxProjects.getSelectionModel().getSelectedItem().getSavedObject() == -1) {
-			this.btnManage.setText("Neues Projekt erstellen");
+		if (this.student.getValue(Student.STATE) == StudentState.ENTER_PROJECTS) {
+			if (this.boxProjects.getSelectionModel().getSelectedItem().getSavedObject() == null) {
+				this.buttonManage.setText("Projekt erstellen");
+			} else {
+				this.buttonManage.setText("Projekt bearbeiten");
+			}
 		} else {
-			this.btnManage.setText("Projekt anpassen");
+			this.buttonManage.setText("Projekt öffnen");
 		}
-	}
-
-	private class ChangeHandler implements ChangeListener<Boolean> {
-
-		private CheckBox handler;
-
-		public ChangeHandler(CheckBox handler) {
-			this.handler = handler;
-		}
-
-		@Override
-		public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-			this.handler.setSelected(newValue);
-			ControllerStudent.this.refillListView();
-		}
-
 	}
 
 }

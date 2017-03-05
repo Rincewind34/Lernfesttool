@@ -19,6 +19,7 @@ public interface SQLRequest<T> {
 			try {
 				action.accept(this.sync());
 			} catch (Exception ex) {
+				ex.printStackTrace();
 				oncatch.accept(ex);
 			}
 		});

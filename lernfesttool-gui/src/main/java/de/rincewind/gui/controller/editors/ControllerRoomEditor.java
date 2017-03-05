@@ -1,10 +1,20 @@
 package de.rincewind.gui.controller.editors;
 
+import java.util.List;
+
+import de.rincewind.api.Project;
 import de.rincewind.api.Room;
+import de.rincewind.api.SchoolClass;
 import de.rincewind.gui.controller.abstracts.ControllerEditor;
+import de.rincewind.gui.util.Cell;
 import de.rincewind.gui.util.TabHandler;
+import de.rincewind.gui.util.listeners.ActionListener;
+import de.rincewind.gui.util.listeners.DoubleClickListener;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 
@@ -31,7 +41,17 @@ public class ControllerRoomEditor extends ControllerEditor {
 	@FXML
 	private Slider sliderSize;
 	
+	@FXML
+	private ListView<Cell<Project>> listProjects;
+	
+	@FXML
+	private Label labelClass;
+	
+	@FXML
+	private Button btnClassOpen;
+	
 	private Room room;
+	private SchoolClass schoolClass;
 	
 	public ControllerRoomEditor(TabHandler handler, int roomId) {
 		super(handler);
@@ -42,6 +62,9 @@ public class ControllerRoomEditor extends ControllerEditor {
 	@Override
 	public void init() {
 		this.room.fetchAll().sync();
+		this.schoolClass = this.room.getOwningClass().sync();
+		
+		List<Project> projects = this.room.getUsingProjects().sync();
 		
 		// === Building === //
 		
@@ -62,10 +85,17 @@ public class ControllerRoomEditor extends ControllerEditor {
 		this.checkSports.setSelected(this.room.getValue(Room.SPORTS));
 		this.checkMusics.setSelected(this.room.getValue(Room.MUSICS));
 		
-		int size = this.room.getValue(Room.SIZE);
+		byte size = this.room.getValue(Room.SIZE);
 		
 		this.textSize.setText(Integer.toString(size));
 		this.sliderSize.setValue(size);
+		
+		this.labelClass.setText(this.schoolClass == null ? "Keine" : this.schoolClass.toString());
+		this.btnClassOpen.setDisable(this.schoolClass == null);
+		
+		for (Project project : projects) {
+			this.listProjects.getItems().add(project.asCell());
+		}
 		
 		// === Inserting === //
 		// === Listening === //
@@ -73,6 +103,12 @@ public class ControllerRoomEditor extends ControllerEditor {
 		this.sliderSize.valueProperty().addListener((observeable, oldValue, newValue) -> {
 			this.textSize.setText(Integer.toString(newValue.intValue()));
 		});
+		
+		this.btnClassOpen.setOnAction(new ActionListener(this, () -> {
+			return this.schoolClass;
+		}));
+		
+		this.listProjects.setOnMouseClicked(new DoubleClickListener(this, this.listProjects));
 		
 		// === Listening === //
 		

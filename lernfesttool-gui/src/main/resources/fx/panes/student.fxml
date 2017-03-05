@@ -7,83 +7,100 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ccc;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<top>
+		<Label text="Projekte" BorderPane.alignment="CENTER">
+			<font>
+				<Font size="27.0" />
+			</font>
+			<BorderPane.margin>
+				<Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+			</BorderPane.margin>
+		</Label>
+	</top>
    <center>
-      <ListView fx:id="listProjects" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #eee;" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets left="200.0" right="200.0" />
+               </VBox.margin>
+            </Separator>
+            <ListView fx:id="listProjects" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </ListView>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets left="200.0" right="200.0" />
+               </VBox.margin>
+            </Separator>
+         </children>
+      </VBox>
    </center>
    <bottom>
-      <BorderPane prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <left>
-            <VBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
-               <children>
-                  <CheckBox fx:id="checkFullProjects" mnemonicParsing="false" selected="true" text="Ganze Projekte anzeigen">
-                     <VBox.margin>
-                        <Insets bottom="15.0" left="50.0" right="20.0" top="20.0" />
-                     </VBox.margin>
-                  </CheckBox>
-                  <CheckBox fx:id="checkEarlyProjects" mnemonicParsing="false" selected="true" text="Frühe Projekte anzeigen">
-                     <VBox.margin>
-                        <Insets bottom="15.0" left="50.0" right="20.0" />
-                     </VBox.margin>
-                  </CheckBox>
-                  <CheckBox fx:id="checkLateProjects" mnemonicParsing="false" selected="true" text="Späte Projekte anzeigen">
-                     <VBox.margin>
-                        <Insets bottom="22.0" left="50.0" right="20.0" />
-                     </VBox.margin>
-                  </CheckBox>
-                  <CheckBox fx:id="checkJoinableProjects" mnemonicParsing="false" text="Nur Projekte für deinen Jahrgang anzeigen">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="50.0" right="20.0" />
-                     </VBox.margin>
-                  </CheckBox>
-               </children>
-            </VBox>
-         </left>
-         <right>
-            <VBox alignment="CENTER" BorderPane.alignment="BOTTOM_RIGHT">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="0.0" prefWidth="540.0">
-                     <children>
-                        <ComboBox fx:id="boxProjects" minHeight="-Infinity" prefHeight="30.0" prefWidth="230.0" promptText="Deine Projekte">
-                           <HBox.margin>
-                              <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
-                           </HBox.margin>
-                        </ComboBox>
-                        <Button fx:id="btnManage" minHeight="-Infinity" mnemonicParsing="false" onAction="#onManage" prefHeight="30.0" prefWidth="230.0" text="{create/edit project}">
-                           <HBox.margin>
-                              <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <Button fx:id="btnLogout" minHeight="-Infinity" mnemonicParsing="false" onAction="#onLogout" prefHeight="30.0" prefWidth="500.0" text="Abmelden">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-            </VBox>
-         </right>
-         <center>
-            <TextField fx:id="textSearch" promptText="Suche" BorderPane.alignment="CENTER">
-               <BorderPane.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </BorderPane.margin>
+      <HBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+				<VBox alignment="CENTER_LEFT" spacing="15.0">
+					<children>
+						<CheckBox fx:id="checkFullProjects" mnemonicParsing="false" selected="true" text="Ganze Projekte anzeigen">
+							<VBox.margin>
+								<Insets />
+							</VBox.margin>
+						</CheckBox>
+						<CheckBox fx:id="checkEarlyProjects" mnemonicParsing="false" selected="true" text="Frühe Projekte anzeigen">
+							<VBox.margin>
+								<Insets />
+							</VBox.margin>
+						</CheckBox>
+						<CheckBox fx:id="checkLateProjects" mnemonicParsing="false" selected="true" text="Späte Projekte anzeigen">
+							<VBox.margin>
+								<Insets />
+							</VBox.margin>
+						</CheckBox>
+						<CheckBox fx:id="checkJoinableProjects" mnemonicParsing="false" selected="true" text="Nur Projekte für deinen Jahrgang anzeigen">
+							<VBox.margin>
+								<Insets top="10.0" />
+							</VBox.margin>
+						</CheckBox>
+					</children>
+				</VBox>
+            <TextField fx:id="textSearch" promptText="Suche" HBox.hgrow="ALWAYS">
                <padding>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </padding>
             </TextField>
-         </center>
-      </BorderPane>
-   </bottom>
-   <top>
-      <Label text="Projekte" BorderPane.alignment="CENTER">
-         <font>
-            <Font size="27.0" />
-         </font>
-         <BorderPane.margin>
+				<VBox alignment="CENTER" prefWidth="310.0" spacing="10.0">
+					<children>
+      						<HBox alignment="CENTER" prefHeight="0.0" prefWidth="540.0" spacing="20.0" VBox.vgrow="NEVER">
+      							<children>
+      								<ComboBox fx:id="boxProjects" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="145.0" promptText="Deine Projekte" HBox.hgrow="ALWAYS">
+      									<HBox.margin>
+      										<Insets />
+      									</HBox.margin>
+      								</ComboBox>
+      								<Button fx:id="buttonManage" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onManage" prefHeight="30.0" prefWidth="145.0" text="Projekt bearbeiten" HBox.hgrow="ALWAYS">
+      									<HBox.margin>
+      										<Insets />
+      									</HBox.margin>
+      								</Button>
+      							</children>
+      						</HBox>
+						<Button fx:id="buttonLogout" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLogout" prefHeight="30.0" prefWidth="310.0" text="Abmelden">
+							<VBox.margin>
+								<Insets />
+							</VBox.margin>
+						</Button>
+					</children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+				</VBox>
+         </children>
+         <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </BorderPane.margin>
-      </Label>
-   </top>
+         </padding>
+      </HBox>
+   </bottom>
 </BorderPane>

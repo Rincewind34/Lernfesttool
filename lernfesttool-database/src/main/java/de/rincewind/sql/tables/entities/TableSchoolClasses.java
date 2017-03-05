@@ -1,12 +1,15 @@
 package de.rincewind.sql.tables.entities;
 
 import java.sql.PreparedStatement;
+import java.util.Map.Entry;
 
 import de.rincewind.sql.Database;
 import de.rincewind.sql.DatabaseConnection;
 import de.rincewind.sql.SQLRequest;
 import de.rincewind.sql.abstracts.EntityTable;
+import de.rincewind.sql.util.CustomMapEntry;
 import de.rincewind.sql.util.DatabaseUtils;
+import de.rincewind.sql.util.SQLResult;
 
 public class TableSchoolClasses extends EntityTable {
 	
@@ -48,4 +51,23 @@ public class TableSchoolClasses extends EntityTable {
 		};
 	}
 	
+	public SQLRequest<Entry<Integer, FieldMap>> getByRoomId(int roomId, String... columns) {
+		return () -> {
+			DatabaseConnection connection = this.getDatabase().getConnection();
+			
+			PreparedStatement stmt = connection.prepare("SELECT classId, " + this.buildSelection(columns) + " FROM schoolClasses WHERE roomId = ?");
+			DatabaseUtils.setInt(stmt, 1, roomId);
+			SQLResult result = connection.query(stmt);
+			
+			Entry<Integer, FieldMap> entry = null;
+			
+			if (result.next()) {
+				entry = new CustomMapEntry<>(result.current("classId", int.class), this.fillFieldMap(result, columns));
+			}
+			
+			result.close();
+			return entry;
+		};
+	}
+
 }

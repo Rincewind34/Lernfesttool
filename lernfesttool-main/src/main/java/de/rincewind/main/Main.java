@@ -22,9 +22,9 @@ import de.rincewind.sql.tables.entities.TableRooms;
 import de.rincewind.sql.tables.entities.TableSchoolClasses;
 import de.rincewind.sql.tables.entities.TableStudents;
 import de.rincewind.sql.tables.entities.TableTeachers;
-import de.rincewind.sql.tables.relations.TableProjectAttandence;
+import de.rincewind.sql.tables.relations.TableProjectAttandences;
+import de.rincewind.sql.tables.relations.TableProjectChoosing;
 import de.rincewind.sql.tables.relations.TableProjectHelping;
-import de.rincewind.sql.tables.relations.TableProjectLeading;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -53,9 +53,14 @@ public class Main extends Application implements GUISession {
 	private Session session;
 
 	public static void main(String[] args) {
+		if (args.length != 5) {
+			System.out.println("Invalid argument length!");
+			return;
+		}
+		
 		Main.threadpool = Executors.newCachedThreadPool();
-
-		Database.initialize(Main.threadpool);
+		
+		Database.initialize(Main.threadpool, args[0], Integer.parseInt(args[1]), args[2], args[3], args[4]);
 		Database.instance().getConnection().open();
 
 		if (Database.instance().getConnection().isOpen()) {
@@ -65,9 +70,9 @@ public class Main extends Application implements GUISession {
 			Database.instance().registerTable(TableSchoolClasses.class);
 			Database.instance().registerTable(TableStudents.class);
 			Database.instance().registerTable(TableTeachers.class);
-			Database.instance().registerTable(TableProjectAttandence.class);
 			Database.instance().registerTable(TableProjectHelping.class);
-			Database.instance().registerTable(TableProjectLeading.class);
+			Database.instance().registerTable(TableProjectAttandences.class);
+			Database.instance().registerTable(TableProjectChoosing.class);
 			Database.instance().setup().sync();
 
 			GUIHandler.initiliaze(new Main());

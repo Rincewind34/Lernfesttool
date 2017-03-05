@@ -108,24 +108,16 @@ public abstract class EntityTable extends AbstractTable {
 		}
 		
 		return () -> {
-			String selection = columns[0];
-			
-			for (int i = 1; i < columns.length; i++) {
-				selection = selection + ", " + columns[i];
-			}
-			
 			DatabaseConnection connection = this.getDatabase().getConnection();
 			
-			PreparedStatement stmt = connection.prepare(this.format("SELECT %s FROM %table WHERE %key = ?", selection));
+			PreparedStatement stmt = connection.prepare(this.format("SELECT %s FROM %table WHERE %key = ?", this.buildSelection(columns)));
 			DatabaseUtils.setInt(stmt, 1, datasetId);
 			SQLResult result = connection.query(stmt);
 			
-			FieldMap values = new FieldMap();
+			FieldMap values = null;
 			
 			if (result.next()) {
-				for (String column : columns) {
-					values.set(column, result.current(column));
-				}
+				values = this.fillFieldMap(result, columns);
 			}
 			
 			result.close();
@@ -139,27 +131,15 @@ public abstract class EntityTable extends AbstractTable {
 		}
 		
 		return () -> {
-			String selection = columns[0];
-			
-			for (int i = 1; i < columns.length; i++) {
-				selection = selection + ", " + columns[i];
-			}
-			
 			DatabaseConnection connection = this.getDatabase().getConnection();
 			
-			PreparedStatement stmt = connection.prepare(this.format(String.format("SELECT %key, %s FROM %table", selection)));
+			PreparedStatement stmt = connection.prepare(String.format(this.format("SELECT %key, %s FROM %table", this.buildSelection(columns))));
 			SQLResult result = connection.query(stmt);
 			
 			Map<Integer, FieldMap> values = new HashMap<>();
 			
 			while (result.next()) {
-				FieldMap fields = new FieldMap();
-				
-				for (String column : columns) {
-					fields.set(column, result.current(column));
-				}
-				
-				values.put(result.current(this.primaryKey), fields);
+				values.put(result.current(this.primaryKey), this.fillFieldMap(result, columns));
 			}
 			
 			result.close();
@@ -184,6 +164,26 @@ public abstract class EntityTable extends AbstractTable {
 	
 	protected String format(String sql, Object... args) {
 		return String.format(sql.replace("%table", this.getName()).replace("%key", this.primaryKey), args);
+	}
+	
+	protected String buildSelection(String... columns) {
+		String selection = columns[0];
+		
+		for (int i = 1; i < columns.length; i++) {
+			selection = selection + ", " + columns[i];
+		}
+		
+		return selection;
+	}
+	
+	protected FieldMap fillFieldMap(SQLResult result, String... columns) {
+		FieldMap map = new FieldMap();
+		
+		for (String column : columns) {
+			map.set(column, result.current(column));
+		}
+		
+		return map;
 	}
 	
 	public static class FieldMap implements Iterable<Entry<String, Object>> {

@@ -26,12 +26,22 @@ public class PaneStatsProject extends FXMLPane<HBox> implements AdminTab {
 	}
 	
 	@Override
+	public boolean delete() {
+		return false;
+	}
+	
+	@Override
 	public boolean hasValueChanged() {
 		return false;
 	}
 	
 	@Override
 	public boolean isSaveable() {
+		return false;
+	}
+	
+	@Override
+	public boolean isDeleteable() {
 		return false;
 	}
 

@@ -1,7 +1,11 @@
 package de.rincewind.api;
 
+import java.awt.Graphics;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterException;
+
 import de.rincewind.api.abstracts.DatasetFieldAccessor;
-import de.rincewind.api.manager.DatasetManager;
+import de.rincewind.api.abstracts.DatasetManager;
 import de.rincewind.api.manager.TeacherManager;
 import de.rincewind.api.util.GuideType;
 import de.rincewind.api.util.SaveResult;
@@ -23,8 +27,9 @@ public class Teacher extends Guide {
 	}
 	
 	@Override
-	public void print() {
+	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
 		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	@Override

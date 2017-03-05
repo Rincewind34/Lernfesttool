@@ -21,10 +21,10 @@ public class StudentSession implements Session {
 		if (this.student.getValue(Student.ACCESS_LEVEL) != AccessLevel.USER) {
 			GUIHandler.session().changeWindow(new WindowAdmin());
 		} else {
-			StudentState state = student.getValue(Student.STATE);
+			StudentState state = this.student.getValue(Student.STATE);
 			
 			if (state == StudentState.ENTER_PROJECTS) {
-				GUIHandler.session().changeWindow(new WindowStudent());
+				GUIHandler.session().changeWindow(new WindowStudent(this.student));
 			} else if (state == StudentState.VOTE_PROJECTS) {
 				GUIHandler.session().changeWindow(new WindowStudentChoice());
 			}

@@ -23,7 +23,7 @@ public class TableProjectHelping extends AbstractTable {
 	
 	@Override
 	protected void executeCreateQuery(DatabaseConnection connection) {
-		connection.update("CREATE TABLE IF NOT EXISTS projecthelping (projectId INT, guideId INT, guideType TINYINT)");
+		connection.update("CREATE TABLE IF NOT EXISTS projecthelping (id INT AUTO_INCREMENT, projectId INT, guideId INT, guideType TINYINT, PRIMARY KEY(id))");
 	}
 	
 	public SQLRequest<Void> add(int projectId, int guideId, byte guideType) {

@@ -2,18 +2,18 @@ package de.rincewind.gui.panes.selectors;
 
 import java.util.Arrays;
 
+import de.rincewind.api.Project;
 import de.rincewind.api.util.ProjectType;
 import de.rincewind.gui.controller.selectors.ControllerProjectSelector;
-import de.rincewind.gui.panes.abstarcts.PaneSelector;
 import de.rincewind.gui.util.Cell;
 import javafx.scene.layout.VBox;
 
-public class PaneProjectSelector extends PaneSelector<VBox> {
+public class PaneProjectSelector extends PaneSelector<VBox, Project> {
 	
 	private ControllerProjectSelector controller;
 	
 	public PaneProjectSelector() {
-		super("projectselector.fxml", Arrays.asList(), new ControllerProjectSelector());
+		super("projectselector.fxml", Arrays.asList(), new ControllerProjectSelector(), Project.getManager(), Project.class);
 		
 		this.controller = (ControllerProjectSelector) this.getController();
 	}

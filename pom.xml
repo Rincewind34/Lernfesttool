@@ -10,6 +10,7 @@
 		<module>lernfesttool-main</module>
 		<module>lernfesttool-database</module>
 		<module>lernfesttool-gui</module>
+		<module>lernfesttool-test</module>
 	</modules>
 
 	<properties>

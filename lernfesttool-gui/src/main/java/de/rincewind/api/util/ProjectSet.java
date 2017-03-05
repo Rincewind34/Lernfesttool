@@ -1,31 +1,32 @@
 package de.rincewind.api.util;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import de.rincewind.api.Guide;
 import de.rincewind.api.Project;
 import de.rincewind.api.Student;
 import de.rincewind.api.abstracts.Dataset;
 import de.rincewind.sql.SQLRequest;
-import de.rincewind.sql.tables.relations.TableProjectAttandence;
+import de.rincewind.sql.tables.relations.TableProjectAttandences;
 import de.rincewind.sql.tables.relations.TableProjectHelping;
-import de.rincewind.sql.tables.relations.TableProjectLeading;
 
 public class ProjectSet implements Iterable<Entry<ProjectType, Project>> {
 	
 	private FetchType fetchType;
 	
 	private Map<ProjectType, Project> projects;
-	private Map<ProjectType, Boolean> leads;
+	private List<ProjectType> leads;
 	
 	public ProjectSet() {
 		this.projects = new HashMap<>();
-		this.leads = new HashMap<>();
+		this.leads = new ArrayList<>();
 	}
 	
 	@Override
@@ -33,10 +34,32 @@ public class ProjectSet implements Iterable<Entry<ProjectType, Project>> {
 		return this.projects.entrySet().iterator();
 	}
 	
-	public void setProject(ProjectType type, Project value) {
-		this.projects.put(type, value);
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
 		
-		if (type == ProjectType.FULL) {
+		for (ProjectType type : ProjectType.values()) {
+			if (this.isSet(type)) {
+				builder.append(this.isLeading(type) ? type.name().charAt(0) : Character.toString(type.name().charAt(0)).toLowerCase());
+				builder.append(":");
+				builder.append(this.getProject(ProjectType.FULL).getId());
+				builder.append(";");
+			}
+		}
+		
+		if (builder.length() > 1) {
+			builder.setLength(builder.length() - 1);
+		}
+		
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	public void setProject(Project value) {
+		this.projects.put(value.getValue(Project.TYPE), value);
+		
+		if (value.getValue(Project.TYPE) == ProjectType.FULL) {
 			this.clear(ProjectType.EARLY);
 			this.clear(ProjectType.LATE);
 		} else {
@@ -45,11 +68,11 @@ public class ProjectSet implements Iterable<Entry<ProjectType, Project>> {
 	}
 	
 	public void setLeading(ProjectType type, boolean value) {
-		if (!this.projects.containsKey(type)) {
-			return;
+		if (value) {
+			this.leads.add(type);
+		} else {
+			this.leads.remove(type);
 		}
-		
-		this.leads.put(type, value);
 	}
 	
 	public void clear(ProjectType type) {
@@ -57,12 +80,39 @@ public class ProjectSet implements Iterable<Entry<ProjectType, Project>> {
 		this.leads.remove(type);
 	}
 	
+	public void clear(Project project) {
+		for (ProjectType type : ProjectType.values()) {
+			if (this.isSet(type) && this.getProject(type).getId() == project.getId()) {
+				this.clear(type);
+			}
+		}
+	}
+	
 	public boolean isSet(ProjectType type) {
 		return this.projects.containsKey(type);
 	}
 	
 	public boolean isLeading(ProjectType type) {
-		return this.leads.get(type);
+		return this.leads.contains(type);
+	}
+	
+	public boolean isComplete() {
+		return this.isSet(ProjectType.FULL) || (this.isSet(ProjectType.EARLY) && this.isSet(ProjectType.LATE));
+	}
+	
+	
+	public int leadingAmount() {
+		return this.leads.size();
+	}
+	
+	public Project getFirstLeadingOne() {
+		for (ProjectType type : ProjectType.values()) {
+			if (this.isLeading(type)) {
+				return this.getProject(type);
+			}
+		}
+		
+		return null;
 	}
 	
 	public Project getProject(ProjectType type) {
@@ -73,8 +123,14 @@ public class ProjectSet implements Iterable<Entry<ProjectType, Project>> {
 		return this.fetchType.getDataset();
 	}
 	
-	public Map<ProjectType, Project> asMap() {
-		return Collections.unmodifiableMap(this.projects);
+	public List<Project> projects() {
+		return Collections.unmodifiableList(this.projects.values().stream().collect(Collectors.toList()));
+	}
+	
+	public List<Project> leadingProjects() {
+		return Collections.unmodifiableList(this.projects.values().stream().filter((project) -> {
+			return this.isLeading(project.getValue(Project.TYPE));
+		}).collect(Collectors.toList()));
 	}
 	
 	public SQLRequest<Void> fetch(Student student) {
@@ -90,7 +146,7 @@ public class ProjectSet implements Iterable<Entry<ProjectType, Project>> {
 			this.fetchType.createClearRequest().sync();
 			
 			for (ProjectType type : this.projects.keySet()) {
-				this.fetchType.createAddRequest(this.projects.get(type).getId(), this.leads.get(type)).sync();
+				this.fetchType.createAddRequest(this.projects.get(type).getId(), this.isLeading(type)).sync();
 			}
 			
 			return null;
@@ -98,9 +154,11 @@ public class ProjectSet implements Iterable<Entry<ProjectType, Project>> {
 	}
 	
 	private SQLRequest<Void> fetch(FetchType fetchType) {
+		this.fetchType = fetchType;
+		
 		return () -> {
 			this.projects.clear();
-			Map<Integer, Boolean> projectIds = fetchType.createRequestProjects().sync();
+			Map<Integer, Boolean> projectIds = this.fetchType.createRequestProjects().sync();
 			
 			for (Integer projectId : projectIds.keySet()) {
 				Project project = Project.getManager().newEmptyObject(projectId);
@@ -111,7 +169,7 @@ public class ProjectSet implements Iterable<Entry<ProjectType, Project>> {
 				}
 					
 				this.projects.put(project.getValue(Project.TYPE), project);
-				this.leads.put(project.getValue(Project.TYPE), projectIds.get(projectId));
+				this.setLeading(project.getValue(Project.TYPE), projectIds.get(projectId));
 			}
 			
 			return null;
@@ -145,13 +203,13 @@ public class ProjectSet implements Iterable<Entry<ProjectType, Project>> {
 			} else if (this.dataset instanceof Student) {
 				return () -> {
 					Map<Integer, Boolean> result = new HashMap<>();
-					List<Integer> projectIds = TableProjectAttandence.instance().getProjects(this.dataset.getId()).sync();
+					List<Integer> projectIds = TableProjectAttandences.instance().getProjects(this.dataset.getId(), false).sync();
 					
 					for (Integer projectId : projectIds) {
 						result.put(projectId, false);
 					}
 					
-					projectIds = TableProjectLeading.instance().getProjects(this.dataset.getId()).sync();
+					projectIds = TableProjectAttandences.instance().getProjects(this.dataset.getId(), true).sync();
 					
 					for (Integer projectId : projectIds) {
 						result.put(projectId, true);
@@ -169,8 +227,8 @@ public class ProjectSet implements Iterable<Entry<ProjectType, Project>> {
 				return TableProjectHelping.instance().clearGuide(this.dataset.getId(), ((Guide) this.dataset).getType().getId());
 			} else if (this.dataset instanceof Student) {
 				return () -> {
-					TableProjectAttandence.instance().clearStudent(this.dataset.getId());
-					TableProjectLeading.instance().clearStudent(this.dataset.getId());
+					TableProjectAttandences.instance().clearStudent(this.dataset.getId(), true);
+					TableProjectAttandences.instance().clearStudent(this.dataset.getId(), false);
 					return null;
 				};
 			} else {
@@ -182,11 +240,7 @@ public class ProjectSet implements Iterable<Entry<ProjectType, Project>> {
 			if (this.dataset instanceof Guide) {
 				return TableProjectHelping.instance().add(projectId, this.dataset.getId(), ((Guide) this.dataset).getType().getId());
 			} else if (this.dataset instanceof Student) {
-				if (leading) {
-					return TableProjectLeading.instance().add(projectId, this.dataset.getId());
-				} else {
-					return TableProjectAttandence.instance().add(projectId, this.dataset.getId());
-				}
+				return TableProjectAttandences.instance().add(projectId, this.dataset.getId(), leading);
 			} else {
 				return null;
 			}

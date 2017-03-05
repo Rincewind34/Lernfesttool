@@ -50,8 +50,7 @@ public class ControllerLogin implements Controller {
 
 	@Override
 	public void init() {
-		for (Dataset schoolClass : SchoolClass.getManager().initAllDatasets().sync()) {
-			schoolClass.fetchAll().sync();
+		for (Dataset schoolClass : SchoolClass.getManager().getAllDatasets().sync()) {
 			this.listClasses.getItems().add(schoolClass.asCell(SchoolClass.class));
 		}
 		
@@ -60,8 +59,7 @@ public class ControllerLogin implements Controller {
 		this.listClasses.getSelectionModel().selectedItemProperty()
 				.addListener((ObservableValue<? extends Cell<SchoolClass>> observable, Cell<SchoolClass> oldValue, Cell<SchoolClass> newValue) -> {
 					this.listClasses.setDisable(true);
-					this.listStudents.setDisable(true);
-
+					
 					Timeline task = new Timeline(new KeyFrame(Duration.ZERO, new KeyValue(ControllerLogin.this.progressStudents.progressProperty(), 0)),
 							new KeyFrame(Duration.seconds(1), new KeyValue(ControllerLogin.this.progressStudents.progressProperty(), 1)));
 					task.playFromStart();
@@ -75,7 +73,6 @@ public class ControllerLogin implements Controller {
 
 						Platform.runLater(() -> {
 							ControllerLogin.this.listClasses.setDisable(false);
-							ControllerLogin.this.listStudents.setDisable(false);
 						});
 					}).start();
 
