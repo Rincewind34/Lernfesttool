@@ -1,6 +1,5 @@
 package de.rincewind.gui.controller;
 
-import java.awt.TextField;
 import java.util.List;
 
 import de.rincewind.api.Guide;
@@ -11,17 +10,19 @@ import de.rincewind.gui.util.Cell;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 public class ControllerStudentProjectVisitor implements Controller {
 	
 	@FXML
 	private Button buttonClose;
+
+	@FXML
+	private TextArea textDescription;
 	
 	@FXML
 	private TextField textName;
-
-	@FXML
-	private TextField textDescription;
 
 	@FXML
 	private TextField textCategory;
@@ -83,20 +84,7 @@ public class ControllerStudentProjectVisitor implements Controller {
 		this.textMaxClass.setText(Integer.toString(this.project.getValue(Project.MAX_CLASS)));
 		this.textMinStudents.setText(Integer.toString(this.project.getValue(Project.MIN_STUDENTS)));
 		this.textMaxStudents.setText(Integer.toString(this.project.getValue(Project.MAX_STUDENTS)));
-		
-		int costs = this.project.getValue(Project.COSTS);
-		
-		if (costs != 0) {
-			if (costs % 100 == 0) {
-				costs = costs / 100;
-
-				this.textCosts.setText(costs + " Euro");
-			} else {
-				this.textCosts.setText(costs + " Cent");
-			}
-		} else {
-			this.textCosts.setText("Keine");
-		}
+		this.textCosts.setText(this.project.getCostString());
 		
 		if (this.project.isRoomSelected()) {
 			this.textRoom.setText(this.project.getValue(Project.ROOM).toString());

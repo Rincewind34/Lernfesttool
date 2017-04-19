@@ -5,7 +5,7 @@ import java.util.Arrays;
 import javafx.scene.layout.HBox;
 import de.rincewind.api.Project;
 import de.rincewind.gui.controller.editors.ControllerProjectEditor;
-import de.rincewind.gui.panes.abstarcts.PaneEditor;
+import de.rincewind.gui.panes.abstracts.PaneEditor;
 import de.rincewind.gui.util.TabHandler;
 
 public class PaneProjectEditor extends PaneEditor<HBox> {

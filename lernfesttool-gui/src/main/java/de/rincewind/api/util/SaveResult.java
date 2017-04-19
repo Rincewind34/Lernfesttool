@@ -7,6 +7,7 @@ public abstract class SaveResult {
 	}
 	
 	public static SaveResultError error(Exception ex) {
+		ex.printStackTrace();
 		return new SaveResultError(ex);
 	}
 	

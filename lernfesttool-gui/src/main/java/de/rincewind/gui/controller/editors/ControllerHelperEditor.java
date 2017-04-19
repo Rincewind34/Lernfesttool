@@ -96,6 +96,7 @@ public class ControllerHelperEditor extends ControllerEditor {
 		this.textName.setText(this.helper.getValue(Helper.NAME));
 		
 		if (this.helper.isStudentSelected()) {
+			this.helper.fetchStudent().sync();
 			this.setStudent(this.helper.getValue(Helper.STUDENT));
 		} else {
 			this.setStudent(null);
@@ -143,17 +144,17 @@ public class ControllerHelperEditor extends ControllerEditor {
 	}
 	
 	private void setStudent(Student student) {
-		if (this.helper.isStudentSelected() && this.helper.getValue(Helper.STUDENT).getId() == student.getId()) {
-			return;
-		}
-		
-		this.helper.setValue(Helper.STUDENT, student);
-		
 		if (student != null) {
 			this.labelStudent.setText(student.toString());
 		} else {
 			this.labelStudent.setText("Keinen");
 		}
+		
+		if (student != null && this.helper.isStudentSelected() && this.helper.getValue(Helper.STUDENT).getId() == student.getId()) {
+			return;
+		}
+		
+		this.helper.setValue(Helper.STUDENT, student);
 		
 		this.updateButtons();
 		this.getSaveHandler().valueChanged();

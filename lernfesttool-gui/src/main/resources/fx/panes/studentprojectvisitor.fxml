@@ -65,13 +65,13 @@
 						<VBox prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
 							<children>
 								<Label text="Minimale Teilnehmerzahl" />
-								<TextField fx:id="textMinUser" disable="true" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
+								<TextField fx:id="textMinStudents" disable="true" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
 							</children>
 						</VBox>
 						<VBox prefHeight="200.0" prefWidth="1000.0" spacing="10.0">
 							<children>
 								<Label text="Maximale Teilnehmerzahl" />
-								<TextField fx:id="textMaxUser" disable="true" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
+								<TextField fx:id="textMaxStudents" disable="true" minHeight="-Infinity" prefHeight="30.0" prefWidth="1000.0" />
 							</children>
 						</VBox>
 					</children>
@@ -112,7 +112,7 @@
 						<Insets bottom="40.0" left="40.0" right="40.0" />
 					</VBox.margin>
 				</ListView>
-				<Button fx:id="buttonClose" minHeight="-Infinity" mnemonicParsing="false" onAction="#onPressClose" prefHeight="30.0" prefWidth="1000.0" text="Schließen">
+				<Button fx:id="buttonClose" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Schließen">
 					<VBox.margin>
 						<Insets bottom="40.0" left="40.0" right="40.0" />
 					</VBox.margin>

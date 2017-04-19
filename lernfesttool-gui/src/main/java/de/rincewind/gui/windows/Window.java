@@ -1,6 +1,6 @@
 package de.rincewind.gui.windows;
 
-import de.rincewind.gui.panes.abstarcts.FXMLPane;
+import de.rincewind.gui.panes.abstracts.FXMLPane;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;

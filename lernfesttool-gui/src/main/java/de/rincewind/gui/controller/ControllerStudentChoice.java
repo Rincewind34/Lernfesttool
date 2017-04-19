@@ -7,12 +7,10 @@ import java.util.function.Consumer;
 
 import de.rincewind.api.Project;
 import de.rincewind.api.Student;
-import de.rincewind.api.session.StudentSession;
 import de.rincewind.api.util.ProjectCategory;
 import de.rincewind.api.util.ProjectSet;
 import de.rincewind.api.util.ProjectType;
 import de.rincewind.gui.controller.abstracts.Controller;
-import de.rincewind.gui.main.GUIHandler;
 import de.rincewind.gui.util.Cell;
 import de.rincewind.gui.util.filler.CheckBoxCheck;
 import de.rincewind.gui.util.filler.ListFiller;
@@ -95,8 +93,8 @@ public class ControllerStudentChoice implements Controller {
 
 	private Student student;
 
-	public ControllerStudentChoice() {
-		this.student = ((StudentSession) GUIHandler.session().getSession()).getStudent();
+	public ControllerStudentChoice(Student student) {
+		this.student = student;
 		this.chooseSets = new ProjectSet[] { new ProjectSet(), new ProjectSet(), new ProjectSet() };
 	}
 

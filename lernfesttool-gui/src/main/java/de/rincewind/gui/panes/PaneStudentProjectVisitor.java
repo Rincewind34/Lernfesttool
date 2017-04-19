@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import de.rincewind.api.Project;
 import de.rincewind.gui.controller.ControllerStudentProjectVisitor;
-import de.rincewind.gui.panes.abstarcts.FXMLPane;
+import de.rincewind.gui.panes.abstracts.FXMLPane;
 import javafx.scene.layout.HBox;
 
 public class PaneStudentProjectVisitor extends FXMLPane<HBox> {

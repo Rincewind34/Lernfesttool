@@ -1,6 +1,7 @@
 package de.rincewind.api.abstracts;
 
 import java.awt.print.Printable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,16 @@ public abstract class Dataset implements Printable {
 	public static final Comparator<Dataset> COMPERATOR_ID = (dataset1, dataset2) -> {
 		return Integer.compare(dataset1.datasetId, dataset2.datasetId);
 	};
+	
+	public static <T extends Dataset> Map<Integer, T> convertList(List<T> datasets) {
+		Map<Integer, T> result = new HashMap<>();
+		
+		for (T dataset : datasets) {
+			result.put(dataset.getId(), dataset);
+		}
+		
+		return result;
+	}
 	
 	protected static void initDataset(DatasetField<Dataset> field, int datasetId, DatasetManager manager) {
 		if (datasetId <= 0) {
@@ -51,7 +62,7 @@ public abstract class Dataset implements Printable {
 	
 	public Dataset(int datasetId) {
 		if (datasetId <= 0) {
-			throw new RuntimeException("The id is out of range!");
+			throw new RuntimeException("The id is out of range: " + datasetId + "!");
 		}
 		
 		this.datasetId = datasetId;
@@ -88,6 +99,14 @@ public abstract class Dataset implements Printable {
 		for (Entry<String, Object> entry : map) {
 			DatasetField<?> field = this.fields.get(this.getMatchingManager().getFieldAccessor(entry.getKey()));
 			this.setSQLValue(field, entry.getValue());
+		}
+	}
+	
+	public void loadFrom(Dataset dataset) {
+		for (DatasetFieldAccessor<?> accessor : this.getMatchingManager().fieldAccessors()) {
+			if (dataset.containsField(accessor) && dataset.isValuePreset(accessor)) {
+				accessor.moveValue(dataset, this);
+			}
 		}
 	}
 	
@@ -156,6 +175,25 @@ public abstract class Dataset implements Printable {
 			List<String> fieldNames = DatasetFieldAccessor.fieldNames(this.fields.keySet());
 			FieldMap map = this.getMatchingManager().getTable().getValues(this.datasetId, fieldNames.toArray(new String[fieldNames.size()])).sync();
 			this.insertValues(map);
+			return null;
+		};
+	}
+	
+	public SQLRequest<Void> fetchMissing() {
+		return () -> {
+			List<String> fieldNames = new ArrayList<>();
+			
+			for (DatasetFieldAccessor<?> field : this.getMatchingManager().fieldAccessors()) {
+				if (!this.isValuePreset(field)) {
+					fieldNames.add(field.getFieldName());
+				}
+			}
+			
+			if (!fieldNames.isEmpty()) {
+				FieldMap map = this.getMatchingManager().getTable().getValues(this.datasetId, fieldNames.toArray(new String[fieldNames.size()])).sync();
+				this.insertValues(map);
+			}
+			
 			return null;
 		};
 	}

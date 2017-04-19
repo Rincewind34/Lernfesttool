@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import de.rincewind.api.Student;
 import de.rincewind.gui.controller.ControllerStudent;
-import de.rincewind.gui.panes.abstarcts.FXMLPane;
+import de.rincewind.gui.panes.abstracts.FXMLPane;
 import javafx.scene.layout.BorderPane;
 
 public class PaneStudent extends FXMLPane<BorderPane> {

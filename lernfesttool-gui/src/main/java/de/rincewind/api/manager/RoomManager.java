@@ -7,7 +7,7 @@ import de.rincewind.api.Room;
 import de.rincewind.api.abstracts.DatasetFieldAccessor;
 import de.rincewind.api.abstracts.DatasetManager;
 import de.rincewind.gui.controller.selectors.ControllerRoomSelector;
-import de.rincewind.gui.panes.abstarcts.FXMLPane;
+import de.rincewind.gui.panes.abstracts.FXMLPane;
 import de.rincewind.gui.panes.editors.PaneRoomEditor;
 import de.rincewind.gui.panes.selectors.PaneSelector;
 import de.rincewind.gui.util.TabHandler;
@@ -48,7 +48,7 @@ public class RoomManager extends DatasetManager {
 
 	@Override
 	public PaneSelector<VBox, Room> createSelectorPane() {
-		return new PaneSelector<>("roomselector.fxml", Arrays.asList(), new ControllerRoomSelector(), this, Room.class);
+		return FXMLPane.setup(new PaneSelector<>("roomselector.fxml", Arrays.asList(), new ControllerRoomSelector(), this, Room.class));
 	}
 
 	@Override

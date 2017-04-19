@@ -40,6 +40,11 @@ public class Helper extends Guide {
 	}
 	
 	@Override
+	public String getName() {
+		return this.getValue(Helper.NAME);
+	}
+	
+	@Override
 	public DatasetManager getMatchingManager() {
 		return Helper.getManager();
 	}
@@ -88,11 +93,7 @@ public class Helper extends Guide {
 	}
 	
 	public boolean isStudentSelected() {
-		if (this.isValuePreset(Helper.STUDENT)) {
-			return false;
-		}
-		
-		return this.getValue(Helper.STUDENT) != null;
+		return Dataset.isDatasetSelected(Helper.STUDENT, this);
 	}
 	
 	public SQLRequest<Void> fetchStudent() {

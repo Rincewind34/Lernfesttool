@@ -5,13 +5,13 @@ import java.util.Arrays;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import de.rincewind.gui.controller.ControllerStatsProject;
-import de.rincewind.gui.panes.abstarcts.AdminTab;
-import de.rincewind.gui.panes.abstarcts.FXMLPane;
+import de.rincewind.gui.panes.abstracts.AdminTab;
+import de.rincewind.gui.panes.abstracts.FXMLPane;
 import de.rincewind.gui.util.TabHandler;
 
-public class PaneStatsProject extends FXMLPane<HBox> implements AdminTab {
+public class PaneStatsProjects extends FXMLPane<HBox> implements AdminTab {
 	
-	public PaneStatsProject(TabHandler handler) {
+	public PaneStatsProjects(TabHandler handler) {
 		super("statsproject.fxml", Arrays.asList(), new ControllerStatsProject(handler));
 	}
 

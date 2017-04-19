@@ -16,7 +16,6 @@ import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -88,6 +87,7 @@ public class ControllerLogin implements Controller {
 					
 					this.textUsername.setText("");
 					this.textPassword.setText("");
+					this.textUsername.setDisable(false);
 					this.textPassword.setDisable(false);
 				});
 
@@ -117,30 +117,10 @@ public class ControllerLogin implements Controller {
 			}
 		});
 	}
-
-	@FXML
-	public void onAction() {
-		String inputUsername = this.textUsername.getText();
-		String inputPassword = this.textPassword.getText();
-
-		if (inputUsername == null || inputUsername.isEmpty()) {
-			this.labelStatus.setText("Bitte Namen auswählen!");
-			return;
-		}
-
-		this.labelStatus.setText("Bitte warten...");
-
-		String result = GUIHandler.session().login(inputUsername, inputPassword);
-
-		if (result == null) {
-			GUIHandler.session().getSession().start();
-		} else {
-			this.labelStatus.setText(result);
-		}
-	}
 	
 	private void initLogin(Student student) {
 		this.textUsername.setText("schüler-" + student.getId());
+		this.textUsername.setDisable(true);
 		this.textPassword.setText("");
 		
 		if (student.getValue(Student.ACCESS_LEVEL) == AccessLevel.USER) {
@@ -150,21 +130,10 @@ public class ControllerLogin implements Controller {
 				this.btnLogin.requestFocus();
 			});
 		} else {
-			this.requestFocus(this.textPassword, 100);
+			Platform.runLater(() -> {
+				this.textPassword.requestFocus();
+			});
 		}
 	}
-
-	private void requestFocus(Node node, int delayMillis) {
-		new Thread(() -> {
-			try {
-				Thread.sleep(delayMillis);
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				Platform.runLater(() -> {
-					node.requestFocus();
-				});
-			}
-		}).start();
-	}
+		
 }

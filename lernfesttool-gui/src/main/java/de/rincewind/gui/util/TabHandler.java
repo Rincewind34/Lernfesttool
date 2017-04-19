@@ -2,7 +2,7 @@ package de.rincewind.gui.util;
 
 import de.rincewind.api.abstracts.Dataset;
 import de.rincewind.api.abstracts.DatasetManager;
-import de.rincewind.gui.panes.abstarcts.AdminTab;
+import de.rincewind.gui.panes.abstracts.AdminTab;
 
 public interface TabHandler {
 	

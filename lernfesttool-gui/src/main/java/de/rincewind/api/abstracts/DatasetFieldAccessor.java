@@ -36,6 +36,10 @@ public class DatasetFieldAccessor<T> {
 		return this.fieldName + "{type=" + this.cls.getSimpleName() + "}";
 	}
 	
+	public void moveValue(Dataset from, Dataset to) {
+		to.setValue(this, from.getValue(this));
+	}
+	
 	public String getFieldName() {
 		return fieldName;
 	}

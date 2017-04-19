@@ -7,7 +7,7 @@ import de.rincewind.api.Helper;
 import de.rincewind.api.abstracts.DatasetFieldAccessor;
 import de.rincewind.api.abstracts.DatasetManager;
 import de.rincewind.gui.controller.selectors.ControllerHelperSelector;
-import de.rincewind.gui.panes.abstarcts.FXMLPane;
+import de.rincewind.gui.panes.abstracts.FXMLPane;
 import de.rincewind.gui.panes.editors.PaneHelperEditor;
 import de.rincewind.gui.panes.selectors.PaneSelector;
 import de.rincewind.gui.util.TabHandler;

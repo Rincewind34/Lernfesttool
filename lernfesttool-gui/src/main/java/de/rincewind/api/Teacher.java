@@ -2,6 +2,7 @@ package de.rincewind.api;
 
 import java.awt.Graphics;
 import java.awt.print.PageFormat;
+import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 
 import de.rincewind.api.abstracts.DatasetFieldAccessor;
@@ -28,8 +29,7 @@ public class Teacher extends Guide {
 	
 	@Override
 	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-		// TODO Auto-generated method stub
-		return 0;
+		return Printable.NO_SUCH_PAGE;
 	}
 	
 	@Override
@@ -40,6 +40,11 @@ public class Teacher extends Guide {
 	@Override
 	public DatasetManager getMatchingManager() {
 		return Teacher.getManager();
+	}
+	
+	@Override
+	public String getName() {
+		return this.getValue(Teacher.NAME);
 	}
 	
 	@Override

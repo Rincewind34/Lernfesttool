@@ -85,7 +85,7 @@ public class ControllerRoomEditor extends ControllerEditor {
 		this.checkSports.setSelected(this.room.getValue(Room.SPORTS));
 		this.checkMusics.setSelected(this.room.getValue(Room.MUSICS));
 		
-		byte size = this.room.getValue(Room.SIZE);
+		int size = this.room.getValue(Room.SIZE);
 		
 		this.textSize.setText(Integer.toString(size));
 		this.sliderSize.setValue(size);
@@ -122,7 +122,7 @@ public class ControllerRoomEditor extends ControllerEditor {
 		this.room.setValue(Room.HARDWARE, this.checkHardware.isSelected());
 		this.room.setValue(Room.SPORTS, this.checkSports.isSelected());
 		this.room.setValue(Room.MUSICS, this.checkMusics.isSelected());
-		this.room.setValue(Room.SIZE, (byte) this.sliderSize.getValue());
+		this.room.setValue(Room.SIZE, (int) this.sliderSize.getValue());
 		this.room.save().async((result) -> {
 			
 		}, (exception) -> {

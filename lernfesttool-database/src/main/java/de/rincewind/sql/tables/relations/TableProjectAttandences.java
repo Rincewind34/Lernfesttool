@@ -37,6 +37,51 @@ public class TableProjectAttandences extends AbstractTable {
 			return null;
 		};
 	}
+
+	public SQLRequest<Void> addAll(List<Entry> entries) {
+		return () -> {
+			String query = "INSERT INTO projectattandences (projectId, studentId, leads) VALUES ";
+			
+			for (Entry entry : entries) {
+				query = query + "(" + entry.projectId + ", " + entry.studentId + ", " + entry.leading + "), ";
+			}
+			
+			this.getDatabase().getConnection().update(query.substring(0, query.length() - 2));
+			return null;
+		};
+	}
+	
+	public SQLRequest<Void> clearProject(int projectId, boolean leading) {
+		return () -> {
+			DatabaseConnection connection = this.getDatabase().getConnection();
+			PreparedStatement stmt = connection.prepare("DELETE FROM projectattandences WHERE projectId = ? AND leads = ?");
+			DatabaseUtils.setInt(stmt, 1, projectId);
+			DatabaseUtils.setBoolean(stmt, 2, leading);
+			connection.update(stmt);
+			return null;
+		};
+	}
+	
+	public SQLRequest<Void> clearStudent(int studentId, boolean leading) {
+		return () -> {
+			DatabaseConnection connection = this.getDatabase().getConnection();
+			PreparedStatement stmt = connection.prepare("DELETE FROM projectattandences WHERE studentId = ? AND leads = ?");
+			DatabaseUtils.setInt(stmt, 1, studentId);
+			DatabaseUtils.setBoolean(stmt, 2, leading);
+			connection.update(stmt);
+			return null;
+		};
+	}
+	
+	public SQLRequest<Void> clearAll(boolean leading) {
+		return () -> {
+			DatabaseConnection connection = this.getDatabase().getConnection();
+			PreparedStatement stmt = connection.prepare("DELETE FROM projectattandences WHERE leads = ?");
+			DatabaseUtils.setBoolean(stmt, 1, leading);
+			connection.update(stmt);
+			return null;
+		};
+	}
 	
 	public SQLRequest<List<Integer>> getProjects(int studentId, boolean leading) {
 		return () -> {
@@ -75,27 +120,34 @@ public class TableProjectAttandences extends AbstractTable {
 			return projects;
 		};
 	}
-	
-	public SQLRequest<Void> clearProject(int projectId, boolean leading) {
+
+	public SQLRequest<List<Entry>> getEntries() {
 		return () -> {
-			DatabaseConnection connection = this.getDatabase().getConnection();
-			PreparedStatement stmt = connection.prepare("DELETE FROM projectattandences WHERE projectId = ? AND leads = ?");
-			DatabaseUtils.setInt(stmt, 1, projectId);
-			DatabaseUtils.setBoolean(stmt, 2, leading);
-			connection.update(stmt);
-			return null;
+			SQLResult result = this.getDatabase().getConnection().query("SELECT * FROM projectattandences");
+			
+			List<Entry> entries = new ArrayList<>();
+			
+			while (result.next()) {
+				entries.add(new Entry(result.current("projectId"), result.current("studentId"), result.current("leads")));
+			}
+			
+			result.close();
+			return entries;
 		};
 	}
 	
-	public SQLRequest<Void> clearStudent(int studentId, boolean leading) {
-		return () -> {
-			DatabaseConnection connection = this.getDatabase().getConnection();
-			PreparedStatement stmt = connection.prepare("DELETE FROM projectattandences WHERE studentId = ? AND leads = ?");
-			DatabaseUtils.setInt(stmt, 1, studentId);
-			DatabaseUtils.setBoolean(stmt, 2, leading);
-			connection.update(stmt);
-			return null;
-		};
+	public static class Entry {
+		
+		public boolean leading;
+		public int projectId;
+		public int studentId;
+		
+		public Entry(int projectId, int studentId, boolean leading) {
+			this.projectId = projectId;
+			this.studentId = studentId;
+			this.leading = leading;
+		}
+		
 	}
 	
 }

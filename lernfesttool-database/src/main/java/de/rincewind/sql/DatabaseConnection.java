@@ -19,13 +19,13 @@ public interface DatabaseConnection {
 	
 	public abstract int insert(String sql);
 	
-	public abstract int insert(PreparedStatement stmt);
-	
 	public abstract SQLResult query(String sql);
 	
 	public abstract SQLResult query(PreparedStatement stmt);
 	
 	public abstract PreparedStatement prepare(String sql);
+	
+	public abstract PreparedStatement prepare(String sql, int generatedKeys);
 	
 	public abstract Connection getJavaConnection();
 	

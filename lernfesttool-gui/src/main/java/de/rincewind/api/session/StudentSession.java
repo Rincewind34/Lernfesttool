@@ -25,8 +25,10 @@ public class StudentSession implements Session {
 			
 			if (state == StudentState.ENTER_PROJECTS) {
 				GUIHandler.session().changeWindow(new WindowStudent(this.student));
+			} else if (state == StudentState.LOOKUP_PROJECTS) {
+				GUIHandler.session().changeWindow(new WindowStudent(this.student));
 			} else if (state == StudentState.VOTE_PROJECTS) {
-				GUIHandler.session().changeWindow(new WindowStudentChoice());
+				GUIHandler.session().changeWindow(new WindowStudentChoice(this.student));
 			}
 		}
 	}

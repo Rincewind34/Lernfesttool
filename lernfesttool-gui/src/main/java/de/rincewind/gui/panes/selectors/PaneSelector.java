@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import de.rincewind.api.abstracts.Dataset;
 import de.rincewind.api.abstracts.DatasetManager;
 import de.rincewind.gui.controller.abstracts.ControllerSelector;
-import de.rincewind.gui.panes.abstarcts.FXMLPane;
+import de.rincewind.gui.panes.abstracts.FXMLPane;
 import de.rincewind.gui.util.Cell;
 import de.rincewind.gui.util.ChangeListener;
 import javafx.application.Platform;

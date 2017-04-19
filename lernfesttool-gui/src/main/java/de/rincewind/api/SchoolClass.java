@@ -2,6 +2,7 @@ package de.rincewind.api;
 
 import java.awt.Graphics;
 import java.awt.print.PageFormat;
+import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +73,7 @@ public class SchoolClass extends Dataset implements Comparable<SchoolClass> {
 
 	@Override
 	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-		// TODO Auto-generated method stub
-		return 0;
+		return Printable.NO_SUCH_PAGE;
 	}
 
 	@Override
@@ -153,7 +153,7 @@ public class SchoolClass extends Dataset implements Comparable<SchoolClass> {
 
 	public SQLRequest<Integer> getClassSize() {
 		return () -> {
-			return StudentManager.instance().getTable().getByClass(this.getId()).sync().size();
+			return StudentManager.instance().getTable().getByClass(this.getId(), Student.getManager().getTableColumns()).sync().size();
 		};
 	}
 

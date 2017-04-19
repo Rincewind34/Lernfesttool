@@ -119,8 +119,6 @@ public class WrapperProjectEditor {
 		this.leaders = this.project.fetchLeaders().sync();
 		this.guides = this.project.fetchGuides().sync();
 		
-		System.out.println(leaders);
-		
 		for (Student student : this.leaders) {
 			this.addedLeaders.add(student.getId());
 		}
@@ -212,9 +210,9 @@ public class WrapperProjectEditor {
 		});
 
 		this.btnLeaderRemove.setOnAction((event) -> {
-			Student current = this.listLeaders.getSelectionModel().getSelectedItem().getSavedObject();
+			Cell<Student> current = this.listLeaders.getSelectionModel().getSelectedItem();
 
-			this.addedLeaders.remove(current.getId());
+			this.addedLeaders.remove((Object) current.getSavedObject().getId());
 			this.listLeaders.getItems().remove(current);
 
 			this.updateLeaderDisplay(true);
@@ -257,12 +255,12 @@ public class WrapperProjectEditor {
 			Guide current = this.listGuides.getSelectionModel().getSelectedItem().getSavedObject();
 
 			if (current.getType() == GuideType.TEACHER) {
-				this.addedTeachers.remove(current.getId());
+				this.addedTeachers.remove((Object) current.getId());
 			} else {
-				this.addedHelpers.remove(current.getId());
+				this.addedHelpers.remove((Object) current.getId());
 			}
-
-			this.listGuides.getItems().remove(current);
+			
+			this.listGuides.getItems().remove(this.listGuides.getSelectionModel().getSelectedItem());
 
 			this.updateGuideDisplay(true);
 			this.valueChanged();
@@ -276,15 +274,13 @@ public class WrapperProjectEditor {
 			this.updateGuideDisplay(false);
 		});
 
-		this.boxMinLevel.getSelectionModel().selectedItemProperty().addListener((observeable, oldValue, newValue) -> { // TODO
-																														// test
+		this.boxMinLevel.getSelectionModel().selectedItemProperty().addListener((observeable, oldValue, newValue) -> {
 			if (this.boxMinLevel.getSelectionModel().getSelectedIndex() > this.boxMaxLevel.getSelectionModel().getSelectedIndex()) {
 				this.boxMaxLevel.getSelectionModel().select(this.boxMinLevel.getSelectionModel().getSelectedIndex());
 			}
 		});
 
-		this.boxMaxLevel.getSelectionModel().selectedItemProperty().addListener((observeable, oldValue, newValue) -> { // TODO
-																														// test
+		this.boxMaxLevel.getSelectionModel().selectedItemProperty().addListener((observeable, oldValue, newValue) -> {
 			if (this.boxMaxLevel.getSelectionModel().getSelectedIndex() < this.boxMinLevel.getSelectionModel().getSelectedIndex()) {
 				this.boxMinLevel.getSelectionModel().select(this.boxMaxLevel.getSelectionModel().getSelectedIndex());
 			}
@@ -334,14 +330,6 @@ public class WrapperProjectEditor {
 			minStudents = maxStudents;
 		}
 
-		// if
-		// (this.boxMinLevel.getSelectionModel().getSelectedItem().getSavedObject()
-		// >
-		// this.boxMaxLevel.getSelectionModel().getSelectedItem().getSavedObject())
-		// {
-		// this.boxMinLevel.getSelectionModel().select(0);
-		// } TODO could be removed, if the listeners working (look up)
-
 		// TODO check if student leads already
 
 		TableProjectAttandences.instance().clearProject(this.project.getId(), true).async((object) -> {
@@ -363,10 +351,10 @@ public class WrapperProjectEditor {
 		}, (exception) -> {
 			// TODO
 		});
-
+		
 		this.project.setValue(Project.NAME, this.textName.getText());
 		this.project.setValue(Project.MIN_CLASS, this.boxMinLevel.getSelectionModel().getSelectedItem().getSavedObject());
-		this.project.setValue(Project.MIN_CLASS, this.boxMaxLevel.getSelectionModel().getSelectedItem().getSavedObject());
+		this.project.setValue(Project.MAX_CLASS, this.boxMaxLevel.getSelectionModel().getSelectedItem().getSavedObject());
 		this.project.setValue(Project.MIN_STUDENTS, minStudents);
 		this.project.setValue(Project.MAX_STUDENTS, maxStudents);
 		this.project.setValue(Project.COSTS, costs * this.boxCurrency.getSelectionModel().getSelectedItem().getSavedObject());

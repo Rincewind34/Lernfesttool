@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import de.rincewind.gui.dialogs.DialogSelector;
-import de.rincewind.gui.panes.abstarcts.PaneEditor;
+import de.rincewind.gui.panes.abstracts.PaneEditor;
 import de.rincewind.gui.panes.selectors.PaneSelector;
 import de.rincewind.gui.util.TabHandler;
 import de.rincewind.sql.SQLRequest;

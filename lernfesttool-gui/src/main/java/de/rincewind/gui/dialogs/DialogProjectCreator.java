@@ -3,7 +3,7 @@ package de.rincewind.gui.dialogs;
 import de.rincewind.api.Project;
 import de.rincewind.api.util.ProjectType;
 import de.rincewind.gui.panes.PaneStudentProjectCreator;
-import de.rincewind.gui.panes.abstarcts.FXMLPane;
+import de.rincewind.gui.panes.abstracts.FXMLPane;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
@@ -11,8 +11,8 @@ import javafx.scene.control.Dialog;
 
 public class DialogProjectCreator extends Dialog<Project> {
 	
-	public DialogProjectCreator(ProjectType type) {
-		ButtonType selectType = new ButtonType("Öffnen", ButtonData.OK_DONE);
+	public DialogProjectCreator(int studentId, ProjectType type) {
+		ButtonType selectType = new ButtonType("Erstellen", ButtonData.OK_DONE);
 		ButtonType cancleType = new ButtonType("Abbrechen", ButtonData.CANCEL_CLOSE);
 		
 		this.setTitle("Projekt erstellen");
@@ -30,14 +30,17 @@ public class DialogProjectCreator extends Dialog<Project> {
 		}
 		
 		pane.valueChanged(() -> {
-			btnSelect.setDisable(pane.isNameSet() && pane.isTypeSelected());
+			btnSelect.setDisable(!pane.isNameSet() || !pane.isTypeSelected());
 		});
 		
 		this.setResultConverter((clickedType) -> {
 			if (clickedType == selectType) {
 				Project project = Project.getManager().newEmptyObject(Project.getManager().createNewData().sync());
+				project.fillDefaults();
 				project.setValue(Project.NAME, pane.getSelectedName());
 				project.setValue(Project.TYPE, pane.getSelectedType());
+				project.save().sync();
+				project.addLeader(studentId).sync();
 				return project;
 			}
 			

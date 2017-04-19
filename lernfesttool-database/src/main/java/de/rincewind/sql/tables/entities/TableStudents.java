@@ -1,9 +1,7 @@
 package de.rincewind.sql.tables.entities;
 
 import java.sql.PreparedStatement;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import de.rincewind.sql.Database;
@@ -33,7 +31,7 @@ public class TableStudents extends EntityTable {
 	public SQLRequest<Integer> insertEmptyDataset() {
 		return () -> {
 			return this.getDatabase().getConnection()
-					.insert("INSERT INTO students (lastname, firstname, classId, accessLevel, state, password) VALUES ('Max', 'Mustermann', -1, 0, 1, '')");
+					.insert("INSERT INTO students (lastname, firstname, classId, accessLevel, state, password) VALUES ('Mustermann', 'Max', -1, 0, 1, '')");
 		};
 	}
 
@@ -75,62 +73,5 @@ public class TableStudents extends EntityTable {
 			return values;
 		};
 	}
-
-	public SQLRequest<List<Integer>> getWithoutProject() {
-		return () -> {
-			DatabaseConnection connection = this.getDatabase().getConnection();
-
-			PreparedStatement stmt = connection.prepare("SELECT students.studentId FROM students LEFT JOIN projectattandences attandences ON "
-					+ "(students.studentId = attandences.studentId) WHERE attandences.projectId IS NULL");
-			SQLResult result = connection.query(stmt);
-
-			List<Integer> values = new ArrayList<>();
-
-			while (result.next()) {
-				values.add(result.current("studentId"));
-			}
-
-			result.close();
-			return values;
-		};
-	}
-
-	public SQLRequest<List<Integer>> getWithoutChoose() {
-		return () -> {
-			DatabaseConnection connection = this.getDatabase().getConnection();
-
-			PreparedStatement stmt = connection.prepare("SELECT students.studentId FROM students LEFT JOIN projectchoosing choosing ON "
-					+ "(students.studentId = choosing.studentId) WHERE choosing.projectId IS NULL");
-			SQLResult result = connection.query(stmt);
-
-			List<Integer> values = new ArrayList<>();
-
-			while (result.next()) {
-				values.add(result.current("studentId"));
-			}
-
-			result.close();
-			return values;
-		};
-	}
-
-	public SQLRequest<List<Integer>> getWithProject(int chooseIndex, byte projectType) {
-		return () -> {
-			DatabaseConnection connection = this.getDatabase().getConnection();
-
-			PreparedStatement stmt = connection.prepare(
-					"SELECT students.studentId FROM students, projectchoosing choosing, projectattandence attandence WHERE (students.studentId = choosing.studentId AND choosing.studentId = attandence.studentId) ");
-			SQLResult result = connection.query(stmt);
-
-			List<Integer> values = new ArrayList<>();
-
-			while (result.next()) {
-				values.add(result.current("studentId"));
-			}
-
-			result.close();
-			return values;
-		};
-	}
-
+	
 }

@@ -2,6 +2,7 @@ package de.rincewind.api;
 
 import java.awt.Graphics;
 import java.awt.print.PageFormat;
+import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class Room extends Dataset {
 	public static final DatasetFieldAccessor<Boolean> HARDWARE = new DatasetFieldAccessor<>("hardware", Boolean.class);
 	public static final DatasetFieldAccessor<Boolean> SPORTS = new DatasetFieldAccessor<>("sports", Boolean.class);
 	public static final DatasetFieldAccessor<Boolean> MUSICS = new DatasetFieldAccessor<>("musics", Boolean.class);
-	public static final DatasetFieldAccessor<Byte> SIZE = new DatasetFieldAccessor<>("size", Byte.class);
+	public static final DatasetFieldAccessor<Integer> SIZE = new DatasetFieldAccessor<>("size", Integer.class);
 
 	public static RoomManager getManager() {
 		return RoomManager.instance();
@@ -38,8 +39,7 @@ public class Room extends Dataset {
 
 	@Override
 	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-		// TODO Auto-generated method stub
-		return 0;
+		return Printable.NO_SUCH_PAGE;
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class Room extends Dataset {
 		return () -> {
 			TableRooms rooms = (TableRooms) this.getMatchingManager().getTable();
 			rooms.update(this.getId(), this.getValue(Room.NAME), this.getValue(Room.E_BOARD), this.getValue(Room.HARDWARE), this.getValue(Room.SPORTS),
-					this.getValue(Room.MUSICS), this.getValue(Room.SIZE)).sync();
+					this.getValue(Room.MUSICS), this.getValue(Room.SIZE).byteValue()).sync();
 
 			return null;
 		};
@@ -69,7 +69,7 @@ public class Room extends Dataset {
 
 	public SQLRequest<SchoolClass> getOwningClass() {
 		return () -> {
-			Entry<Integer, FieldMap> entry = TableSchoolClasses.instance().getByRoomId(this.getId(), this.getMatchingManager().getTableColumns()).sync();
+			Entry<Integer, FieldMap> entry = TableSchoolClasses.instance().getByRoomId(this.getId(), SchoolClass.getManager().getTableColumns()).sync();
 
 			if (entry == null) {
 				return null;
@@ -81,7 +81,7 @@ public class Room extends Dataset {
 
 	public SQLRequest<List<Project>> getUsingProjects() {
 		return () -> {
-			Map<Integer, FieldMap> result = TableProjects.instance().getByRoom(this.getId(), this.getMatchingManager().getTableColumns()).sync();
+			Map<Integer, FieldMap> result = TableProjects.instance().getByRoom(this.getId(), Project.getManager().getTableColumns()).sync();
 			List<Project> projects = new ArrayList<>();
 			
 			for (int projectId : result.keySet()) {

@@ -29,7 +29,7 @@ public class TableProjectHelping extends AbstractTable {
 	public SQLRequest<Void> add(int projectId, int guideId, byte guideType) {
 		return () -> {
 			DatabaseConnection connection = this.getDatabase().getConnection();
-			PreparedStatement stmt = connection.prepare("INSERT INTO {table} (projectId, guideId, guideType) VALUES (?, ?, ?)");
+			PreparedStatement stmt = connection.prepare("INSERT INTO projecthelping (projectId, guideId, guideType) VALUES (?, ?, ?)");
 			DatabaseUtils.setInt(stmt, 1, projectId);
 			DatabaseUtils.setInt(stmt, 2, guideId);
 			DatabaseUtils.setByte(stmt, 3, guideType);

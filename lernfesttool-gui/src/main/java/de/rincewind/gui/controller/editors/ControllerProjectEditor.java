@@ -162,7 +162,9 @@ public class ControllerProjectEditor extends ControllerEditor {
 
 		// === Inserting === //
 		// === Listening === //
-
+		
+		this.wrapper.addListeners();
+		
 		this.btnRoomSelect.setOnAction((event) -> {
 			Optional<Dataset> result = Room.getManager().dialogSelector().showAndWait();
 
@@ -204,6 +206,7 @@ public class ControllerProjectEditor extends ControllerEditor {
 
 	@Override
 	public void saveStages() {
+		this.project.setValue(Project.ROOM, this.room);
 		this.wrapper.save(this.boxType.getSelectionModel().getSelectedItem().getSavedObject());
 	}
 

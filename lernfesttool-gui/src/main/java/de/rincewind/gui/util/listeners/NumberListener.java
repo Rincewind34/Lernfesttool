@@ -19,10 +19,12 @@ public class NumberListener implements ChangeListener<String> {
 		}
 		
 		try {
-			Integer.parseInt(newValue);
-		} catch (NumberFormatException ex) {
-			System.out.println("SET");
+			int i = Integer.parseInt(newValue);
 			
+			if (i < 0) {
+				throw new NumberFormatException();
+			}
+		} catch (NumberFormatException ex) {
 			this.control.setText(oldValue != null ? oldValue : "");
 		}
 	}

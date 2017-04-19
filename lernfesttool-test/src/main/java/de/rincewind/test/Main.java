@@ -66,7 +66,12 @@ public class Main extends Application implements GUISession {
 		Main.threadpool = Executors.newCachedThreadPool();
 
 		Database.initialize(Main.threadpool, "192.168.1.30", 3306, "lernfest_choosing", "torben", "torben");
-		Database.instance().getConnection().open();
+		
+		try {
+			Database.instance().getConnection().open();
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
 
 		if (Database.instance().getConnection().isOpen()) {
 			Database.instance().registerTable(TableHelpers.class);
@@ -89,6 +94,20 @@ public class Main extends Application implements GUISession {
 		mapping.fetchData();
 		mapping.execute();
 		System.out.println("FINISHED");
+		
+//		System.out.println("CREATE PRINT");
+//		PrinterJob job = PrinterJob.getPrinterJob();
+//		job.setPrintable(new Design());
+//		System.out.println("DIALOG...");
+//		
+//		if (job.printDialog()) {
+//			try {
+//				System.out.println("PRINT");
+//				job.print();
+//			} catch (PrinterException e) {
+//				e.printStackTrace();
+//			}
+//		}
 
 		System.out.println("SHUTING DOWN");
 		Main.threadpool.shutdownNow();
@@ -317,4 +336,5 @@ public class Main extends Application implements GUISession {
 			}
 		}
 	}
+	
 }

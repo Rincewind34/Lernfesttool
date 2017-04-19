@@ -1,19 +1,23 @@
 package de.rincewind.api.manager;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import de.rincewind.api.Project;
+import de.rincewind.api.Student;
 import de.rincewind.api.abstracts.DatasetFieldAccessor;
 import de.rincewind.api.abstracts.DatasetManager;
 import de.rincewind.api.util.ProjectType;
 import de.rincewind.gui.dialogs.DialogSelector;
-import de.rincewind.gui.panes.abstarcts.FXMLPane;
+import de.rincewind.gui.panes.abstracts.FXMLPane;
 import de.rincewind.gui.panes.editors.PaneProjectEditor;
 import de.rincewind.gui.panes.selectors.PaneProjectSelector;
 import de.rincewind.gui.util.TabHandler;
 import de.rincewind.sql.SQLRequest;
 import de.rincewind.sql.tables.entities.TableProjects;
+import de.rincewind.sql.tables.relations.TableProjectAttandences;
 
 public class ProjectManager extends DatasetManager {
 
@@ -68,7 +72,7 @@ public class ProjectManager extends DatasetManager {
 	public SQLRequest<List<Project>> getAllDatasets() {
 		return this.getAllDatasets(Project.class);
 	}
-
+	
 	public PaneProjectSelector createSelectorPane(ProjectType locked) {
 		PaneProjectSelector pane = this.createSelectorPane();
 		pane.lockType(locked);
@@ -79,6 +83,25 @@ public class ProjectManager extends DatasetManager {
 		PaneProjectSelector fxmlPane = this.createSelectorPane();
 		fxmlPane.lockType(type);
 		return new DialogSelector(this, fxmlPane);
+	}
+	
+	public SQLRequest<Void> clearAttandences() {
+		return TableProjectAttandences.instance().clearAll(false);
+	}
+	
+	public SQLRequest<Void> addAttandences(Map<Project, List<Student>> matching) {
+		return () -> {
+			List<TableProjectAttandences.Entry> entries = new ArrayList<>();
+			
+			for (Project project : matching.keySet()) {
+				for (Student student : matching.get(project)) {
+					entries.add(new TableProjectAttandences.Entry(project.getId(), student.getId(), false));
+				}
+			}
+			
+			TableProjectAttandences.instance().addAll(entries).sync();
+			return null;
+		};
 	}
 
 }

@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import de.rincewind.api.util.ProjectType;
 import de.rincewind.gui.controller.ControllerStudentProjectCreator;
-import de.rincewind.gui.panes.abstarcts.FXMLPane;
+import de.rincewind.gui.panes.abstracts.FXMLPane;
 import de.rincewind.gui.util.Cell;
 import javafx.scene.layout.VBox;
 

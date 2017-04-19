@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.embed.swing.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox maxWidth="600.0" HBox.hgrow="ALWAYS">
+         <children>
+            <ListView fx:id="listConsole" VBox.vgrow="ALWAYS" />
+            <HBox spacing="80.0">
+               <children>
+                  <Button fx:id="btnDeleteConsole" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Ausgabe löschen" HBox.hgrow="ALWAYS" />
+                  <CheckBox fx:id="checkBoxConsole" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Ausgabe deaktiviert" HBox.hgrow="ALWAYS" />
+               </children>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <HBox.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+         </HBox.margin>
+      </VBox>
+      <Separator orientation="VERTICAL" prefHeight="200.0">
+         <HBox.margin>
+            <Insets bottom="20.0" top="20.0" />
+         </HBox.margin>
+      </Separator>
+      <VBox alignment="CENTER_LEFT" maxWidth="800.0" HBox.hgrow="ALWAYS">
+         <children>
+            <HBox>
+               <children>
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="Schüler in der Verteilung (komplett): " />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label fx:id="labelStudents" minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="Schüler in der Verteilung (nur früh): " />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label fx:id="labelStudentsEarly" minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="Schüler in der Verteilung (nur spät): " />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label fx:id="labelStudentsLate" minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="Projekte in der Verteilung: " />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label fx:id="labelProjects" minHeight="-Infinity" prefHeight="30.0" text="{COUNT}" />
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </VBox.margin>
+            </Separator>
+            <Label minHeight="-Infinity" prefHeight="30.0" text="Strafwerte:" />
+            <HBox>
+               <children>
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="- Erstwahl: " />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="textDamageFirst" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="50.0" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="- Zweitwahl:" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="textDamageSecond" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="50.0" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="- Drittwahl: " />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="textDamageThird" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="50.0" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="- Kein Projekt: " />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="textDamageWithout" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="50.0" />
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </VBox.margin>
+            </Separator>
+            <HBox>
+               <children>
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="Zeit für die Optimierung (in Sekunden): " />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="textTimeout" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="100.0" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox>
+               <children>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="btnStart" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Optimierung starten" />
+                  <Region HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <Region VBox.vgrow="ALWAYS" />
+            <Label minHeight="-Infinity" prefHeight="30.0" text="Auswertung:">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin></Label>
+            <GridPane alignment="CENTER" gridLinesVisible="true">
+               <children>
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="Frühes Projekt" GridPane.columnIndex="1" />
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="Spätes Projekt" GridPane.columnIndex="2" />
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="Ganzes Projekt" GridPane.columnIndex="3" />
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="1. Wahl" GridPane.rowIndex="1" />
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="2. Wahl" GridPane.rowIndex="2" />
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="3. Wahl" GridPane.rowIndex="3" />
+                  <Label fx:id="labelStatsFirstEarly" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="labelStatsSecondEarly" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="labelStatsFirstLate" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label fx:id="labelStatsFirstFull" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Label fx:id="labelStatsSecondFull" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <Label fx:id="labelStatsThirdEarly" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label fx:id="labelStatsThirdLate" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label fx:id="labelStatsSecondLate" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Label fx:id="labelStatsThirdFull" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <HBox>
+               <children>
+                  <Label minHeight="-Infinity" prefHeight="30.0" text="Ohne Projekt: " />
+                  <Region HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Region>
+                  <Label fx:id="labelStatsWithout" minHeight="-Infinity" prefHeight="30.0" />
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </VBox.margin>
+            </Separator>
+            <HBox alignment="CENTER" spacing="30.0">
+               <children>
+                  <Button fx:id="btnSave" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Optimierung setzten" />
+                  <Button fx:id="btnDelete" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Aktuelle Zuteilung löschen" />
+               </children>
+            </HBox>
+         </children>
+         <HBox.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+         </HBox.margin>
+      </VBox>
+   </children>
+</HBox>

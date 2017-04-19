@@ -1,4 +1,4 @@
-package de.rincewind.gui.panes.abstarcts;
+package de.rincewind.gui.panes.abstracts;
 
 import java.io.IOException;
 import java.util.List;

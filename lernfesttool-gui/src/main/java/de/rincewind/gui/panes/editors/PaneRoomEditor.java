@@ -5,7 +5,7 @@ import java.util.Arrays;
 import javafx.scene.layout.VBox;
 import de.rincewind.api.Room;
 import de.rincewind.gui.controller.editors.ControllerRoomEditor;
-import de.rincewind.gui.panes.abstarcts.PaneEditor;
+import de.rincewind.gui.panes.abstracts.PaneEditor;
 import de.rincewind.gui.util.TabHandler;
 
 public class PaneRoomEditor extends PaneEditor<VBox> {

@@ -55,7 +55,7 @@ public class TableSchoolClasses extends EntityTable {
 		return () -> {
 			DatabaseConnection connection = this.getDatabase().getConnection();
 			
-			PreparedStatement stmt = connection.prepare("SELECT classId, " + this.buildSelection(columns) + " FROM schoolClasses WHERE roomId = ?");
+			PreparedStatement stmt = connection.prepare("SELECT classId, " + this.buildSelection(columns) + " FROM schoolclasses WHERE roomId = ?");
 			DatabaseUtils.setInt(stmt, 1, roomId);
 			SQLResult result = connection.query(stmt);
 			

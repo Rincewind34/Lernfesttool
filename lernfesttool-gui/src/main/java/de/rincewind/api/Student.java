@@ -2,6 +2,7 @@ package de.rincewind.api;
 
 import java.awt.Graphics;
 import java.awt.print.PageFormat;
+import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 
 import de.rincewind.api.abstracts.Dataset;
@@ -15,6 +16,7 @@ import de.rincewind.api.util.SaveResult;
 import de.rincewind.api.util.StudentState;
 import de.rincewind.sql.SQLRequest;
 import de.rincewind.sql.tables.entities.TableStudents;
+import de.rincewind.sql.tables.relations.TableProjectAttandences;
 import de.rincewind.sql.tables.relations.TableProjectChoosing;
 
 public class Student extends Dataset {
@@ -37,8 +39,7 @@ public class Student extends Dataset {
 	
 	@Override
 	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-		// TODO Auto-generated method stub
-		return 0;
+		return Printable.NO_SUCH_PAGE;
 	}
 	
 	@Override
@@ -68,7 +69,7 @@ public class Student extends Dataset {
 	@SuppressWarnings("unchecked")
 	protected <T> void setSQLValue(DatasetField<?> field, T value) {
 		if (field.getAccessor().equals(Student.SCHOOL_CLASS)) {
-			((DatasetField<SchoolClass>) field).setValue(SchoolClass.getManager().newEmptyObject((int) (Object) value));
+			Dataset.initDataset((DatasetField<Dataset>) field, (int) (Object) value, SchoolClass.getManager());
 		} else if (field.getAccessor().equals(Student.ACCESS_LEVEL)) {
 			((DatasetField<AccessLevel>) field).setValue(AccessLevel.get((int) (Object) value));
 		} else if (field.getAccessor().equals(Student.STATE)) {
@@ -95,6 +96,17 @@ public class Student extends Dataset {
 		} else {
 			return "schüler-" + this.getId();
 		}
+	}
+	
+	@Override
+	public SQLRequest<Void> delete() {
+		return () -> {
+			super.delete().sync();
+			TableProjectAttandences.instance().clearStudent(this.getId(), true).sync();
+			TableProjectAttandences.instance().clearStudent(this.getId(), false).sync();
+			TableProjectChoosing.instance().clearStudent(this.getId()).sync();
+			return null;
+		};
 	}
 	
 	public boolean isSchoolClassSelected() {

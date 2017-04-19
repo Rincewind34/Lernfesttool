@@ -27,7 +27,7 @@ public class TableHelpers extends EntityTable {
 	@Override
 	public SQLRequest<Integer> insertEmptyDataset() {
 		return () -> {
-			return this.getDatabase().getConnection().insert("INSERT INTO helpers (name, studentId) VALUES ('Helfer', -1)");
+			return this.getDatabase().getConnection().insert("INSERT INTO helpers (name, studentId) VALUES ('Max', -1)");
 		};
 	}
 	
@@ -38,7 +38,7 @@ public class TableHelpers extends EntityTable {
 			PreparedStatement stmt = connection.prepare("UPDATE helpers SET name = ?, studentId = ? WHERE helperId = ?");
 			DatabaseUtils.setString(stmt, 1, name);
 			DatabaseUtils.setInt(stmt, 2, studentId);
-			DatabaseUtils.setInt(stmt, 2, helperId);
+			DatabaseUtils.setInt(stmt, 3, helperId);
 			connection.update(stmt);
 			
 			return null;

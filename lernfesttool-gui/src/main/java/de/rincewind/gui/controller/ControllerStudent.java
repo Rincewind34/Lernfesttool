@@ -94,7 +94,7 @@ public class ControllerStudent implements Controller {
 			return value ? true : cell.getSavedObject().getValue(Project.TYPE) != ProjectType.LATE;
 		}));
 		this.filler.addChecker(new CheckBoxCheck<>(this.checkJoinableProjects, (value, cell) -> {
-			if (value || !this.student.isSchoolClassSelected()) {
+			if (!value || !this.student.isSchoolClassSelected()) {
 				return true;
 			}
 
@@ -106,9 +106,11 @@ public class ControllerStudent implements Controller {
 		// === Inserting === //
 
 		this.filler.refresh();
-
-		if ((leadings.leadingAmount() == 0 || !leadings.isLeading(ProjectType.FULL)) && this.student.getValue(Student.STATE) == StudentState.ENTER_PROJECTS) {
-			this.boxProjects.getItems().add(new Cell<>("<Neues erstellen>", null));
+		
+		if (this.student.getValue(Student.STATE) == StudentState.ENTER_PROJECTS) {
+			if ((leadings.leadingAmount() == 0 || !leadings.isLeading(ProjectType.FULL))) {
+				this.boxProjects.getItems().add(new Cell<>("<Neues erstellen>", null));
+			}
 		}
 
 		for (Project project : leadings.leadingProjects()) {
@@ -121,6 +123,10 @@ public class ControllerStudent implements Controller {
 		});
 
 		this.calculateButton();
+		
+		if (this.student.getValue(Student.STATE) != StudentState.ENTER_PROJECTS && leadings.leadingAmount() == 0) {
+			this.boxProjects.setDisable(true);
+		}
 
 		// === Inserting === //
 		// === Listening === //
@@ -148,7 +154,7 @@ public class ControllerStudent implements Controller {
 					type = leadings.getFirstLeadingOne().getValue(Project.TYPE).invert();
 				}
 
-				DialogProjectCreator creator = new DialogProjectCreator(type);
+				DialogProjectCreator creator = new DialogProjectCreator(this.student.getId(), type);
 				Optional<Project> result = creator.showAndWait();
 
 				if (result.isPresent()) {
@@ -175,6 +181,8 @@ public class ControllerStudent implements Controller {
 	}
 
 	private void calculateButton() {
+		this.buttonManage.setDisable(this.boxProjects.getSelectionModel().getSelectedIndex() == -1);
+		
 		if (this.student.getValue(Student.STATE) == StudentState.ENTER_PROJECTS) {
 			if (this.boxProjects.getSelectionModel().getSelectedItem().getSavedObject() == null) {
 				this.buttonManage.setText("Projekt erstellen");

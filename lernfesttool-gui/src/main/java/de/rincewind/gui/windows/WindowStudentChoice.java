@@ -1,13 +1,14 @@
 package de.rincewind.gui.windows;
 
+import de.rincewind.api.Student;
+import de.rincewind.gui.panes.PaneStudentChoice;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import de.rincewind.gui.panes.PaneStudentChoice;
 
 public class WindowStudentChoice extends Window<GridPane> {
 
-	public WindowStudentChoice() {
-		super(new PaneStudentChoice(), "Lernfest");
+	public WindowStudentChoice(Student student) {
+		super(new PaneStudentChoice(student), "Lernfest");
 	}
 
 	@Override

@@ -2,12 +2,14 @@ package de.rincewind.api.manager;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import de.rincewind.api.Room;
 import de.rincewind.api.SchoolClass;
 import de.rincewind.api.abstracts.DatasetFieldAccessor;
 import de.rincewind.api.abstracts.DatasetManager;
 import de.rincewind.gui.controller.selectors.ControllerClassSelector;
-import de.rincewind.gui.panes.abstarcts.FXMLPane;
+import de.rincewind.gui.panes.abstracts.FXMLPane;
 import de.rincewind.gui.panes.editors.PaneClassEditor;
 import de.rincewind.gui.panes.selectors.PaneSelector;
 import de.rincewind.gui.util.TabHandler;
@@ -65,6 +67,20 @@ public class SchoolClassManager extends DatasetManager {
 	@SuppressWarnings("unchecked")
 	public SQLRequest<List<SchoolClass>> getAllDatasets() {
 		return this.getAllDatasets(SchoolClass.class);
+	}
+	
+	public SQLRequest<List<SchoolClass>> getAllDatasets(Map<Integer, Room> rooms) {
+		return () -> {
+			List<SchoolClass> classes = this.getAllDatasets().sync();
+			
+			for (SchoolClass schoolClass : classes) {
+				if (schoolClass.isRoomSelected()) {
+					schoolClass.getValue(SchoolClass.ROOM).loadFrom(rooms.get(schoolClass.getValue(SchoolClass.ROOM).getId()));
+				}
+			}
+			
+			return classes;
+		};
 	}
 	
 }

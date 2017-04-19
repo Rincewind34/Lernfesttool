@@ -1,9 +1,9 @@
 package de.rincewind.main;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import javax.print.PrintServiceLookup;
 
 import de.rincewind.api.Student;
 import de.rincewind.api.session.Accounts;
@@ -25,22 +25,9 @@ import de.rincewind.sql.tables.entities.TableTeachers;
 import de.rincewind.sql.tables.relations.TableProjectAttandences;
 import de.rincewind.sql.tables.relations.TableProjectChoosing;
 import de.rincewind.sql.tables.relations.TableProjectHelping;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ReadOnlyBooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class Main extends Application implements GUISession {
 
@@ -57,6 +44,8 @@ public class Main extends Application implements GUISession {
 			System.out.println("Invalid argument length!");
 			return;
 		}
+		
+		System.out.println(PrintServiceLookup.lookupPrintServices(null, null).length);
 		
 		Main.threadpool = Executors.newCachedThreadPool();
 		
@@ -176,77 +165,6 @@ public class Main extends Application implements GUISession {
 	public void start(Stage stage) throws Exception {
 		Main.stage = stage;
 		this.changeWindow(new WindowLogin());
-
-		//
-		// Rectangle2D primaryScreenBounds =
-		// Screen.getPrimary().getVisualBounds();
-		//
-		// final FadePopup popup = new FadePopup();
-		// popup.setHideOnEscape(true);
-		//
-		// String css = "-fx-background-color: #eee;\n"
-		// + "-fx-border-color: #ccc;\n"
-		// + "-fx-border-width: 2;\n"
-		// + "-fx-border-style: solid;\n";
-		//
-		// HBox content = new HBox();
-		// content.setStyle(css);
-		// content.setMinWidth(300);
-		// content.setMinWidth(30);
-		// content.setPadding(new Insets(10.0, 10.0, 10.0, 10.0));
-		// content.getChildren().add(new Label("Hey, das ist ein Test"));
-		//
-		// popup.getContent().addAll(content);
-		//
-		// popup.setX(primaryScreenBounds.getWidth() - 130);
-		// popup.setY(30);
-		//
-		// Button show = new Button("Show");
-		// show.setOnAction(new EventHandler<ActionEvent>() {
-		//
-		// @Override
-		// public void handle(ActionEvent event) {
-		// popup.show(stage);
-		// stage.requestFocus();
-		//
-		// new AnimationTimer() {
-		//
-		// private double originalX = popup.getX();
-		// private double x = this.originalX;
-		//
-		// @Override
-		// public void handle(long now) {
-		// if (!popup.isShowing() || this.x == this.originalX - 100) {
-		// this.stop();
-		// }
-		//
-		// this.x = this.x - 1;
-		// popup.setX(this.x);
-		// }
-		//
-		// }.start();
-		// }
-		//
-		// });
-		//
-		// Button hide = new Button("Hide");
-		// hide.disableProperty().bind(popup.hidingProperty());
-		// hide.setOnAction(new EventHandler<ActionEvent>() {
-		//
-		// @Override
-		// public void handle(ActionEvent event) {
-		// popup.hide();
-		// }
-		//
-		// });
-		//
-		// HBox layout = new HBox(10);
-		//
-		// layout.setStyle("-fx-background-color: cornsilk; -fx-padding: 10;");
-		// layout.getChildren().addAll(show, hide);
-		//
-		// stage.setScene(new Scene(layout));
-		// stage.show();
 	}
 
 	@Override
@@ -256,58 +174,4 @@ public class Main extends Application implements GUISession {
 		this.changeWindow(null);
 	}
 
-	public class FadePopup extends Popup {
-
-		private final BooleanProperty hiding;
-
-		public FadePopup() {
-			this.hiding = new SimpleBooleanProperty(this, "hiding", false);
-			this.setEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> {
-				this.hide();
-			});
-		}
-
-		public ReadOnlyBooleanProperty hidingProperty() {
-			return this.hiding;
-		}
-
-		public boolean isHiding() {
-			return this.hiding.get();
-		}
-
-		@Override
-		public void hide() {
-			if (!this.hiding.get()) {
-				this.hiding.set(true);
-
-				final ObservableList<Node> nodes = this.getContent();
-				final Map<Node, Double> opacities = new HashMap<>();
-				KeyValue[] keyValues = new KeyValue[nodes.size()];
-
-				for (int i = 0; i < keyValues.length; i++) {
-					Node node = nodes.get(i);
-					opacities.put(node, node.getOpacity());
-					keyValues[i] = new KeyValue(nodes.get(i).opacityProperty(), 0);
-				}
-
-				KeyFrame frame = new KeyFrame(Duration.seconds(1), keyValues);
-				Timeline timeline = new Timeline(frame);
-
-				timeline.setOnFinished(new EventHandler<ActionEvent>() {
-
-					@Override
-					public void handle(ActionEvent event) {
-						FadePopup.this.hiding.set(false);
-						FadePopup.super.hide();
-						for (Node node : nodes) {
-							node.setOpacity(opacities.get(node));
-						}
-					}
-
-				});
-
-				timeline.play();
-			}
-		}
-	}
 }

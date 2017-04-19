@@ -13,14 +13,19 @@ import de.rincewind.api.abstracts.DatasetManager;
 import de.rincewind.gui.controller.abstracts.Controller;
 import de.rincewind.gui.dialogs.DialogConfirmClose;
 import de.rincewind.gui.main.GUIHandler;
-import de.rincewind.gui.panes.PaneStatsProject;
-import de.rincewind.gui.panes.abstarcts.AdminTab;
-import de.rincewind.gui.panes.abstarcts.FXMLPane;
+import de.rincewind.gui.panes.PaneStatsProjects;
+import de.rincewind.gui.panes.PaneStatsStudents;
+import de.rincewind.gui.panes.PaneStudentActions;
+import de.rincewind.gui.panes.PaneStudentMatching;
+import de.rincewind.gui.panes.abstracts.AdminTab;
+import de.rincewind.gui.panes.abstracts.FXMLPane;
+import de.rincewind.gui.panes.abstracts.PaneEditor;
 import de.rincewind.gui.util.TabHandler;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -67,6 +72,15 @@ public class ControllerAdmin implements Controller, TabHandler {
 	private MenuItem menuStatsProject;
 	
 	@FXML
+	private MenuItem menuStatsStudents;
+	
+	@FXML
+	private MenuItem menuStudentMatching;
+	
+	@FXML
+	private MenuItem menuStudentActions;
+	
+	@FXML
 	private MenuItem menuPrint;
 	
 	@FXML
@@ -80,6 +94,12 @@ public class ControllerAdmin implements Controller, TabHandler {
 	
 	@FXML
 	private MenuItem menuTerminate;
+	
+	@FXML
+	private Button btnSave;
+	
+	@FXML
+	private Button btnCreateProject;
 	
 	@FXML
 	private TabPane paneTabs;
@@ -96,21 +116,23 @@ public class ControllerAdmin implements Controller, TabHandler {
 				this.addTab(manager, datasetId, false);
 			});
 		} else {
-			FXMLPane<?> pane = manager.createEditorPane(this, datasetId);
-			
-			if (!(pane instanceof AdminTab)) {
-				throw new RuntimeException("Can not add the pane '" + pane.getClass().getName() + "' as admintab!");
-			}
+			PaneEditor<?> pane = manager.createEditorPane(this, datasetId);
 			
 			Platform.runLater(() -> {
-				this.addTab((AdminTab) pane);
+				this.addTab(pane);
 			});
 		}
 	}
 	
 	@Override
 	public void addTab(AdminTab adminTab) {
-		Tab tab = new Tab(adminTab.getName());
+		String name = adminTab.getName();
+		
+		if (name.length() > 40) {
+			name = name.substring(0, 40) + "...";
+		}
+		
+		Tab tab = new Tab(name);
 		tab.setUserData(adminTab);
 		tab.setContent(adminTab.getContentPane());
 		tab.setClosable(true);
@@ -133,6 +155,7 @@ public class ControllerAdmin implements Controller, TabHandler {
 		
 		System.out.println("=== Add tab ===");
 		this.paneTabs.getTabs().add(tab);
+		this.paneTabs.getSelectionModel().select(tab);
 	}
 	
 	@Override
@@ -140,6 +163,7 @@ public class ControllerAdmin implements Controller, TabHandler {
 		this.menuPrint.setDisable(true);
 		this.menuSave.setDisable(true);
 		this.menuDelete.setDisable(true);
+		this.btnSave.setDisable(true);
 		
 		this.menuCreateProject.setOnAction((event) -> {
 			this.createDataset(Project.getManager());
@@ -191,7 +215,37 @@ public class ControllerAdmin implements Controller, TabHandler {
 		
 		this.menuStatsProject.setOnAction((event) -> {
 			GUIHandler.session().threadpool().execute(() -> {
-				AdminTab tab = FXMLPane.setup(new PaneStatsProject(this));
+				AdminTab tab = FXMLPane.setup(new PaneStatsProjects(this));
+				
+				Platform.runLater(() -> {
+					this.addTab(tab);
+				});
+			});
+		});
+		
+		this.menuStatsStudents.setOnAction((event) -> {
+			GUIHandler.session().threadpool().execute(() -> {
+				AdminTab tab = FXMLPane.setup(new PaneStatsStudents(this));
+				
+				Platform.runLater(() -> {
+					this.addTab(tab);
+				});
+			});
+		});
+		
+		this.menuStudentMatching.setOnAction((event) -> {
+			GUIHandler.session().threadpool().execute(() -> {
+				AdminTab tab = FXMLPane.setup(new PaneStudentMatching());
+				
+				Platform.runLater(() -> {
+					this.addTab(tab);
+				});
+			});
+		});
+		
+		this.menuStudentActions.setOnAction((event) -> {
+			GUIHandler.session().threadpool().execute(() -> {
+				AdminTab tab = FXMLPane.setup(new PaneStudentActions(this));
 				
 				Platform.runLater(() -> {
 					this.addTab(tab);
@@ -220,16 +274,26 @@ public class ControllerAdmin implements Controller, TabHandler {
 			GUIHandler.session().terminate();
 		});
 		
+		this.btnSave.setOnAction((event) -> {
+			this.getCurrentTab().save();
+		});
+		
+		this.btnCreateProject.setOnAction((event) -> {
+			this.createDataset(Project.getManager());
+		});
+		
 		this.paneTabs.getSelectionModel().selectedItemProperty().addListener((observeable, oldVale, newValue) -> {
 			if (newValue == null) {
 				this.menuPrint.setDisable(true);
 				this.menuSave.setDisable(true);
 				this.menuDelete.setDisable(true);
+				this.btnSave.setDisable(true);
 			} else {
 				AdminTab adminTab = (AdminTab) newValue.getUserData();
 				
 				this.menuPrint.setDisable(!adminTab.isPrintable());
 				this.menuSave.setDisable(!adminTab.isSaveable());
+				this.btnSave.setDisable(!adminTab.isSaveable());
 				this.menuDelete.setDisable(!adminTab.isDeleteable());
 			}
 		});

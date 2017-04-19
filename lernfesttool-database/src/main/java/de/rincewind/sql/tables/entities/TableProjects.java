@@ -33,11 +33,10 @@ public class TableProjects extends EntityTable {
 	@Override
 	public SQLRequest<Integer> insertEmptyDataset() {
 		return () -> {
-			PreparedStatement stmt = this.getDatabase().getConnection()
-					.prepare("INSERT INTO projects (roomId, name, minClass, maxClass, minStudents, maxStudents, costs, description,"
+			return this.getDatabase().getConnection()
+					.insert("INSERT INTO projects (roomId, name, minClass, maxClass, minStudents, maxStudents, costs, description,"
 							+ "notes, type, requestEBoard, requestHardware, requestSports, requestMusics, category, accepted) VALUES"
 							+ "(-1, '', 5, 12, 5, 10, 0, '', '', 2, false, false, false, false, 0, false)");
-			return this.getDatabase().getConnection().insert(stmt);
 		};
 	}
 
@@ -48,7 +47,7 @@ public class TableProjects extends EntityTable {
 		return () -> {
 			DatabaseConnection connection = this.getDatabase().getConnection();
 
-			String sql = "UPDATE projects SET roomId = ?, name = ? minClass = ?, maxClass = ?, minStudents = ?, maxStudents = ?, costs = ?, description = ?, notes = ?,"
+			String sql = "UPDATE projects SET roomId = ?, name = ?, minClass = ?, maxClass = ?, minStudents = ?, maxStudents = ?, costs = ?, description = ?, notes = ?,"
 					+ "type = ?, requestEBoard = ?, requestHardware = ?, requestSports = ?, requestMusics = ?, category = ? WHERE projectId = ?";
 
 			PreparedStatement stmt = connection.prepare(sql);
@@ -67,6 +66,7 @@ public class TableProjects extends EntityTable {
 			DatabaseUtils.setBoolean(stmt, 13, requestSports);
 			DatabaseUtils.setBoolean(stmt, 14, requestMusics);
 			DatabaseUtils.setByte(stmt, 15, category);
+			DatabaseUtils.setInt(stmt, 16, projectId);
 			connection.update(stmt);
 
 			return null;
@@ -89,12 +89,12 @@ public class TableProjects extends EntityTable {
 			while (result.next()) {
 				projectIds.add(result.current("projectId"));
 			}
-			
+
 			result.close();
 			return projectIds;
 		};
 	}
-	
+
 	public SQLRequest<Map<Integer, FieldMap>> getByRoom(int roomId, String... columns) {
 		return () -> {
 			DatabaseConnection connection = this.getDatabase().getConnection();
@@ -104,14 +104,14 @@ public class TableProjects extends EntityTable {
 			SQLResult result = connection.query(stmt);
 
 			Map<Integer, FieldMap> projects = new HashMap<>();
-			
+
 			while (result.next()) {
 				projects.put(result.current("projectId"), this.fillFieldMap(result, columns));
 			}
-			
+
 			result.close();
 			return projects;
 		};
 	}
-
+	
 }
