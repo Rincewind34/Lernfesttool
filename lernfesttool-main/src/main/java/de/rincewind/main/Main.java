@@ -3,8 +3,6 @@ package de.rincewind.main;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.print.PrintServiceLookup;
-
 import de.rincewind.api.Student;
 import de.rincewind.api.session.Accounts;
 import de.rincewind.api.session.HardcodedSession;
@@ -44,8 +42,6 @@ public class Main extends Application implements GUISession {
 			System.out.println("Invalid argument length!");
 			return;
 		}
-		
-		System.out.println(PrintServiceLookup.lookupPrintServices(null, null).length);
 		
 		Main.threadpool = Executors.newCachedThreadPool();
 		
@@ -91,8 +87,7 @@ public class Main extends Application implements GUISession {
 		}
 
 		System.out.println("=== Switch Window ===");
-		System.out.println(Main.stage);
-
+		
 		if (newWindow != null) {
 			this.currentWindow = newWindow;
 			this.currentWindow.create();
