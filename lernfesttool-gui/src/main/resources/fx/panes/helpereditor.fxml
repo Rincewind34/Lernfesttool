@@ -5,73 +5,92 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;"
-			text="Name">
-			<VBox.margin>
-				<Insets bottom="10.0" left="40.0" right="40.0" top="40.0" />
-			</VBox.margin>
-		</Label>
-		<TextField fx:id="textName" maxWidth="-Infinity" minHeight="-Infinity"
-			minWidth="-Infinity" prefHeight="30.0" prefWidth="520.0">
+		<TextField fx:id="textName" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="520.0" promptText="Name">
 			<VBox.margin>
 				<Insets bottom="60.0" left="40.0" right="40.0" />
 			</VBox.margin>
 		</TextField>
-		<ListView fx:id="listStudents" maxWidth="-Infinity" minWidth="-Infinity"
-			prefHeight="1000.0" prefWidth="520.0">
-			<VBox.margin>
-				<Insets bottom="20.0" left="40.0" right="40.0" />
-			</VBox.margin>
-		</ListView>
-		<HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="0.0"
-			prefWidth="520.0" spacing="40.0">
-			<children>
-				<TextField fx:id="textSearch" maxWidth="-Infinity"
-					minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0"
-					prefWidth="240.0" promptText="Suche" />
-				<ComboBox fx:id="boxClasses" maxWidth="-Infinity"
-					minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0"
-					prefWidth="240.0" promptText="Klasse" />
-			</children>
-			<VBox.margin>
-				<Insets bottom="20.0" left="40.0" right="40.0" />
-			</VBox.margin>
-		</HBox>
-		<HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="0.0"
-			prefWidth="520.0" spacing="40.0">
-			<children>
-				<Button fx:id="btnChooseStudent" maxWidth="-Infinity"
-					minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
-					prefHeight="30.0" prefWidth="146.0" text="Schüler auswählen">
-					<HBox.margin>
-						<Insets />
-					</HBox.margin>
-				</Button>
-				<Button fx:id="btnOpenStudent" maxWidth="-Infinity"
-					minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
-					prefHeight="30.0" prefWidth="148.0" text="Schüler öffnen" />
-				<Button fx:id="btnUnselect" minHeight="-Infinity" minWidth="-Infinity"
-					mnemonicParsing="false" prefHeight="30.0" prefWidth="146.0"
-					text="Auswahl löschen" />
-			</children>
-			<VBox.margin>
-				<Insets bottom="20.0" left="40.0" right="40.0" />
-			</VBox.margin>
-		</HBox>
-		<HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="0.0"
-			prefWidth="520.0">
-			<children>
-				<Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0"
-					style="-fx-font-size: 15;" text="Angehöriger Schüler: " />
-				<Label fx:id="labelStudent" minHeight="-Infinity" prefHeight="30.0"
-					prefWidth="1000.0" style="-fx-font-size: 15;" />
-			</children>
-			<VBox.margin>
-				<Insets bottom="40.0" left="40.0" right="40.0" />
-			</VBox.margin>
-		</HBox>
+      <Separator maxWidth="-Infinity" prefWidth="540.0">
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" />
+         </VBox.margin>
+      </Separator>
+      <HBox maxWidth="-Infinity" prefWidth="520.0">
+         <children>
+            <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Angehöriger Schüler: " />
+            <Label fx:id="labelStudent" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+            <Button fx:id="btnOpenStudent" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Schüler öffnen">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox maxWidth="-Infinity" prefWidth="520.0" spacing="120.0">
+         <children>
+            <Button fx:id="btnRemoveStudent" disable="true" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Auswahl entfernen">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnSelectStudent" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="1000.0" text="Schüler auswählen">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets bottom="20.0" left="40.0" right="40.0" />
+         </VBox.margin>
+      </HBox>
+      <Separator maxWidth="-Infinity" prefWidth="540.0" />
+      <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Projektbeaufsichtigung">
+         <VBox.margin>
+            <Insets bottom="10.0" left="40.0" right="40.0" top="20.0" />
+         </VBox.margin>
+      </Label>
+      <GridPane gridLinesVisible="true" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="520.0">
+         <children>
+            <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Frühes Projekt" />
+            <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Spätest Projekt" GridPane.rowIndex="1" />
+            <Label minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Ganzes Projekt" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
+            <Button fx:id="btnEarly" disable="true" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Projekt öffnen" GridPane.columnIndex="2">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="btnLate" disable="true" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Projekt öffnen" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button fx:id="btnFull" disable="true" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Projekt öffnen" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="labelEarly" minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Keines" GridPane.columnIndex="1" />
+            <Label fx:id="labelLate" minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Keines" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="labelFull" minHeight="-Infinity" prefHeight="30.0" style="-fx-font-size: 15;" text="Keines" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         </children>
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <VBox.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" />
+         </VBox.margin>
+      </GridPane>
 	</children>
 </VBox>

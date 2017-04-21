@@ -38,7 +38,6 @@ public class ControllerTeacherEditor extends ControllerEditor {
 	@FXML
 	private Button btnFull;
 	
-	
 	private Teacher teacher;
 	private ProjectSet projectSet;
 	
