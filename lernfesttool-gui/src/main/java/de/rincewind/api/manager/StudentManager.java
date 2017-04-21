@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import de.rincewind.api.Room;
 import de.rincewind.api.SchoolClass;
 import de.rincewind.api.Student;
 import de.rincewind.api.abstracts.Dataset;
@@ -72,17 +73,17 @@ public class StudentManager extends DatasetManager {
 	public SQLRequest<List<Student>> getAllDatasets() {
 		return this.getAllDatasets(Student.class);
 	}
-	
+
 	public SQLRequest<List<Student>> getAllDatasets(Map<Integer, SchoolClass> classes) {
 		return () -> {
 			List<Student> students = this.getAllDatasets().sync();
-			
+
 			for (Student student : students) {
 				if (student.isSchoolClassSelected()) {
 					student.getValue(Student.SCHOOL_CLASS).loadFrom(classes.get(student.getValue(Student.SCHOOL_CLASS).getId()));
 				}
 			}
-			
+
 			return students;
 		};
 	}
@@ -92,12 +93,12 @@ public class StudentManager extends DatasetManager {
 
 		for (Integer studentId : studentMap.keySet()) {
 			Student student = studentMap.get(studentId);
-			
+
 			if (leadingSets.containsKey(studentId)) {
 				if (leadingSets.get(studentId).isComplete()) {
 					continue;
 				}
-				
+
 				if (chooses.containsKey(studentId)) {
 					if (leadingSets.get(studentId).isSet(ProjectType.EARLY) && ProjectSet.checkAll(chooses.get(studentId), ProjectType.LATE)) {
 						continue;
@@ -108,7 +109,7 @@ public class StudentManager extends DatasetManager {
 			} else if (chooses.containsKey(studentId) && ProjectSet.checkAll(chooses.get(studentId))) {
 				continue;
 			}
-			
+
 			result.add(student);
 		}
 
@@ -121,9 +122,22 @@ public class StudentManager extends DatasetManager {
 		for (Integer studentId : studentMap.keySet()) {
 			Student student = studentMap.get(studentId);
 
-			if (attandencesSets.containsKey(studentId) && attandencesSets.get(studentId).isComplete()) {
-				continue;
-			} else {
+			if (!attandencesSets.containsKey(studentId) || attandencesSets.get(studentId).isEmpty()) {
+				result.add(student);
+			}
+		}
+
+		return result;
+	}
+
+	public List<Student> getWithoutHalfProject(Map<Integer, Student> studentMap, Map<Integer, ProjectSet> attandencesSets, ProjectType type) {
+		List<Student> result = new ArrayList<>();
+
+		for (Integer studentId : studentMap.keySet()) {
+			Student student = studentMap.get(studentId);
+
+			if (attandencesSets.containsKey(studentId) && !attandencesSets.get(studentId).isComplete()
+					&& (attandencesSets.get(studentId).isSet(type.invert()))) {
 				result.add(student);
 			}
 		}
@@ -133,7 +147,8 @@ public class StudentManager extends DatasetManager {
 
 	public SQLRequest<List<Student>> fetchSchoolClasses(List<Student> students) {
 		return () -> {
-			Map<Integer, SchoolClass> classes = Dataset.convertList(SchoolClass.getManager().getAllDatasets().sync());
+			Map<Integer, SchoolClass> classes = Dataset
+					.convertList(SchoolClass.getManager().getAllDatasets(Dataset.convertList(Room.getManager().getAllDatasets().sync())).sync());
 
 			for (Student student : students) {
 				if (student.isSchoolClassSelected()) {

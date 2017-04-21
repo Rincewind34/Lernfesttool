@@ -72,73 +72,6 @@ public class Project extends Dataset {
 	}
 
 	@Override
-	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-		if (pageIndex > 0) {
-			return Printable.NO_SUCH_PAGE;
-		}
-		
-		this.fetchMissing().sync();
-		List<Student> fetchedLeaders = this.fetchLeaders().sync();
-		List<Guide> fetchedGuides = this.fetchGuides().sync();
-		
-		String room = "NaN";
-		
-		if (this.isRoomSelected()) {
-			this.getValue(Project.ROOM).fetchMissing().sync();
-			room = this.getValue(Project.ROOM).getValue(Room.NAME);
-		}
-		
-		String leaders = "";
-		
-		for (Student student : fetchedLeaders) {
-			leaders = leaders + ", " + student.getValue(Student.FIRSTNAME) + " " + student.getValue(Student.LASTNAME);
-		}
-		
-		for (Guide guide : fetchedGuides) {
-			leaders = leaders + ", " + guide.getName();
-		}
-		
-		leaders = leaders.substring(2);
-		
-		String classes = SchoolClass.convertLevel(this.getValue(Project.MIN_CLASS)) + "-" + SchoolClass.convertLevel(this.getValue(Project.MAX_CLASS));
-		String students = this.getValue(Project.MIN_STUDENTS) + "-" + this.getValue(Project.MAX_STUDENTS);
-
-		double width = Design.pointsToCenti((int) pageFormat.getImageableWidth());
-		double height = Design.pointsToCenti((int) pageFormat.getImageableHeight());
-		
-		Design.setupGraphics((Graphics2D) graphics, pageFormat);
-		
-		graphics.drawRect(0, 0, (int) pageFormat.getImageableWidth(), (int) pageFormat.getImageableHeight());
-
-		graphics.drawLine(0, Design.centiToPoints(1), (int) pageFormat.getImageableWidth(), Design.centiToPoints(1));
-		graphics.drawLine(0, Design.centiToPoints(2), (int) pageFormat.getImageableWidth(), Design.centiToPoints(2));
-		graphics.drawLine(0, Design.centiToPoints(3), (int) pageFormat.getImageableWidth(), Design.centiToPoints(3));
-		graphics.drawLine(0, Design.centiToPoints(height - 1), (int) pageFormat.getImageableWidth(), Design.centiToPoints(height - 1));
-		graphics.drawLine(Design.centiToPoints(2), 0, Design.centiToPoints(2), Design.centiToPoints(2));
-		graphics.drawLine(Design.centiToPoints(width - 2), 0, Design.centiToPoints(width - 2), Design.centiToPoints(1));
-		graphics.drawLine(Design.centiToPoints((width - 2) / 2.0D + 2), Design.centiToPoints(1), Design.centiToPoints((width - 2) / 2.0D + 2),
-				Design.centiToPoints(2));
-		graphics.drawLine(Design.centiToPoints(width / 2.0D), Design.centiToPoints(height - 1), Design.centiToPoints(width / 2.0D),
-				(int) pageFormat.getImageableHeight());
-
-		graphics.drawString(this.getProjectIdString(), Design.centiToPoints(0.5), Design.centiToPoints(0.75));
-		graphics.drawString(this.getValue(Project.NAME), Design.centiToPoints(2.5), Design.centiToPoints(0.75));
-		graphics.drawString(this.getValue(Project.TYPE).getName(), Design.centiToPoints(width - 1.5), Design.centiToPoints(0.75));
-		graphics.drawString(room, Design.centiToPoints(0.5), Design.centiToPoints(1.75));
-		graphics.drawString("Klassenstufe: " + classes, Design.centiToPoints(2.5), Design.centiToPoints(1.75));
-		graphics.drawString("Teilnhemerzahl: " + students, Design.centiToPoints((width - 2) / 2.0D + 2.5), Design.centiToPoints(1.75));
-		graphics.drawString("Leiter: " + leaders, Design.centiToPoints(0.5), Design.centiToPoints(2.75));
-		graphics.drawString("Kosten: " + this.getCostString(), Design.centiToPoints(0.5), Design.centiToPoints(height - 0.25));
-		graphics.drawString("Kategory: " + this.getValue(Project.CATEGORY).getName(), Design.centiToPoints(width / 2.0D + 0.5),
-				Design.centiToPoints(height - 0.25));
-
-		Design.drawStringMultiLine((Graphics2D) graphics, this.getValue(Project.DESCRIPTION), Design.centiToPoints(width - 1), Design.centiToPoints(0.5),
-				Design.centiToPoints(3.75));
-
-		return Printable.PAGE_EXISTS;
-	}
-
-	@Override
 	public DatasetManager getMatchingManager() {
 		return Project.getManager();
 	}
@@ -170,6 +103,86 @@ public class Project extends Dataset {
 
 			return result;
 		};
+	}
+
+	@Override
+	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+		if (pageIndex > 0) {
+			return Printable.NO_SUCH_PAGE;
+		}
+		
+		try {
+			this.fetchMissing().sync();
+			List<Student> fetchedLeaders = this.fetchLeaders().sync();
+			List<Guide> fetchedGuides = this.fetchGuides().sync();
+			
+			String room = "NaN";
+			
+			if (this.isRoomSelected()) {
+				this.getValue(Project.ROOM).fetchMissing().sync();
+				room = this.getValue(Project.ROOM).getValue(Room.NAME);
+			}
+			
+			String leaders = "";
+			
+			for (Student student : fetchedLeaders) {
+				leaders = leaders + ", " + student.getValue(Student.FIRSTNAME) + " " + student.getValue(Student.LASTNAME);
+			}
+			
+			for (Guide guide : fetchedGuides) {
+				leaders = leaders + ", " + guide.getName();
+			}
+			
+			if (!leaders.isEmpty()) {
+				leaders = leaders.substring(2);
+			}
+			
+			String classes = SchoolClass.convertLevel(this.getValue(Project.MIN_CLASS)) + "-" + SchoolClass.convertLevel(this.getValue(Project.MAX_CLASS));
+			String students = this.getValue(Project.MIN_STUDENTS) + "-" + this.getValue(Project.MAX_STUDENTS);
+	
+			double width = Design.pointsToCenti((int) pageFormat.getImageableWidth());
+			double height = Design.pointsToCenti((int) pageFormat.getImageableHeight());
+			
+			Design.setupGraphics((Graphics2D) graphics, pageFormat);
+			
+			graphics.drawRect(0, 0, (int) pageFormat.getImageableWidth(), (int) pageFormat.getImageableHeight());
+	
+			graphics.drawLine(0, Design.centiToPoints(1), (int) pageFormat.getImageableWidth(), Design.centiToPoints(1));
+			graphics.drawLine(0, Design.centiToPoints(2), (int) pageFormat.getImageableWidth(), Design.centiToPoints(2));
+			graphics.drawLine(0, Design.centiToPoints(3), (int) pageFormat.getImageableWidth(), Design.centiToPoints(3));
+			graphics.drawLine(0, Design.centiToPoints(height - 1), (int) pageFormat.getImageableWidth(), Design.centiToPoints(height - 1));
+			graphics.drawLine(Design.centiToPoints(2), 0, Design.centiToPoints(2), Design.centiToPoints(2));
+			graphics.drawLine(Design.centiToPoints(width - 2), 0, Design.centiToPoints(width - 2), Design.centiToPoints(1));
+			graphics.drawLine(Design.centiToPoints((width - 2) / 2.0D + 2), Design.centiToPoints(1), Design.centiToPoints((width - 2) / 2.0D + 2),
+					Design.centiToPoints(2));
+			graphics.drawLine(Design.centiToPoints(width / 2.0D), Design.centiToPoints(height - 1), Design.centiToPoints(width / 2.0D),
+					(int) pageFormat.getImageableHeight());
+	
+			graphics.drawString(this.getProjectIdString(), Design.centiToPoints(0.5), Design.centiToPoints(0.75));
+			graphics.drawString(this.getValue(Project.NAME), Design.centiToPoints(2.5), Design.centiToPoints(0.75));
+			graphics.drawString(this.getValue(Project.TYPE).getName(), Design.centiToPoints(width - 1.5), Design.centiToPoints(0.75));
+			graphics.drawString(room, Design.centiToPoints(0.5), Design.centiToPoints(1.75));
+			graphics.drawString("Klassenstufe: " + classes, Design.centiToPoints(2.5), Design.centiToPoints(1.75));
+			graphics.drawString("Teilnhemerzahl: " + students, Design.centiToPoints((width - 2) / 2.0D + 2.5), Design.centiToPoints(1.75));
+			graphics.drawString("Leiter: " + leaders, Design.centiToPoints(0.5), Design.centiToPoints(2.75));
+			graphics.drawString("Kosten: " + this.getCostString(), Design.centiToPoints(0.5), Design.centiToPoints(height - 0.25));
+			graphics.drawString("Kategory: " + this.getValue(Project.CATEGORY).getName(), Design.centiToPoints(width / 2.0D + 0.5),
+					Design.centiToPoints(height - 0.25));
+	
+			Design.drawStringMultiLine((Graphics2D) graphics, this.getValue(Project.DESCRIPTION), Design.centiToPoints(width - 1), Design.centiToPoints(0.5),
+					Design.centiToPoints(3.75));
+	
+			return Printable.PAGE_EXISTS;
+		} catch (Exception exception) {
+			System.out.println("ERROR while printing project " + this.getId() + ":");
+			exception.printStackTrace();
+			return Printable.NO_SUCH_PAGE;
+		}
+	}
+	
+	@Override
+	public int getPageCount(PageFormat pageFormat) {
+		return 1;
 	}
 
 	@Override

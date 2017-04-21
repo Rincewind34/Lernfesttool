@@ -184,7 +184,7 @@ public class ControllerStudentMatching implements Controller {
 			this.btnDelete.setDisable(true);
 			
 			Project.getManager().clearAttandences().async((voidObject) -> {
-				this.btnSave.setDisable(false);
+				this.btnSave.setDisable(this.mapping.getResult() == null);
 				this.btnDelete.setDisable(false);
 			}, (exception) -> {
 				// TODO

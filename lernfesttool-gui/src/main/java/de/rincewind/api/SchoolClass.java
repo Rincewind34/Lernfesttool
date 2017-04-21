@@ -7,6 +7,7 @@ import java.awt.print.PrinterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import de.rincewind.api.abstracts.Dataset;
 import de.rincewind.api.abstracts.DatasetField;
@@ -142,6 +143,12 @@ public class SchoolClass extends Dataset implements Comparable<SchoolClass> {
 	public boolean isTeacherSelected() {
 		return Dataset.isDatasetSelected(SchoolClass.TEACHER, this);
 	}
+	
+	public List<Student> getStudents(List<Student> students) {
+		return students.stream().filter((student) -> {
+			return student.isSchoolClassSelected() && student.getValue(Student.SCHOOL_CLASS).getId() == this.getId();
+		}).collect(Collectors.toList());
+	}
 
 	public SQLRequest<Void> fetchRoom() {
 		return Dataset.fetchDataset(SchoolClass.ROOM, this);
@@ -163,7 +170,9 @@ public class SchoolClass extends Dataset implements Comparable<SchoolClass> {
 			List<Student> students = new ArrayList<>();
 			
 			for (int studentId : result.keySet()) {
-				students.add(Student.getManager().newObject(studentId, result.get(studentId)));
+				Student student = Student.getManager().newObject(studentId, result.get(studentId));
+				student.getValue(Student.SCHOOL_CLASS).loadFrom(this);
+				students.add(student);
 			}
 
 			return students;

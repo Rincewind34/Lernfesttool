@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.rincewind.api.Project;
+import de.rincewind.api.Room;
 import de.rincewind.api.Student;
 import de.rincewind.api.abstracts.DatasetFieldAccessor;
 import de.rincewind.api.abstracts.DatasetManager;
@@ -71,6 +72,20 @@ public class ProjectManager extends DatasetManager {
 	@SuppressWarnings("unchecked")
 	public SQLRequest<List<Project>> getAllDatasets() {
 		return this.getAllDatasets(Project.class);
+	}
+	
+	public SQLRequest<List<Project>> getAllDatasets(Map<Integer, Room> rooms) {
+		return () -> {
+			List<Project> projects = this.getAllDatasets().sync();
+
+			for (Project project : projects) {
+				if (project.isRoomSelected()) {
+					project.getValue(Project.ROOM).loadFrom(rooms.get(project.getValue(Project.ROOM).getId()));
+				}
+			}
+
+			return projects;
+		};
 	}
 	
 	public PaneProjectSelector createSelectorPane(ProjectType locked) {

@@ -4,8 +4,8 @@ import java.util.function.Consumer;
 
 public enum GuideType {
 	
-	TEACHER(0x00, "Lehrer"),
-	HELPER(0x01, "Betreuer");
+	TEACHER(0, "Lehrer"),
+	HELPER(1, "Betreuer");
 	
 	private byte id;
 	

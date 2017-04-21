@@ -76,7 +76,7 @@ public class ProjectMapping {
 		List<TableProjectAttandences.Entry> attandences = TableProjectAttandences.instance().getEntries().sync();
 		List<TableProjectChoosing.Entry> choosing = TableProjectChoosing.instance().getEntries().sync();
 
-		Map<Integer, ProjectSet> leadings = ProjectSet.convertLeadings(attandences, this.projects);
+		Map<Integer, ProjectSet> leadings = ProjectSet.convertAttandences(attandences, this.projects);
 		Map<Integer, ProjectSet[]> chooses = ProjectSet.convertChooses(choosing, this.projects);
 		List<Student> withoutChoice = Student.getManager().getWithoutChoice(students, chooses, leadings);
 		List<Student> withoutProject = Student.getManager().getWithoutProject(students, ProjectSet.convertAttandences(attandences, this.projects));
@@ -187,6 +187,9 @@ public class ProjectMapping {
 					projectLinears.get(set.getProject(ProjectType.LATE).getId()).add(1, lateVar);
 					problem.setVarType(earlyVar, VarType.BOOL);
 					problem.setVarType(lateVar, VarType.BOOL);
+					
+					earlyVars.add(earlyVar);
+					lateVars.add(lateVar);
 				}
 			}
 
@@ -211,7 +214,8 @@ public class ProjectMapping {
 			}
 
 			studentLinear.add(2, studentId + "_" + "exit");
-			mainLinear.add(this.damageNoProject, studentId + "_" + "exit");
+			mainLinear.add(this.damageNoProject * 2, studentId + "_" + "exit");
+			
 			problem.setVarType(studentId + "_" + "exit", VarType.BOOL);
 			problem.add(studentLinear, "=", 2);
 		}
@@ -314,6 +318,32 @@ public class ProjectMapping {
 
 			if (exit) {
 				chooseStats.put(11, chooseStats.get(11) + 1);
+			}
+		}
+		
+		for (Student student : this.leadEarly.keySet()) {
+			for (int i = 0; i < 3; i++) {
+				Number resultVar = result.get(student.getId() + "_" + (i + 1) + ProjectType.LATE.name().charAt(0));
+
+				if (resultVar != null && resultVar.equals(new Integer(1))) {
+					Project project = this.leadEarly.get(student)[i].getProject(ProjectType.LATE);
+					attandences.get(project).add(student);
+
+					chooseStats.put(i * 3 + 2, chooseStats.get(i * 3 + 2) + 1);
+				}
+			}
+		}
+		
+		for (Student student : this.leadLate.keySet()) {
+			for (int i = 0; i < 3; i++) {
+				Number resultVar = result.get(student.getId() + "_" + (i + 1) + ProjectType.EARLY.name().charAt(0));
+
+				if (resultVar != null && resultVar.equals(new Integer(1))) {
+					Project project = this.leadLate.get(student)[i].getProject(ProjectType.EARLY);
+					attandences.get(project).add(student);
+
+					chooseStats.put(i * 3 + 1, chooseStats.get(i * 3 + 1) + 1);
+				}
 			}
 		}
 

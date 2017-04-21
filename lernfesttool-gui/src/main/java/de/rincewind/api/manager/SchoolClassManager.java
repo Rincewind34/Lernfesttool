@@ -6,6 +6,7 @@ import java.util.Map;
 
 import de.rincewind.api.Room;
 import de.rincewind.api.SchoolClass;
+import de.rincewind.api.Teacher;
 import de.rincewind.api.abstracts.DatasetFieldAccessor;
 import de.rincewind.api.abstracts.DatasetManager;
 import de.rincewind.gui.controller.selectors.ControllerClassSelector;
@@ -76,6 +77,24 @@ public class SchoolClassManager extends DatasetManager {
 			for (SchoolClass schoolClass : classes) {
 				if (schoolClass.isRoomSelected()) {
 					schoolClass.getValue(SchoolClass.ROOM).loadFrom(rooms.get(schoolClass.getValue(SchoolClass.ROOM).getId()));
+				}
+			}
+			
+			return classes;
+		};
+	}
+	
+	public SQLRequest<List<SchoolClass>> getAllDatasets(Map<Integer, Room> rooms, Map<Integer, Teacher> teachers) {
+		return () -> {
+			List<SchoolClass> classes = this.getAllDatasets().sync();
+			
+			for (SchoolClass schoolClass : classes) {
+				if (schoolClass.isRoomSelected()) {
+					schoolClass.getValue(SchoolClass.ROOM).loadFrom(rooms.get(schoolClass.getValue(SchoolClass.ROOM).getId()));
+				}
+				
+				if (schoolClass.isTeacherSelected()) {
+					schoolClass.getValue(SchoolClass.TEACHER).loadFrom(teachers.get(schoolClass.getValue(SchoolClass.TEACHER).getId()));
 				}
 			}
 			

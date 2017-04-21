@@ -12,6 +12,7 @@ import de.rincewind.api.abstracts.Dataset;
 import de.rincewind.api.abstracts.DatasetManager;
 import de.rincewind.gui.controller.abstracts.Controller;
 import de.rincewind.gui.dialogs.DialogConfirmClose;
+import de.rincewind.gui.dialogs.DialogPrintJob;
 import de.rincewind.gui.main.GUIHandler;
 import de.rincewind.gui.panes.PaneStatsProjects;
 import de.rincewind.gui.panes.PaneStatsStudents;
@@ -20,6 +21,7 @@ import de.rincewind.gui.panes.PaneStudentMatching;
 import de.rincewind.gui.panes.abstracts.AdminTab;
 import de.rincewind.gui.panes.abstracts.FXMLPane;
 import de.rincewind.gui.panes.abstracts.PaneEditor;
+import de.rincewind.gui.util.Design;
 import de.rincewind.gui.util.TabHandler;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -79,6 +81,9 @@ public class ControllerAdmin implements Controller, TabHandler {
 	
 	@FXML
 	private MenuItem menuStudentActions;
+	
+	@FXML
+	private MenuItem menuPrints;
 	
 	@FXML
 	private MenuItem menuPrint;
@@ -259,6 +264,12 @@ public class ControllerAdmin implements Controller, TabHandler {
 		
 		this.menuPrint.setOnAction((event) -> {
 			this.getCurrentTab().print();
+		});
+		
+		this.menuPrints.setOnAction((event) -> {
+			new DialogPrintJob().showAndWait().ifPresent((job) -> {
+				Design.startPrint(job.getPrintable());
+			});
 		});
 		
 		this.menuDelete.setOnAction((event) -> {

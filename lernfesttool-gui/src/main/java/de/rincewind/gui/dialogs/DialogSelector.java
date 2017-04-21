@@ -19,7 +19,7 @@ public class DialogSelector extends Dialog<Dataset> {
 		ButtonType cancleType = new ButtonType("Abbrechen", ButtonData.CANCEL_CLOSE);
 
 		this.setTitle(manager.getDataName() + " öffnen");
-		this.setHeaderText("Bitte wähle einen Eintrag aus" /* TODO */);
+		this.setHeaderText("Bitte wähle einen Eintrag aus");
 		this.getDialogPane().getButtonTypes().addAll(selectType, cancleType);
 
 		Node btnSelect = this.getDialogPane().lookupButton(selectType);

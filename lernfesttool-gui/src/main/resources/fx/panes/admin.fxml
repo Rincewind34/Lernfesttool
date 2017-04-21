@@ -58,6 +58,7 @@
 					<items>
 						<MenuItem fx:id="menuStudentMatching" mnemonicParsing="false" text="Schülerzuordnung" />
                   <MenuItem fx:id="menuStudentActions" mnemonicParsing="false" text="Schüleraktionen" />
+                  <MenuItem fx:id="menuPrints" mnemonicParsing="false" text="Druckaufträge" />
 					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="Abmelden">

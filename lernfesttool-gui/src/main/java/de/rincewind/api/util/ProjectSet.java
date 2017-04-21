@@ -191,13 +191,36 @@ public class ProjectSet implements Iterable<Entry<ProjectType, Project>> {
 	public boolean isLeading(ProjectType type) {
 		return this.leads.contains(type);
 	}
-
+	
+	public boolean isEmpty() {
+		return !this.isSet(ProjectType.FULL) && !this.isSet(ProjectType.EARLY) && !this.isSet(ProjectType.LATE);
+	}
+	
 	public boolean isComplete() {
 		return this.isSet(ProjectType.FULL) || (this.isSet(ProjectType.EARLY) && this.isSet(ProjectType.LATE));
 	}
 
 	public int leadingAmount() {
 		return this.leads.size();
+	}
+	
+	public int equalize(ProjectSet projectSet) {
+		if (this.equalize(projectSet, ProjectType.FULL)) {
+			return 3;
+		}
+		
+		boolean early = this.equalize(projectSet, ProjectType.EARLY);
+		boolean late = this.equalize(projectSet, ProjectType.LATE);
+		
+		if (early && late) {
+			return 3;
+		} else if (late) {
+			return 2;
+		} else if (early) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 	public Project getFirstLeadingOne() {
@@ -253,6 +276,10 @@ public class ProjectSet implements Iterable<Entry<ProjectType, Project>> {
 			this.setProject(set.getProject(type));
 			this.setLeading(type, set.isLeading(type));
 		}
+	}
+	
+	private boolean equalize(ProjectSet projectSet, ProjectType type) {
+		return this.isSet(type) && projectSet.isSet(type) && this.getProject(type) == projectSet.getProject(type);
 	}
 
 	private SQLRequest<Void> fetch(FetchType fetchType) {

@@ -164,11 +164,11 @@ public class ControllerStudentChoice implements Controller {
 
 		this.btnDoChoice.setOnAction((event) -> {
 			this.student.choose(this.chooseSets).async((object) -> {
-				
+
 			}, (exception) -> {
 				// TODO
 			});
-				
+
 			if (this.onClose != null) {
 				this.onClose.run();
 			}
@@ -197,29 +197,28 @@ public class ControllerStudentChoice implements Controller {
 	public void setOnOpenProject(Consumer<Project> onOpenProject) {
 		this.onOpenProject = onOpenProject;
 	}
-	
+
 	private void select(int index) {
 		Project project = this.listProjects.getSelectionModel().getSelectedItem().getSavedObject();
-		
+
 		for (ProjectSet set : this.chooseSets) {
 			set.clear(project);
 		}
-		
+
 		this.chooseSets[index].setProject(project);
-		
+
 		this.fillLabels();
 		this.calculateDoneButton();
 	}
 
 	private void calculateDoneButton() {
-		if (this.projectSet.isLeading(ProjectType.FULL)
-				|| (this.projectSet.isLeading(ProjectType.EARLY) && this.projectSet.isLeading(ProjectType.LATE))) {
-			
+		if (this.projectSet.isLeading(ProjectType.FULL) || (this.projectSet.isLeading(ProjectType.EARLY) && this.projectSet.isLeading(ProjectType.LATE))) {
+
 			this.btnDoChoice.setDisable(false);
 			this.btnDoChoice.setText("Wahl überspringen");
 			return;
 		}
-		
+
 		for (int i = 0; i < 3; i++) {
 			if (this.chooseSets[i].isSet(ProjectType.FULL)) {
 				continue;
@@ -230,11 +229,11 @@ public class ControllerStudentChoice implements Controller {
 			} else if (this.chooseSets[i].isSet(ProjectType.EARLY) && this.chooseSets[i].isSet(ProjectType.LATE)) {
 				continue;
 			}
-			
+
 			this.btnDoChoice.setDisable(true);
 			return;
 		}
-		
+
 		this.btnDoChoice.setDisable(false);
 	}
 
@@ -284,11 +283,18 @@ public class ControllerStudentChoice implements Controller {
 
 	private String getText(int index, ProjectType type) {
 		ProjectSet set = this.chooseSets[index];
-		
+
 		if (set.isSet(type)) {
 			return set.getProject(type).getValue(Project.NAME);
 		} else {
-			return "KEINE";
+			if (this.projectSet.isLeading(type)) {
+				return "LEITUNG";
+			} else if ((type == ProjectType.FULL && (this.projectSet.isLeading(ProjectType.EARLY) || this.projectSet.isLeading(ProjectType.LATE)))
+					|| (type.isHalfTime() && this.projectSet.isLeading(ProjectType.FULL))) {
+				return "= / =";
+			} else {
+				return "KEINE";
+			}
 		}
 	}
 

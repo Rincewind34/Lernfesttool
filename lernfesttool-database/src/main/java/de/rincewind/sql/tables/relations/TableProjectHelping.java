@@ -85,7 +85,7 @@ public class TableProjectHelping extends AbstractTable {
 	public SQLRequest<List<Integer>> getGuides(int projectId, byte guideType) {
 		return () -> {
 			DatabaseConnection connection = this.getDatabase().getConnection();
-			PreparedStatement stmt = connection.prepare("SELECT guideId FROM projecthelping WHERE projectId = ? AND guideId = ?");
+			PreparedStatement stmt = connection.prepare("SELECT guideId FROM projecthelping WHERE projectId = ? AND guideType = ?");
 			DatabaseUtils.setInt(stmt, 1, projectId);
 			DatabaseUtils.setByte(stmt, 2, guideType);
 			SQLResult result = connection.query(stmt);
