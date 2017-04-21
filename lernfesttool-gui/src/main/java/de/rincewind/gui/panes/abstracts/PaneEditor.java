@@ -4,7 +4,6 @@ import java.util.List;
 
 import de.rincewind.api.abstracts.Dataset;
 import de.rincewind.gui.controller.abstracts.ControllerEditor;
-import de.rincewind.gui.util.Design;
 import javafx.scene.layout.Pane;
 
 public abstract class PaneEditor<T extends Pane> extends FXMLPane<T> implements AdminTab {
@@ -17,7 +16,7 @@ public abstract class PaneEditor<T extends Pane> extends FXMLPane<T> implements 
 	
 	@Override
 	public void print() {
-		Design.startPrint(this.getEditingObject());
+		
 	}
 	
 	@Override
@@ -50,7 +49,7 @@ public abstract class PaneEditor<T extends Pane> extends FXMLPane<T> implements 
 	
 	@Override
 	public boolean isPrintable() {
-		return true;
+		return false;
 	}
 	
 	@Override

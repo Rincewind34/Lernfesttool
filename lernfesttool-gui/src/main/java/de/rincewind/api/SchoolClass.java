@@ -16,12 +16,15 @@ import de.rincewind.api.abstracts.DatasetManager;
 import de.rincewind.api.manager.ProjectManager;
 import de.rincewind.api.manager.SchoolClassManager;
 import de.rincewind.api.manager.StudentManager;
+import de.rincewind.api.util.ProjectSet;
 import de.rincewind.api.util.SaveResult;
+import de.rincewind.gui.printjobs.ClassStudentList;
 import de.rincewind.sql.SQLRequest;
 import de.rincewind.sql.abstracts.EntityTable.FieldMap;
 import de.rincewind.sql.tables.entities.TableSchoolClasses;
+import de.rincewind.sql.tables.relations.TableProjectAttandences;
 
-public class SchoolClass extends Dataset implements Comparable<SchoolClass> {
+public class SchoolClass extends Dataset implements Printable, Comparable<SchoolClass> {
 
 	public static final DatasetFieldAccessor<Integer> CLASS_LEVEL = new DatasetFieldAccessor<>("classLevel", Integer.class);
 	public static final DatasetFieldAccessor<String> CLASS_DATA = new DatasetFieldAccessor<>("classData", String.class);
@@ -74,7 +77,10 @@ public class SchoolClass extends Dataset implements Comparable<SchoolClass> {
 
 	@Override
 	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-		return Printable.NO_SUCH_PAGE;
+		return new ClassStudentList(this,
+				ProjectSet.convertAttandences(TableProjectAttandences.instance().getEntries().sync(),
+						Dataset.convertList(Project.getManager().getAllDatasets(Dataset.convertList(Room.getManager().getAllDatasets().sync())).sync())))
+								.print(graphics, pageFormat, pageIndex);
 	}
 
 	@Override
@@ -143,7 +149,7 @@ public class SchoolClass extends Dataset implements Comparable<SchoolClass> {
 	public boolean isTeacherSelected() {
 		return Dataset.isDatasetSelected(SchoolClass.TEACHER, this);
 	}
-	
+
 	public List<Student> getStudents(List<Student> students) {
 		return students.stream().filter((student) -> {
 			return student.isSchoolClassSelected() && student.getValue(Student.SCHOOL_CLASS).getId() == this.getId();
@@ -168,7 +174,7 @@ public class SchoolClass extends Dataset implements Comparable<SchoolClass> {
 		return () -> {
 			Map<Integer, FieldMap> result = StudentManager.instance().getTable().getByClass(this.getId(), Student.getManager().getTableColumns()).sync();
 			List<Student> students = new ArrayList<>();
-			
+
 			for (int studentId : result.keySet()) {
 				Student student = Student.getManager().newObject(studentId, result.get(studentId));
 				student.getValue(Student.SCHOOL_CLASS).loadFrom(this);

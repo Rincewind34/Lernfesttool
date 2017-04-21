@@ -7,6 +7,7 @@ import de.rincewind.gui.main.GUIHandler;
 import de.rincewind.gui.windows.WindowAdmin;
 import de.rincewind.gui.windows.WindowStudent;
 import de.rincewind.gui.windows.WindowStudentChoice;
+import de.rincewind.gui.windows.WindowStudentSecondChoice;
 
 public class StudentSession implements Session {
 
@@ -29,6 +30,8 @@ public class StudentSession implements Session {
 				GUIHandler.session().changeWindow(new WindowStudent(this.student));
 			} else if (state == StudentState.VOTE_PROJECTS) {
 				GUIHandler.session().changeWindow(new WindowStudentChoice(this.student));
+			} else if (state == StudentState.SEC_VOTE_PROJECTS) {
+				GUIHandler.session().changeWindow(new WindowStudentSecondChoice(this.student));
 			}
 		}
 	}

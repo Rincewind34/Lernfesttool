@@ -6,6 +6,7 @@ import javafx.scene.layout.HBox;
 import de.rincewind.api.SchoolClass;
 import de.rincewind.gui.controller.editors.ControllerClassEditor;
 import de.rincewind.gui.panes.abstracts.PaneEditor;
+import de.rincewind.gui.util.Design;
 import de.rincewind.gui.util.TabHandler;
 
 public class PaneClassEditor extends PaneEditor<HBox> {
@@ -17,10 +18,20 @@ public class PaneClassEditor extends PaneEditor<HBox> {
 		
 		this.controller = (ControllerClassEditor) this.getController();
 	}
-
+	
 	@Override
 	public SchoolClass getEditingObject() {
 		return this.controller.getEditingObject();
+	}
+
+	@Override
+	public void print() {
+		Design.startPrint(this.getEditingObject());
+	}
+	
+	@Override
+	public boolean isPrintable() {
+		return true;
 	}
 	
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import de.rincewind.api.Project;
 import de.rincewind.api.Room;
@@ -85,6 +86,18 @@ public class ProjectManager extends DatasetManager {
 			}
 
 			return projects;
+		};
+	}
+
+	public SQLRequest<List<Project>> filterFullProjects(List<Project> projects) {
+		return () -> {
+			return projects.stream().filter((project) -> {
+				if (!project.isValuePreset(Project.MAX_STUDENTS)) {
+					project.fetchValue(Project.MAX_STUDENTS).sync();
+				}
+				
+				return project.fetchSimpleAttendences().sync().size() < project.getValue(Project.MAX_STUDENTS);
+			}).collect(Collectors.toList());
 		};
 	}
 	

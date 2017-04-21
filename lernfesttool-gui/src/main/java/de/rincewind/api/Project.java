@@ -7,6 +7,7 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.rincewind.api.abstracts.Dataset;
 import de.rincewind.api.abstracts.DatasetField;
@@ -18,13 +19,14 @@ import de.rincewind.api.util.GuideType;
 import de.rincewind.api.util.ProjectCategory;
 import de.rincewind.api.util.ProjectType;
 import de.rincewind.api.util.SaveResult;
+import de.rincewind.gui.printjobs.CustomPrintable;
 import de.rincewind.gui.util.Design;
 import de.rincewind.sql.SQLRequest;
 import de.rincewind.sql.tables.entities.TableProjects;
 import de.rincewind.sql.tables.relations.TableProjectAttandences;
 import de.rincewind.sql.tables.relations.TableProjectHelping;
 
-public class Project extends Dataset {
+public class Project extends Dataset implements CustomPrintable {
 
 	public static final String FORMAT = "(%s) %s";
 
@@ -303,6 +305,14 @@ public class Project extends Dataset {
 			}
 
 			return students;
+		};
+	}
+
+	public SQLRequest<List<Student>> fetchSimpleAttendences() {
+		return () -> {
+			return TableProjectAttandences.instance().getStudents(this.getId(), false).sync().stream().map((studentId) -> {
+				return Student.getManager().newEmptyObject(studentId);
+			}).collect(Collectors.toList());
 		};
 	}
 

@@ -1,9 +1,5 @@
 package de.rincewind.api.abstracts;
 
-import java.awt.Graphics;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -12,12 +8,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import de.rincewind.api.util.SaveResult;
-import de.rincewind.gui.printjobs.CustomPrintable;
 import de.rincewind.gui.util.Cell;
 import de.rincewind.sql.SQLRequest;
 import de.rincewind.sql.abstracts.EntityTable.FieldMap;
 
-public abstract class Dataset implements CustomPrintable {
+public abstract class Dataset {
 	
 	public static final Comparator<Dataset> COMPERATOR_ID = (dataset1, dataset2) -> {
 		return Integer.compare(dataset1.datasetId, dataset2.datasetId);
@@ -80,16 +75,6 @@ public abstract class Dataset implements CustomPrintable {
 	public abstract DatasetManager getMatchingManager();
 	
 	public abstract SQLRequest<SaveResult> save();
-	
-	@Override
-	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-		return Printable.NO_SUCH_PAGE;
-	}
-	
-	@Override
-	public int getPageCount(PageFormat pageFormat) {
-		return 0;
-	}
 	
 	public <T> void clearValue(DatasetFieldAccessor<?> accessor) {
 		if (!this.containsField(accessor)) {

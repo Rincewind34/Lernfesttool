@@ -1,9 +1,5 @@
 package de.rincewind.api;
 
-import java.awt.Graphics;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,11 +31,6 @@ public class Room extends Dataset {
 
 	public Room(int roomId) {
 		super(roomId);
-	}
-
-	@Override
-	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-		return Printable.NO_SUCH_PAGE;
 	}
 
 	@Override

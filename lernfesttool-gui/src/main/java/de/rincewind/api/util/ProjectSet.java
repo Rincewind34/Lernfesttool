@@ -161,12 +161,18 @@ public class ProjectSet implements Iterable<Entry<ProjectType, Project>> {
 			this.leads.remove(type);
 		}
 	}
+	
+	public void clearLeading() {
+		while (this.leads.size() > 0) {
+			this.clear(this.leads.get(0));
+		}
+	}
 
 	public void clear(ProjectType type) {
 		this.projects.remove(type);
 		this.leads.remove(type);
 	}
-
+	
 	public void clear(Project project) {
 		for (ProjectType type : ProjectType.values()) {
 			if (this.isSet(type) && this.getProject(type).getId() == project.getId()) {

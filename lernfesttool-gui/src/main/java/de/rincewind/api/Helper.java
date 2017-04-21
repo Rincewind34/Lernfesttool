@@ -1,10 +1,5 @@
 package de.rincewind.api;
 
-import java.awt.Graphics;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-
 import de.rincewind.api.abstracts.Dataset;
 import de.rincewind.api.abstracts.DatasetField;
 import de.rincewind.api.abstracts.DatasetFieldAccessor;
@@ -27,11 +22,6 @@ public class Helper extends Guide {
 	
 	public Helper(int helperId) {
 		super(helperId);
-	}
-	
-	@Override
-	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-		return Printable.NO_SUCH_PAGE;
 	}
 	
 	@Override

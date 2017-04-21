@@ -1,10 +1,5 @@
 package de.rincewind.api;
 
-import java.awt.Graphics;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-
 import de.rincewind.api.abstracts.DatasetFieldAccessor;
 import de.rincewind.api.abstracts.DatasetManager;
 import de.rincewind.api.manager.TeacherManager;
@@ -25,11 +20,6 @@ public class Teacher extends Guide {
 	
 	public Teacher(int teacherId) {
 		super(teacherId);
-	}
-	
-	@Override
-	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-		return Printable.NO_SUCH_PAGE;
 	}
 	
 	@Override
