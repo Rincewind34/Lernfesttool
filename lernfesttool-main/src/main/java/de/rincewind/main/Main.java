@@ -30,22 +30,23 @@ import javafx.stage.Stage;
 public class Main extends Application implements GUISession {
 
 	private static ExecutorService threadpool;
-	
+
 	private static Stage stage;
-	
+
 	private Window<?> currentWindow;
 
 	private Session session;
 
 	public static void main(String[] args) {
-		if (args.length != 5) {
+		if (args.length < 4) {
 			System.out.println("Invalid argument length!");
 			return;
 		}
-		
+
 		Main.threadpool = Executors.newCachedThreadPool();
-		
-		Database.initialize(Main.threadpool, args[0], Integer.parseInt(args[1]), args[2], args[3], args[4]);
+
+		Database.initialize(Main.threadpool, args[0], Integer.parseInt(args[1]), args[2], args[3],
+				args.length >= 4 ? new String(Main.decodeArray(args[4].getBytes())) : "");
 		Database.instance().getConnection().open();
 
 		if (Database.instance().getConnection().isOpen()) {
@@ -87,7 +88,7 @@ public class Main extends Application implements GUISession {
 		}
 
 		System.out.println("=== Switch Window ===");
-		
+
 		if (newWindow != null) {
 			this.currentWindow = newWindow;
 			this.currentWindow.create();
@@ -167,6 +168,16 @@ public class Main extends Application implements GUISession {
 		super.stop();
 
 		this.changeWindow(null);
+	}
+
+	public static byte[] decodeArray(byte[] input) {
+		byte[] result = new byte[input.length];
+
+		for (int i = 0; i < input.length; i++) {
+			result[i] = (byte) (input[i] - 3);
+		}
+
+		return result;
 	}
 
 }

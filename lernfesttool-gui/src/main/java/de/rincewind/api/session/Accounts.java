@@ -6,12 +6,10 @@ import de.rincewind.api.util.AccessLevel;
 
 public class Accounts {
 	
-	public static final Account ADMIN = new Account("admin", "secure-bit", AccessLevel.ADMIN);
-	public static final Account LEADING = new Account("leitung", "leitung", AccessLevel.ADMIN);
+	public static final Account ADMIN = new Account("leitung", "lernfest2017", AccessLevel.ADMIN);
 	
 	public static void iterate(Consumer<Account> action) {
 		action.accept(Accounts.ADMIN);
-		action.accept(Accounts.LEADING);
 	}
 	
 	
